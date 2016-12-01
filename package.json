@@ -2,12 +2,16 @@
   "name": "juri",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://bakuzan.github.io/juri",
   "devDependencies": {
+    "enzyme": "^2.6.0",
+    "react-addons-test-utils": "^15.4.1",
     "react-scripts": "0.7.0"
   },
   "dependencies": {
     "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "react-dom": "^15.4.1",
+    "react-router": "^3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
