@@ -8,13 +8,19 @@ it('renders without crashing', () => {
   ReactDOM.render(<SearchBox />, div);
 });
 
-it('renders input field', () => {
+xit('renders input field', () => {
   const wrapper = shallow(<SearchBox />);
   const input = <input type="text" value />;
 
   expect(wrapper.contains(input)).toEqual(true);
 });
 
-xit('', () => {
+xit('SearchBox state changes when input value is updated', () => {
+  const searchBox = shallow(<SearchBox />);
+  const text = 'steins;gate';
 
+  expect(searchBox.state.searchString).toEqual('');
+  searchBox.value = text;
+  searchBox.find('input').simulate('change');
+  expect(searchBox.state.searchString).toEqual(text);
 });
