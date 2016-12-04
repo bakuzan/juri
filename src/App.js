@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import QueryControl from './components/query-control/query-control.js'
+import FilteredSearchResult from './components/filtered-search-result/filtered-search-result.js'
 import './App.css';
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, search for something.
         </p>
-        <QueryControl />
+        <FilteredSearchResult />
       </div>
     );
   }
