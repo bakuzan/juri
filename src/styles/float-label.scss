@@ -1,0 +1,88 @@
+@import './partials/_mixin-float-label';
+
+.has-float-label {
+  @include float-label-container;
+
+  @include float-label;
+
+  select {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+  }
+
+  input, select {
+    @include float-label-input;
+    font-size: inherit;
+    padding: 0 .5em;
+    padding-top: 1em;
+    margin-bottom: 2px;
+    // border: 0;
+    // border-radius: 0;
+    // border-bottom: 2px solid rgba(0,0,0,.1);
+
+    @include float-label-scaled {
+      top: .25em;
+      left: .5em;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: rgba(0,0,0,.5);
+    }
+  }
+
+  select {
+    padding-right: 1em;
+    background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right .5em bottom .25em;
+    background-size: 8px 10px;
+  }
+}
+
+// Custom styling
+
+// * {
+//   box-sizing: border-box;
+// }
+// body {
+//   position: relative;
+//   max-width: 20rem;
+//   background: #eee;
+//   margin: 2rem auto;
+// }
+// fieldset {
+//   padding: 1.5rem;
+//   background: white;
+// }
+// input, select {
+//   width: 100%;
+//   margin-bottom: .5rem;
+// }
+// button {
+//   background: #333;
+//   color: white;
+//   border: 0;
+//   padding: .5em 1em;
+//   margin-top: 1rem;
+// }
+// a {
+//   display: block;
+//   padding: 10px;
+//   position: absolute;
+//   z-index: -1;
+//   top: 1rem;
+//   left: 100%;
+//   margin-left: -65px;
+//   transition: all .2s;
+// }
+// a:hover {
+//   margin-left: 0;
+// }
+// .input-group {
+//   display: table;
+//   width: 100%;
+// }
+// .input-group > * {
+//   display: table-cell;
+//   width: 50%;
+// }

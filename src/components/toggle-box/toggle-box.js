@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './toggle-box.css';
 
 class ToggleBox extends Component {
   handleChange(e) {

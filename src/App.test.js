@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
-import App from './App';
+import App from './app';
 import SearchBox from './components/search-box/search-box';
 
 it('renders without crashing', () => {
