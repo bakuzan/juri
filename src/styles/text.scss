@@ -1,0 +1,52 @@
+@import './partials/_variables';
+
+@each $align in $text-align {
+    .text-#{$align} {
+        text-align: #{$align};
+    }
+}
+
+@each $weight in $font-weights {
+    .#{$weight} {
+        font-weight: #{$weight};
+    }
+}
+
+.bold{
+    font-weight: bold;
+}
+.thin {
+    font-weight: lighter;
+}
+
+@each $size in $font-sizes {
+    .font-#{$size} {
+                    font-size: #{$size}#{$pixel};
+               }
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
+
+@each $cursor in $cursors {
+    .cursor-#{$cursor} {
+        cursor: #{$cursor};
+    }
+}
+
+@each $transform in $transformations {
+    .transform-#{$transform} {
+        text-transform: #{$transform};
+    }
+}
+
+@each $deco in $text-decorations {
+    .decoration-#{$deco} {
+        text-decoration: #{$deco};
+    }
+}
+
+.word-per-line {
+    word-spacing: 10000px;
+}

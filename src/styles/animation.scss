@@ -1,0 +1,29 @@
+@import './partials/_mixins';
+
+.animate.ease-out {
+    max-height: 0;
+    @include transition(max-height 0.5s ease-out);
+    overflow: hidden;
+}
+
+.animate.ease-in {
+    max-height: 650px;
+    @include transition(max-height 1s ease-in);
+}
+
+.animate-transition {
+  @include transition(all linear 0.5s);
+}
+
+.animate.animate-rotate-hover {
+    @include transition(transform 1.8s ease-in-out);
+}
+.animate-rotate-hover:hover {
+    @include transform(rotate(360deg));
+}
+
+//Hijacked fa-spin from font-awesome.
+.animate-spin-hover:hover {
+    -webkit-animation: fa-spin 2s 1 linear;
+            animation: fa-spin 2s 1 linear;
+}

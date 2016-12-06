@@ -1,0 +1,33 @@
+//for media queries.
+$break-small: 768px;
+$break-medium: 992px;
+$break-large: 1200px;
+
+//Unit helpers:
+$pixel: 'px';
+$percent: '%';
+
+//TEXT:
+$font-sizes: 10 12 14 15 16 18 20 22 24 25 28 30 32 34 35 36 38 40 42;
+$font-weights: bold bolder normal lighter;
+$text-align: left right center start end;
+
+$cursors: default none pointer move help;
+
+$transformations: uppercase lowercase none capitalize full-width;
+
+$text-decorations: underline overline none line-through;
+
+//BOX MODEL:
+$percentage-sizes: 10 15 20 25 30 33 40 50 60 66 70 75 80 90 95 100;
+$positions: absolute relative fixed;
+$boxing: 0 2 5 10 15 20 25 30 35 40 45 50 55;
+
+//Display:
+$displays: inline inline-block inline-flex flex list-item block none;
+
+//Overflow:
+$overflow: auto hidden scroll visible;
+
+//Floats:
+$floats: left right none;

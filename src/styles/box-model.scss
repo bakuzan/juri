@@ -1,0 +1,140 @@
+@import './partials/_variables';
+@import './partials/_mixins';
+
+@each $size in $percentage-sizes {
+  .width-#{$size} {
+    width: #{$size}#{$percent};
+  }
+  .height-#{$size} {
+    height: #{$size}#{$percent};
+  }
+  .view-height-#{$size} {
+    height: #{$size}vh;
+  }
+}
+
+@each $place in $positions {
+    .#{$place} {
+        position: #{$place};
+    }
+}
+
+.position-top {
+    top: 0;
+}
+.position-left {
+    left: 0;
+}
+.position-right {
+    right: 0;
+}
+.position-bottom {
+    bottom: 0;
+}
+
+@each $box in $boxing {
+    .padding-#{$box} {
+        padding: #{$box}#{$pixel};
+    }
+    .padding-top-#{$box} {
+        padding-top: #{$box}#{$pixel};
+    }
+    .padding-right-#{$box} {
+        padding-right: #{$box}#{$pixel};
+    }
+    .padding-bottom-#{$box} {
+        padding-bottom: #{$box}#{$pixel};
+    }
+    .padding-left-#{$box} {
+        padding-left: #{$box}#{$pixel};
+    }
+    .margin-#{$box} {
+        margin: #{$box}#{$pixel};
+    }
+    .margin-top-#{$box} {
+        margin-top: #{$box}#{$pixel};
+    }
+    .margin-right-#{$box} {
+        margin-right: #{$box}#{$pixel};
+    }
+    .margin-bottom-#{$box} {
+        margin-bottom: #{$box}#{$pixel};
+    }
+    .margin-left-#{$box} {
+        margin-left: #{$box}#{$pixel};
+    }
+}
+
+@each $display in $displays {
+    .display-#{$display} {
+        display: #{$display};
+    }
+}
+
+.margin-0-auto {
+  margin: 0 auto;
+}
+
+.margin-auto {
+    margin: auto;
+}
+.margin-top-auto {
+  margin-top: auto;
+}
+.margin-right-auto {
+  margin-right: auto;
+}
+.margin-bottom-auto {
+  margin-bottom: auto;
+}
+.margin-left-auto {
+  margin-left: auto;
+}
+
+@each $flow in $overflow {
+    .overflow-#{$flow} {
+        overflow: #{$flow}
+    }
+}
+
+.overflow-auto-hover {
+    overflow: hidden;
+    &:hover {
+        overflow: auto;
+    }
+}
+
+@each $float in $floats {
+    .float-#{$float} {
+        float: #{$float};
+    }
+}
+
+@each $display in $displays {
+    .display-#{$display} {
+        display: #{$display};
+    }
+}
+
+.center-contents {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center-in-parent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include transform(translateX(-50%) translateY(-50%));
+}
+
+.center-vertically {
+    position: relative;
+    top: 50%;
+    @include transform(translateY(-50%));
+}
+
+.row-container > * {
+  display: inline-block;
+}

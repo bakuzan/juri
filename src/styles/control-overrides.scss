@@ -1,0 +1,54 @@
+@import './partials/_variables';
+@import './partials/_colours';
+@import './partials/_mixins';
+
+//Standard phantom controls:
+.phantom-control {
+    background: none;
+    border: none;
+}
+
+//Phantom checkbox:
+input[type="checkbox"].phantom-control {
+    @include appearance(none);
+    @include transition(all 0.3s);
+    display: inline-block;
+    height: 19px;
+    width: 19px;
+    margin: 0;
+    cursor: pointer;
+    vertical-align: middle;
+    &:before, &:checked:before{
+        font-family: 'FontAwesome';
+        font-size: 19px;
+        @include transition(all 0.3s);
+    }
+    &:before {
+        content: '\f096';
+    }
+    &:disabled:before {
+        content: '\f03a';
+        color: $danger-colour;
+    }
+    &:checked:before {
+        content: '\f14a';
+        color: $success-colour;
+    }
+}
+
+.input-group {
+    input[type="checkbox"].phantom-control {
+        height: 34px;
+        width: 34px;
+        margin: 2px 10px 0;
+        &:before, &:checked:before {
+            font-size: 34px;
+            @include transition(all 0.3s);
+        }
+    }
+}
+
+//Nav menu override:
+ul.dropdown-menu {
+    padding: 0;
+}

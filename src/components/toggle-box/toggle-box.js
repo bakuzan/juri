@@ -10,11 +10,13 @@ class ToggleBox extends Component {
   render() {
     return (
       <div className="toggle-box">
-        <input type="checkbox"
-               name={this.props.name}
-               checked={this.props.isChecked}
-               onChange={(e) => this.handleChange(e)} />
-        <span className="toggle-box-text">{this.props.text}</span>
+        <label className="toggle-box-text">
+          <input type="checkbox"
+                 name={this.props.name}
+                 checked={this.props.isChecked}
+                 onChange={(e) => this.handleChange(e)} />
+          {this.props.text}
+        </label>
       </div>
     );
   }
