@@ -1,0 +1,21 @@
+@import "../../styles/partials/_colours";
+
+.juri-header {
+  background-color: $primary-background;
+  height: 40px;
+  padding: 5px;
+  color: $primary-colour-contrast;
+}
+
+#juri-svg, #about-link {
+  position: absolute;
+  cursor: pointer;
+}
+#juri-svg {
+  top: 0;
+  left: 0;
+}
+#about-link {
+  top: 10px;
+  right: 10px;
+}

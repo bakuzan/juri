@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './toggle-box.css';
+import '../../styles/ripple.css';
 
 class ToggleBox extends Component {
   handleChange(e) {
@@ -9,7 +10,7 @@ class ToggleBox extends Component {
   }
   render() {
     return (
-      <div className="toggle-box">
+      <div className="toggle-box ripple">
         <label className="toggle-box-text">
           <input type="checkbox"
                  name={this.props.name}

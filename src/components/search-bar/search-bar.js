@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ToggleBox from '../toggle-box/toggle-box.js';
 import '../../styles/float-label.css';
 import './search-bar.css';
+import '../../styles/box-model.css';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class SearchBar extends Component {
     const currentAge = this.props.isAdult ? '18+' : 'Standard';
     return (
       <div className="search-bar">
-        <h2>
+        <h2 className="center-contents">
           Search for
           <ToggleBox isChecked={this.props.isAnime}
                      handleChange={this.handleToggleBoxInput}
@@ -36,17 +37,15 @@ class SearchBar extends Component {
                      text={currentAge} />
           sites
         </h2>
-        <form name="searchBarForm" className="search-bar-form">
-          <div className="has-float-label text-input-container">
-            <input id="search-input"
-                   type="text"
-                   name="searchString"
-                   placeholder="search..."
-                   value={this.props.searchString}
-                   onChange={(e) => this.handleSearchStringInput(e)} />
-            <label>search for something</label>
-          </div>
-        </form>
+        <div className="has-float-label text-input-container">
+          <input id="search-input"
+                 type="text"
+                 name="searchString"
+                 placeholder="search..."
+                 value={this.props.searchString}
+                 onChange={(e) => this.handleSearchStringInput(e)} />
+          <label>search for something</label>
+        </div>
       </div>
     );
   }

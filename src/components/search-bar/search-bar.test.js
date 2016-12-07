@@ -1,26 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {createRenderer, scryRenderedComponentsWithType, renderIntoDocument} from 'react-addons-test-utils';
 import { shallow } from 'enzyme';
-import SearchBox from './search-box';
+import SearchBar from './search-bar';
 
-it('renders without crashing', () => {
+it('should render without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<SearchBox />, div);
+  ReactDOM.render(<SearchBar />, div);
 });
 
-xit('renders input field', () => {
-  const wrapper = shallow(<SearchBox />);
-  const input = <input type="text" value />;
+it('should render input field', () => {
+  const wrapper = renderIntoDocument(<SearchBar />);
+  const query = ReactDOM.findDOMNode(wrapper).querySelectorAll('#search-input');
 
-  expect(wrapper.contains(input)).toEqual(true);
+  expect(query.length).toEqual(1);
 });
 
-xit('SearchBox state changes when input value is updated', () => {
-  const searchBox = shallow(<SearchBox />);
-  const text = 'steins;gate';
+it('should render two toggle boxes', () => {
+  const wrapper = renderIntoDocument(<SearchBar />);
+  const query = ReactDOM.findDOMNode(wrapper).querySelectorAll('.toggle-box');
 
-  expect(searchBox.state.searchString).toEqual('');
-  searchBox.value = text;
-  searchBox.find('input').simulate('change');
-  expect(searchBox.state.searchString).toEqual(text);
+  expect(query.length).toEqual(2);
 });
