@@ -25,6 +25,7 @@ svg {
   }
 
   &:hover {
+    background-color: darken($primary-background, $darken-amount);
     > #word {
       opacity: 1;
     }
