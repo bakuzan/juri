@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ToggleBox from '../toggle-box/toggle-box.js';
-import * as searchFilters from '../../constants/SearchFilters';
+import * as searchFilters from '../../constants/search-filters';
 import '../../styles/float-label.css';
 import './search-bar.css';
 import '../../styles/box-model.css';
