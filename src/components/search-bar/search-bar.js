@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ToggleBox from '../toggle-box/toggle-box.js';
+import * as searchFilters from '../../constants/SearchFilters';
 import '../../styles/float-label.css';
 import './search-bar.css';
 import '../../styles/box-model.css';
@@ -20,8 +21,8 @@ class SearchBar extends Component {
     this.props.onUserInput(name, value);
   }
   render() {
-    const currentType = this.props.isAnime ? 'Anime' : 'Manga';
-    const currentAge = this.props.isAdult ? '18+' : 'Standard';
+    const currentType = this.props.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
+    const currentAge = this.props.isAdult ? searchFilters.IS_ADULT_TRUE : searchFilters.IS_ADULT_FALSE;
     return (
       <div className="search-bar">
         <h2 className="center-contents">
