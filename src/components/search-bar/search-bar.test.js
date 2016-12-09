@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {createRenderer, scryRenderedComponentsWithType, scryRenderedDOMComponentsWithTag, renderIntoDocument} from 'react-addons-test-utils';
 import { shallow } from 'enzyme';
+import * as searchFilters from '../../constants/search-filters';
 import SearchBar from './search-bar';
 import ToggleBox from '../toggle-box/toggle-box';
 
@@ -74,8 +75,8 @@ describe('testing child component props', () => {
                    isAnime={isAnime} />);
       const children = scryRenderedComponentsWithType(wrapper, ToggleBox);
 
-      expect(children[0].props.text).toEqual('Anime');
-      expect(children[1].props.text).toEqual('18+');
+      expect(children[0].props.text).toEqual(searchFilters.IS_ANIME_TRUE);
+      expect(children[1].props.text).toEqual(searchFilters.IS_ADULT_TRUE);
     });
 
     it('should set toggle box text to "Manga"(isAnime) and "standard"(isAdult) when they are FALSE', () => {
@@ -86,8 +87,8 @@ describe('testing child component props', () => {
                    isAnime={isAnime} />);
       const children = scryRenderedComponentsWithType(wrapper, ToggleBox);
 
-      expect(children[0].props.text).toEqual('Manga');
-      expect(children[1].props.text).toEqual('Standard');
+      expect(children[0].props.text).toEqual(searchFilters.IS_ANIME_FALSE);
+      expect(children[1].props.text).toEqual(searchFilters.IS_ADULT_FALSE);
     });
 
     describe('testing text switching on click', () => {
