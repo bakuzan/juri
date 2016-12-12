@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import App from './views/app/app';
 import About from './views/about/about';
+import PageNotFound from './views/page-not-found/page-not-found';
 import {Router, Route, browserHistory} from 'react-router';
 
 class Routes extends Component {
@@ -8,7 +9,8 @@ class Routes extends Component {
     return (
       <Router history={browserHistory}>
         <Route path="/" component={App}/>
-        <Route path="/about" component={About}/>
+        <Route path="about" component={About}/>
+		<Route path="*" component={PageNotFound} />
       </Router>
     );
   }
