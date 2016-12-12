@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import FilteredSearchResult from '../../components/filtered-search-result/filtered-search-result.js';
+import Header from '../../components/header/header.js'
 import './app.css';
 
 class App extends Component {
   render() {
     return (
       <div className="juri">
-        <FilteredSearchResult />
+        <Header />
+        <main>
+          {this.props.children}
+        </main>
       </div>
     );
   }
