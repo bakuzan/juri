@@ -20,6 +20,15 @@ describe('testing toggle box component', () => {
       expect(input.type).toEqual('checkbox');
     });
 
+    it('should put text into label', () => {
+      const testText = 'i hate unit testing, but apparently everyone thinks it is a good idea';
+      const wrapper = TestUtils.renderIntoDocument(<ToggleBox text={testText} />);
+      const label = ReactDOM.findDOMNode(wrapper).querySelector('label');
+
+      expect(label).not.toBe(null);
+      expect(label.textContent).toEqual(testText);
+    });
+
   });
 
   describe('testing functions', () => {

@@ -61,9 +61,11 @@ describe('testing child component props', () => {
 
   it('should set input value to "searchString" value', () => {
     const input = ReactDOM.findDOMNode(wrapper).querySelector('input');
+    expect(input.value).toEqual('');
 
+    input.value = searchString;
     TestUtils.Simulate.change(input);
-    console.log(input.props);
+
     expect(input.value).toEqual(searchString);
   });
 
@@ -124,10 +126,6 @@ describe('testing child component props', () => {
       });
 
     });
-
-  });
-
-  describe('testing functions', () => {
 
   });
 

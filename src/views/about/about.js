@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
+import { paths } from '../../constants/paths';
 
 class About extends Component {
   render() {
@@ -13,7 +15,7 @@ class About extends Component {
             <br /><br />
             <b>Status:</b> Work in progress.
             <br /><br />
-            <a href="/">back</a>
+            <Link to={paths.base}>back</Link>
           </p>
         </div>
       </article>
