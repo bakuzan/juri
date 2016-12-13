@@ -19,6 +19,7 @@ const mangaSearch = (search) => {
 }
 
 export default search = (req, res) => {
+	console.log('server => mal search : ', req);
 	const type = req.params.type;
 	const search = req.query.searchString;
 
