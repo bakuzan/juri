@@ -1,6 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const app = express();
 
@@ -10,10 +13,9 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
-// Always return the main index.html, so react-router render the route in the client
-app.get(/^\/(?!api)/g, (req, res) => {
-  console.log(req, res);
+// Always return the main index.html, so react-router render the route in the client /^\/(?!api)/g
+app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
 
-export default app;
+module.exports = app;

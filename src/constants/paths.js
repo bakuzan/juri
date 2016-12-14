@@ -1,7 +1,9 @@
 export const paths = {
   build: (path, params) => {
     for(let k in params) {
-      path = path.replace(`:${k}`, params[k]);
+      if (params.hasOwnProperty(k)) {
+        path = path.replace(`:${k}`, params[k]);
+      }
     }
     return path;
   },

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SearchBar from '../search-bar/search-bar.js';
 import SearchResult from '../search-result/search-result.js';
 import * as searchFilters from '../../constants/search-filters';
-import paths from '../../constants/paths';
+import { paths } from '../../constants/paths';
 
 class FilteredSearchResult extends Component {
   constructor(props) {
@@ -24,7 +24,6 @@ class FilteredSearchResult extends Component {
   }
   fetchMalItems() {
     const type = this.state.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
-    console.log(`mal search for ${type}`);
     fetch(paths.build(paths.query.malSearch, { type: type.toLowerCase() }), {
       method: 'GET',
       headers: {
