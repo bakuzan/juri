@@ -1,4 +1,10 @@
 export const paths = {
+  build: (path, params) => {
+    for(let k in params) {
+      path = path.replace(`:${k}`, params[k]);
+    }
+    return path;
+  },
   base: '/juri/',
   about: 'about',
   query: {
