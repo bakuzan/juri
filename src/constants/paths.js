@@ -10,7 +10,7 @@ export const paths = {
   base: '/juri/',
   about: 'about',
   query: {
-    malSearch: '/mal-search/:type',
-    siteSearch: '/site-search/:type/:age'
+    malSearch: '/api/mal-search/:type',
+    siteSearch: '/api/site-search/:type/:age'
   }
 };
