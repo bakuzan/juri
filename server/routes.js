@@ -1,6 +1,6 @@
-import app from './app';
-import mal from './mal-search';
-import { paths } from '../src/constants/paths';
+const app = require('./app');
+const malSearch = require('./mal-search');
+const paths = require('../src/constants/paths');
 
 export const routes = () => {
   // MAL Route
