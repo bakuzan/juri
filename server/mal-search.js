@@ -1,5 +1,4 @@
-import popura from 'popura';
-
+const popura = require('popura');
 const client = popura(process.env.MAL_USER, process.env.MAL_PASSWORD);
 
 const animeSearch = (search) => {
