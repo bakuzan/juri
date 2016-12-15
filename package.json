@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://bakuzan.github.io/juri/",
+  "proxy": "http://localhost:9000",
   "devDependencies": {
     "create-react-app-sass": "^1.1.0",
     "enzyme": "^2.6.0",
@@ -20,8 +21,9 @@
     "react-router": "^3.0.0"
   },
   "scripts": {
-    "start": "react-scripts-with-sass start",
-    "start:server": "node server",
+    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "client": "react-scripts-with-sass start",
+    "server": "node server",
     "build": "react-scripts-with-sass build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",

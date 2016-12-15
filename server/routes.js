@@ -1,8 +1,7 @@
 const express = require('express');
-const mal = require('./mal-search');
-const paths = require('../src/constants/paths');
+const malSearch = require('./mal-search');
 
-const router = express.Router(); 
+const router = express.Router();
 
 // middleware to use for all requests
 router.use((req, res, next) => {
@@ -11,13 +10,15 @@ router.use((req, res, next) => {
 });
 
 //MAL route
-router.get(paths.query.malSearch, mal.search);
+router.get('/api/mal-search/:type', malSearch);
 
 // Content Site Routes
+router.get('/api/site-search/:type/:age', (req, res) => { console.log('site serach needs implementing!'); });
 
-// Always return the main index.html, so react-router render the route in the client ## /^\/(?!api)/g
-router.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
-});
+// always return the main index.html, so react-router render the route in the client ## /^\/(?!api)/g
+// router.get('/juri/', (req, res) => {
+//   console.log('returning index.html for :', req.url);
+//   res.sendfile(path.resolve(__dirname, '..', 'build', 'index.html'));
+// });
 
 module.exports = router;

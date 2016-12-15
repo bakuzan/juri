@@ -1,11 +1,11 @@
 export const paths = {
   build: (path, params) => {
     for(let k in params) {
-      if (params.hasOwnProperty(k)) {
+      if (params.hasOwnProperty(k) && k !== 'search') {
         path = path.replace(`:${k}`, params[k]);
       }
     }
-    return path;
+    return `${path}?search=${params.search}`;
   },
   base: '/juri/',
   about: 'about',

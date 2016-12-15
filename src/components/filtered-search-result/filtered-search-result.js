@@ -24,11 +24,10 @@ class FilteredSearchResult extends Component {
   }
   fetchMalItems() {
     const type = this.state.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
-    fetch(paths.build(paths.query.malSearch, { type: type.toLowerCase() }), {
+    fetch(paths.build(paths.query.malSearch, { type: type.toLowerCase(), search: this.state.searchString }), {
       method: 'GET',
       headers: {
-        'Accept': 'application/xml',
-        'Content-Type': 'application/xml'
+        'Accept': 'application/jsonp'
       }
     }).then((data) => {
       console.log('mal search: ', data);
