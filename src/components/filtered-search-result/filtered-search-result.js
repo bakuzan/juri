@@ -3,6 +3,7 @@ import SearchBar from '../search-bar/search-bar.js';
 import SearchResult from '../search-result/search-result.js';
 import * as searchFilters from '../../constants/search-filters';
 import { paths } from '../../constants/paths';
+import { malQuery } from '../../actions/query';
 
 class FilteredSearchResult extends Component {
   constructor(props) {
@@ -14,23 +15,23 @@ class FilteredSearchResult extends Component {
       malResults: [],
       searchString: ''
     };
+    this.searchStringStateName = 'searchString';
 
     this.handleUserInput = this.handleUserInput.bind(this);
   }
   handleUserInput(name, value) {
-    console.log(name);
+    // set a timeout here to debounce user input
+    // ensure that the timeout is reset when further input is recieved.
     this.setState({[name]: value});
-    if (name === 'searchString' && this.state.searchString.length > 2) this.fetchMalItems();
+    if (name === this.searchStringStateName && this.state.searchString.length > 2) this.fetchMalItems();
   }
   fetchMalItems() {
     const type = this.state.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
-    fetch(paths.build(paths.query.malSearch, { type: type.toLowerCase(), search: this.state.searchString }), {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/jsonp'
-      }
-    }).then((data) => {
-      console.log('mal search: ', data);
+    const url = paths.build(paths.query.malSearch, { type: type.toLowerCase(), search: this.state.searchString });
+    malQuery(url).then((data) => {
+      this.setState({
+        malResults: data
+      });
     });
   }
   render() {
@@ -40,9 +41,7 @@ class FilteredSearchResult extends Component {
                    isAdult={this.state.isAdult}
                    isAnime={this.state.isAnime}
                    onUserInput={this.handleUserInput} />
-        <SearchResult searchString={this.state.searchString}
-                      isAdult={this.state.isAdult}
-                      isAnime={this.state.isAnime}
+        <SearchResult isAnime={this.state.isAnime}
                       malResults={this.state.malResults}
                       contentResults={this.state.contentResults} />
       </div>

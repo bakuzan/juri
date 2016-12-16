@@ -1,0 +1,16 @@
+.search-results, .mal-search-result, .content-search-result {
+  display: flex;
+}
+
+.search-results {
+  flex-direction: row;
+}
+
+.mal-search-result, .content-search-result {
+  flex-direction: column;
+  width: 50%;
+}
+
+.mal-search-result {
+  margin-right: 5px;
+}
