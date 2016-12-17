@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import SearchBar from '../search-bar/search-bar.js';
 import SearchResult from '../search-result/search-result.js';
 import * as searchFilters from '../../constants/search-filters';
-import { paths } from '../../constants/paths';
-import { malQuery } from '../../actions/query';
+import { malQuery, contentQuery } from '../../actions/query';
 
 class FilteredSearchResult extends Component {
   constructor(props) {
@@ -15,22 +14,36 @@ class FilteredSearchResult extends Component {
       malResults: [],
       searchString: ''
     };
-    this.searchStringStateName = 'searchString';
+    this.isAdultStateName = 'isAdult';
+    this.timer = null;
 
     this.handleUserInput = this.handleUserInput.bind(this);
   }
   handleUserInput(name, value) {
-    // set a timeout here to debounce user input
-    // ensure that the timeout is reset when further input is recieved.
     this.setState({[name]: value});
-    if (name === this.searchStringStateName && this.state.searchString.length > 2) this.fetchMalItems();
+
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      if (this.state.searchString.length > 2) {
+        const type = this.state.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
+        const age = this.state.isAdult ? searchFilters.IS_ADULT_TRUE : searchFilters.IS_ADULT_FALSE;
+
+        if (name !== this.isAdultStateName) this.fetchMalItems(type);
+        this.fetchContentItems(type, age);
+      }
+    }, 1500);
   }
-  fetchMalItems() {
-    const type = this.state.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
-    const url = paths.build(paths.query.malSearch, { type: type.toLowerCase(), search: this.state.searchString });
-    malQuery(url).then((data) => {
+  fetchContentItems(type, age) {
+    contentQuery({ type: type.toLowerCase(), age: age.toLowerCase(), search: this.state.searchString }).then((response) => {
       this.setState({
-        malResults: data
+        contentResults: response.data
+      });
+    });
+  }
+  fetchMalItems(type) {
+    malQuery({ type: type.toLowerCase(), search: this.state.searchString }).then((response) => {
+      this.setState({
+        malResults: response
       });
     });
   }
@@ -41,9 +54,12 @@ class FilteredSearchResult extends Component {
                    isAdult={this.state.isAdult}
                    isAnime={this.state.isAnime}
                    onUserInput={this.handleUserInput} />
-        <SearchResult isAnime={this.state.isAnime}
-                      malResults={this.state.malResults}
-                      contentResults={this.state.contentResults} />
+        {
+          this.state.searchString.length > 2 &&
+          <SearchResult isAnime={this.state.isAnime}
+                        malResults={this.state.malResults}
+                        contentResults={this.state.contentResults} />
+        }
       </div>
     );
   }

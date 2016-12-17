@@ -1,3 +1,4 @@
+const constants = require('./constants');
 const popura = require('popura');
 const client = popura(process.env.MAL_USER, process.env.MAL_PASSWORD);
 
@@ -21,8 +22,8 @@ const search = (req, res) => {
 	const type = req.params.type;
 	const search = req.query.search;
 
-	if (type === 'anime') animeSearch(res, search);
-	if (type === 'manga') mangaSearch(res, search);
+	if (type === constants.type.anime) animeSearch(res, search);
+	if (type === constants.type.manga) mangaSearch(res, search);
 }
 
 module.exports = search;

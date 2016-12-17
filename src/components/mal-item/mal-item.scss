@@ -1,3 +1,20 @@
 .mal-item {
+  min-height: 90px;
+  padding: 2px;
+  margin: 2px 0;
   list-style-type: none;
+  .image {
+    position: absolute;
+    width: 58px;
+    height: 90px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+  }
+  .mal-item-info {
+    padding-left: 65px;
+    a {
+      text-decoration: none;
+    }
+  }
 }

@@ -1,5 +1,6 @@
 const express = require('express');
 const malSearch = require('./mal-search');
+const contentSearch = require('./content-search');
 
 const router = express.Router();
 
@@ -12,7 +13,7 @@ router.use((req, res, next) => {
 //MAL route
 router.get('/api/mal-search/:type', malSearch);
 
-// Content Site Routes
-router.get('/api/site-search/:type/:age', (req, res) => { console.log('site serach needs implementing!'); });
+// Content Site Route
+router.get('/api/content-search/:type/:age', contentSearch);
 
 module.exports = router;

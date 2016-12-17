@@ -11,6 +11,6 @@ export const paths = {
   about: 'about',
   query: {
     malSearch: '/api/mal-search/:type',
-    siteSearch: '/api/site-search/:type/:age'
+    contentSearch: '/api/content-search/:type/:age'
   }
 };
