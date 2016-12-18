@@ -36,7 +36,7 @@ class FilteredSearchResult extends Component {
   fetchContentItems(type, age) {
     contentQuery({ type: type.toLowerCase(), age: age.toLowerCase(), search: this.state.searchString }).then((response) => {
       this.setState({
-        contentResults: response.data
+        contentResults: type === searchFilters.IS_ANIME_TRUE ? response.data : response
       });
     });
   }

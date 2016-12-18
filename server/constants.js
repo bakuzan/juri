@@ -11,7 +11,7 @@ const urls = {
     masterani: 'http://www.masterani.me/api/anime/filter?search=:searchString&order=title&page=1'
   },
   manga: {
-
+    mangafox: 'http://mangafox.me/ajax/search.php?term=:searchString'
   }
 }
 

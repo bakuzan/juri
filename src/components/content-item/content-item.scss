@@ -1,6 +1,6 @@
 @import '../../styles/partials/_colours';
 
-.mal-item {
+.content-item {
   min-height: 90px;
   padding: 2px;
   margin: 2px 0;
@@ -13,7 +13,7 @@
     background-repeat: no-repeat;
     background-position: center top;
   }
-  .mal-item-info {
+  .content-item-info {
     padding-left: 65px;
     a {
       text-decoration: none;

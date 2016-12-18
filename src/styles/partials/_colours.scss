@@ -5,7 +5,10 @@ $darken-amount: 5%;
 
 /* Colours*/
 $juri-purple: #5f3e85;
+$juri-pink: #e627a8;
+$juri-black: #2c1d1a;
 $white: #fff;
+$black: #000;
 $red: #ff0000;
 $green: #00ff00;
 
@@ -13,7 +16,12 @@ $green: #00ff00;
  * USAGES
  */
 $primary-background: $juri-purple;
+$primary-colour: $juri-purple;
 $primary-colour-contrast: $white;
+
+$secondary-background: $juri-pink;
+$secondary-colour: $juri-pink;
+$secondary-colour-contrast: $black;
 
 $danger-colour: $red;
 $success-colour: $green;
