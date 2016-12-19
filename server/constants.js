@@ -7,11 +7,15 @@ const types = {
   manga: 'manga'
 }
 const urls = {
+  favourite: {
+    anime: 'http://www.masterani.me/api/anime/filter?search=:searchString&order=title&page=1',
+    manga: 'http://mangafox.me/ajax/search.php?term=:searchString'
+  },
   anime: {
-    masterani: 'http://www.masterani.me/api/anime/filter?search=:searchString&order=title&page=1'
+    // other anime to be searched by name when asked for.
   },
   manga: {
-    mangafox: 'http://mangafox.me/ajax/search.php?term=:searchString'
+    // other manga to be searched by name when asked for.
   }
 }
 
