@@ -16,6 +16,14 @@ const urls = {
   },
   manga: {
     // other manga to be searched by name when asked for.
+  },
+  adult: {
+    anime: [
+      { url: 'http://ohentai.org/search.php?k=:searchString', selector: '.videolistcontainer > .videobrickwrap > div.videobrick' }
+    ],
+    manga: [
+
+    ]
   }
 }
 

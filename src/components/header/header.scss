@@ -1,10 +1,13 @@
 @import "../../styles/partials/_colours";
 
 .juri-header {
-  background-color: $primary-background;
+  position: fixed;
   height: 40px;
-  padding: 5px;
+  width: calc(100% - 10px);
+  background-color: $primary-background;
   color: $primary-colour-contrast;
+  padding: 5px;
+  z-index: 10;
 }
 
 #juri-svg, #about-link {

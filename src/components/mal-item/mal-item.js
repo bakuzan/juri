@@ -18,7 +18,14 @@ function MalItem(props) {
           </span>
           <br />
           <span>
-            <b>Episodes:</b> {props.content.episodes}
+            { type === searchFilters.IS_ANIME_TRUE ? (
+              <span> <b>Episodes:</b> {props.content.episodes} </span>
+            ) : (
+              <span>
+                <b>Chapters:</b> {props.content.chapters} <br />
+                <b>Volumes:</b> {props.content.volumes} 
+              </span>
+            )}
           </span>
           <br />
           <span>

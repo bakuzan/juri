@@ -37,9 +37,9 @@ class ContentItem extends Component {
   renderMangaContentItem() {
     return (
       <div>
-        <span className="image" style={{backgroundImage: `url(http://www.mangafox.com/icon/${this.props.content[0]}.jpg)`}} title={`Cover image for ${this.props.content[1]}`}></span>
+        <span className="image" style={{backgroundImage: `url(http://www.mangafox.com/store/manga/${this.props.content[0]}/cover.jpg)`}} title={`Cover image for ${this.props.content[1]}`}></span>
         <div className="content-item-info">
-          <a href={`https://mangafox.me/${this.type.toLowerCase()}/${this.props.content[2]}`} target="_blank">
+          <a href={`http://mangafox.me/${this.type.toLowerCase()}/${this.props.content[2]}/`} target="_blank">
             {`${this.props.content[1]} (${this.props.content[4]})`}
           </a>
         </div>

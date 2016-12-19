@@ -1,14 +1,27 @@
 const fetch = require('node-fetch');
 const constants = require('./constants');
 
-const standardSearch = (res, type, search) => {
-  const url = constants.url.favourite[type].replace(':searchString', search);
-  fetch(url).then((response) => {
-    return response.json();
-  }).then((body) => {
-    res.jsonp(body);
+const fetchContentFromUrl = (url, dataType) => {
+  return fetch(url).then((response) => {
+    return response[dataType]();
   }).catch((err) => {
     return err;
+  });
+}
+
+const standardSearch = (res, type, search) => {
+  const url = constants.url.favourite[type].replace(':searchString', search);
+  fetchContentFromUrl(url, 'json').then((body) => {
+    res.jsonp(body);
+  });
+}
+
+const adultSearch = (res, type, search) => {
+  const site = constants.url.adult[type][0];
+  const url = site.url.replace(':searchString', search);
+  fetchContentFromUrl(url, 'text').then((body) => {
+    const results = body.querySelectorAll(site.selector);
+    res.jsonp(results);
   });
 }
 
@@ -18,6 +31,7 @@ const search = (req, res) => {
 	const search = req.query.search;
 
 	if (age === constants.age.standard) standardSearch(res, type, search);
+  if (age === constants.age.adult) adultSearch(res, type, search);
 }
 
 module.exports = search;
