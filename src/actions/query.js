@@ -22,6 +22,7 @@ export const contentQuery = (params) => {
       'Content-Type': 'application/json'
     }
   }).then((response) => {
+    console.log(response, response.text());
     return response.json();
   });
 }

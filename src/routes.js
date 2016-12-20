@@ -14,8 +14,9 @@ class Routes extends Component {
 
         <Route path={paths.base} component={App}>
           <IndexRoute component={FilteredSearchResult} />
-          
+
           <Route path={paths.about} component={About} />
+          // <Route path={paths.latest} />
         </Route>
 
         <Route path="*" component={PageNotFound} />

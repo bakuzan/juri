@@ -9,6 +9,7 @@ export const paths = {
   },
   base: '/juri/',
   about: 'about',
+  latest: 'latest',
   query: {
     malSearch: '/api/mal-search/:type',
     contentSearch: '/api/content-search/:type/:age'
