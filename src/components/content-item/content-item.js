@@ -7,6 +7,7 @@ class ContentItem extends Component {
   constructor(props) {
     super(props);
 
+    this.adult = this.props.isAdult ? searchFilters.IS_ADULT_TRUE : searchFilters.IS_ADULT_FALSE;
     this.type = this.props.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
   }
   renderAnimeContentItem() {
@@ -46,14 +47,29 @@ class ContentItem extends Component {
       </div>
     );
   }
+  renderAdultAnimeContentItem() {
+    return (
+      <div>
+        <span className="image" style={{backgroundImage: `url(${this.props.content.image}`}} title={`Cover image for ${this.props.content.title}`}></span>
+        <div className="content-item-info">
+          <a href={`${this.props.content.link}`} target="_blank">
+            {`${this.props.content.title} (${this.props.content.versions})`}
+          </a>
+        </div>
+      </div>
+    );
+  }
   render() {
+    let renderFunction;
+    if (this.type === searchFilters.IS_ANIME_TRUE) {
+      renderFunction = this.adult === searchFilters.IS_ADULT_TRUE ? (this.renderAdultAnimeContentItem) : (this.renderAnimeContentItem);
+    } else {
+      renderFunction = this.adult === searchFilters.IS_ADULT_TRUE ? (() => {}) : (this.renderMangaContentItem);
+    }
+
     return(
         <li className="content-item">
-          {this.type === searchFilters.IS_ANIME_TRUE ? (
-            this.renderAnimeContentItem()
-          ) : (
-            this.renderMangaContentItem()
-          )}
+          { renderFunction() }
         </li>
     );
   }

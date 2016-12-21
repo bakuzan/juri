@@ -57,7 +57,8 @@ class FilteredSearchResult extends Component {
                    onUserInput={this.handleUserInput} />
         {
           this.state.searchString.length > 2 &&
-          <SearchResult isAnime={this.state.isAnime}
+          <SearchResult isAdult={this.state.isAdult}
+                        isAnime={this.state.isAnime}
                         malResults={this.state.malResults}
                         contentResults={this.state.contentResults} />
         }
