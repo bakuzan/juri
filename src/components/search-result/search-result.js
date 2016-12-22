@@ -12,7 +12,7 @@ class SearchResult extends Component {
     );
   }
   render() {
-    console.log(this.props.contentResults);
+    console.log('content: ', this.props.contentResults);
     const myanimelist = this.props.malResults.map((malItem) => {
       return (<MalItem key={malItem.id} content={malItem} isAnime={this.props.isAnime} />);
     });

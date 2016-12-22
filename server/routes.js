@@ -1,6 +1,6 @@
 const express = require('express');
-const malSearch = require('./mal-search');
-const contentSearch = require('./content-search');
+const malSearch = require('./controllers/mal-search');
+const contentSearch = require('./controllers/content-search');
 
 const router = express.Router();
 
