@@ -1,4 +1,5 @@
 const jsdom = require('jsdom').jsdom;
+const ContentItem = require('./content-item-factory');
 
 const getVersions = (subTags) => {
   let versions = [];
@@ -16,19 +17,9 @@ const processHtml = (html, selector, url) => {
 
   for(let i = 0, length = htmlItems.length; i < length; i++) {
     const container = htmlItems[i];
-    const link = container.getElementsByTagName('a')[1];
-    const image = container.getElementsByTagName('img')[0];
-    const subs = container.getElementsByClassName('subtag');
-
-    jsonItems.push({
-      id: i,
-      href: `http://ohentai.org/${link.href}`,
-      title: link.firstChild.textContent,
-      image: `http://ohentai.org/${image.src}`,
-      versions: getVersions(subs)
-    });
+    jsonItems.push(new ContentItem(url, container));
   }
-  return { data: jsonItems, url: url };
+  return { data: jsonItems };
 };
 
 module.exports = processHtml;
