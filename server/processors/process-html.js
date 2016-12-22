@@ -1,5 +1,5 @@
 const jsdom = require('jsdom').jsdom;
-const ContentItem = require('./content-item-factory');
+const ContentItem = require('./content-item');
 
 const getVersions = (subTags) => {
   let versions = [];
