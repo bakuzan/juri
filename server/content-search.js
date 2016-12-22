@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const constants = require('./constants');
-const processHtml = require('./process-html');
+const processHtml = require('./processors/process-html');
 
 const fetchContentFromUrl = (url, dataType) => {
   return fetch(url).then((response) => {
