@@ -2,12 +2,12 @@ const ContentItemFactory = require('./content-item-factory');
 
 class ContentItem {
 	constructor(url, dataItem) {
-		const REGEX_GET_HOST = /(?=^http.*).*(?=\.)/g;
+		const REGEX_GET_HOST = /((^.*\/\/)|(.*www\.))(?=\w{5,}\.)|\..*$/g;
 
 		this.host = url.replace(REGEX_GET_HOST, '');
 		console.log('HOST !! ', this.host);
 		const factory = new ContentItemFactory(this);
-		factory[this.host](dataItem);
+		factory.process(dataItem);
 	}
 	initaliseProps({ id, href, title, image, versions, authour, type, status, episodes, startDate, endDate }) {
 		this.id = id;
