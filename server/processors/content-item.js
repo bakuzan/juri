@@ -3,9 +3,8 @@ const ContentItemFactory = require('./content-item-factory');
 class ContentItem {
 	constructor(url, dataItem) {
 		const REGEX_GET_HOST = /((^.*\/\/)|(.*www\.))(?=\w{5,}\.)|\..*$/g;
-
 		this.host = url.replace(REGEX_GET_HOST, '');
-		console.log('HOST !! ', this.host);
+
 		const factory = new ContentItemFactory(this);
 		factory.process(dataItem);
 	}

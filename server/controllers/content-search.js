@@ -14,7 +14,6 @@ const fetchContentFromUrl = (url, dataType) => {
 const standardSearch = (res, type, search) => {
   const url = constants.url.favourite[type].replace(':searchString', search);
   fetchContentFromUrl(url, 'json').then((body) => {
-    console.log(body, typeof body);
     let array = body.data || body;
     return array.map((dataItem) => {
       return new ContentItem(url, dataItem);

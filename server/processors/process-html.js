@@ -11,7 +11,7 @@ const processHtml = (html, selector, url) => {
     const container = htmlItems[i];
     jsonItems.push(new ContentItem(url, container));
   }
-  return { data: jsonItems };
+  return jsonItems;
 };
 
 module.exports = processHtml;

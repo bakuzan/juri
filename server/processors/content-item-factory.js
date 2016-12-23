@@ -2,11 +2,9 @@ const jsdom = require('jsdom').jsdom;
 
 class ContentItemFactory {
   constructor(contentItem) {
-    console.log('new factory: ', contentItem);
     this.contentItem = contentItem;
   }
   process(dataItem) {
-    console.log('what this ? ', this.contentItem.host, this[this.contentItem.host]);
     this[this.contentItem.host](dataItem);
   }
   getVersions(subTags) {
@@ -21,7 +19,7 @@ class ContentItemFactory {
       id: dataItem.id,
       href: `https://masterani.me/anime/info/${dataItem.slug}`,
       title: dataItem.title,
-      image: `https://cdn.masterani.me/poster/${dataItem.file}`,
+      image: `https://cdn.masterani.me/poster/${dataItem.poster.file}`,
       type: dataItem.type,
       status: dataItem.status,
       episodes: dataItem.episode_count,
@@ -48,7 +46,7 @@ class ContentItemFactory {
       id: link.href,
       href: `${urlBase}${link.href}`,
       title: link.firstChild.textContent,
-      image: `${urlBase}${image.src}`,
+      image: `${urlBase}${image.src.substring(2)}`,
       versions: this.getVersions(subs)
     });
   }

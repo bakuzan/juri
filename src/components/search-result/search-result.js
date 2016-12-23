@@ -18,7 +18,7 @@ class SearchResult extends Component {
     });
     const mycontentlist = this.props.contentResults.map((contentItem) => {
       return (
-        <ContentItem key={contentItem.id || contentItem[0]}
+        <ContentItem key={contentItem.id}
                      content={contentItem}
                      isAnime={this.props.isAnime}
                      isAdult={this.props.isAdult} />

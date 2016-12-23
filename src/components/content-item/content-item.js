@@ -7,69 +7,55 @@ class ContentItem extends Component {
   constructor(props) {
     super(props);
 
+    this.content = this.props.content;
     this.adult = this.props.isAdult ? searchFilters.IS_ADULT_TRUE : searchFilters.IS_ADULT_FALSE;
     this.type = this.props.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
-  }
-  renderAnimeContentItem() {
-    return (
-      <div>
-        <span className="image" style={{backgroundImage: `url(https://cdn.masterani.me/poster/${this.props.content.poster.file})`}} title={`Cover image for ${this.props.content.title}`}></span>
-        <div className="content-item-info">
-          <a href={`https://masterani.me/${this.type.toLowerCase()}/info/${this.props.content.slug}`} target="_blank">
-            {`${this.props.content.title} (${magicNumbers.animeType[this.props.content.type]})`}
-          </a>
-          <div>
-            <span>
-              <b>Aired:</b> {`${this.props.content.started_airing_date} to ${this.props.content.finished_airing_date}`}
-            </span>
-            <br />
-            <span>
-              <b>Episodes:</b> {this.props.content.episode_count}
-            </span>
-            <br />
-            <span>
-              <b>Status:</b> {magicNumbers.animeStatus[this.props.content.status]}
-            </span>
-          </div>
-        </div>
-      </div>
-    );
   }
   renderMangaContentItem() {
     return (
       <div>
-        <span className="image" style={{backgroundImage: `url(http://www.mangafox.com/store/manga/${this.props.content[0]}/cover.jpg)`}} title={`Cover image for ${this.props.content[1]}`}></span>
+        <span className="image" style={{backgroundImage: `url(${this.content.image})`}} title={`Cover image for ${this.content.title}`}></span>
         <div className="content-item-info">
-          <a href={`http://mangafox.me/${this.type.toLowerCase()}/${this.props.content[2]}/`} target="_blank">
-            {`${this.props.content[1]} (${this.props.content[4]})`}
+          <a href={this.content.href} target="_blank">
+            {`${this.content.title} (${this.content.authour})`}
           </a>
         </div>
       </div>
     );
   }
-  renderAdultAnimeContentItem() {
+  renderAnimeContentItem() {
     return (
       <div>
-        <span className="image" style={{backgroundImage: `url(${this.props.content.image}`}} title={`Cover image for ${this.props.content.title}`}></span>
+        <span className="image" style={{backgroundImage: `url(${this.content.image})`}} title={`Cover image for ${this.content.title}`}></span>
         <div className="content-item-info">
-          <a href={`${this.props.content.link}`} target="_blank">
-            {`${this.props.content.title} (${this.props.content.versions})`}
+          <a href={`${this.content.href}`} target="_blank">
+            {`${this.content.title} (${this.content.versions || magicNumbers.animeType[this.content.type]})`}
           </a>
+          { this.content.episodes !== undefined &&
+            (<div>
+              <span>
+                <b>Aired:</b> {`${this.content.startDate} to ${this.content.endDate}`}
+              </span>
+              <br />
+              <span>
+                <b>Episodes:</b> {this.content.episodes}
+              </span>
+              <br />
+              <span>
+                <b>Status:</b> {magicNumbers.animeStatus[this.content.status]}
+              </span>
+            </div>)
+         }
         </div>
       </div>
     );
   }
   render() {
-    let renderFunction;
-    if (this.type === searchFilters.IS_ANIME_TRUE) {
-      renderFunction = this.adult === searchFilters.IS_ADULT_TRUE ? (this.renderAdultAnimeContentItem) : (this.renderAnimeContentItem);
-    } else {
-      renderFunction = this.adult === searchFilters.IS_ADULT_TRUE ? (() => {}) : (this.renderMangaContentItem);
-    }
+    const listItemContent = this.type === searchFilters.IS_ANIME_TRUE ? this.renderAnimeContentItem() : this.renderMangaContentItem();
 
     return(
         <li className="content-item">
-          { renderFunction() }
+          { listItemContent }
         </li>
     );
   }
