@@ -4,15 +4,10 @@ class ContentItemFactory {
   constructor(contentItem) {
     console.log('new factory: ', contentItem);
     this.contentItem = contentItem;
-    this.processors = {
-      masterani: this.masterani,
-      mangafox: this.mangafox,
-      ohentai: this.ohentai,
-    };
   }
   process(dataItem) {
-    console.log('what this ? ', this.contentItem.host, this.processors[this.contentItem.host]);
-    this.processors[this.contentItem.host](dataItem);
+    console.log('what this ? ', this.contentItem.host, this[this.contentItem.host]);
+    this[this.contentItem.host](dataItem);
   }
   getVersions(subTags) {
 	  let versions = [];
