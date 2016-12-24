@@ -1,7 +1,6 @@
 import { paths } from '../constants/paths';
 
-export const malQuery = (params) => {
-  const url = paths.build(paths.query.malSearch, params);
+const fetchFromServer = (url) => {
   return fetch(url, {
     method: 'GET',
     headers: {
@@ -13,15 +12,16 @@ export const malQuery = (params) => {
   });
 }
 
+export const malQuery = (params) => {
+  const url = paths.build(paths.query.malSearch, params);
+  return fetchFromServer(url);
+}
+
 export const contentQuery = (params) => {
   const url = paths.build(paths.query.contentSearch, params);
-  return fetch(url, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }).then((response) => {
-    return response.json();
-  });
+  return fetchFromServer(url);
+}
+
+export const contentSiteListQuery = () => {
+  return fetchFromServer(paths.query.contentSiteList);
 }

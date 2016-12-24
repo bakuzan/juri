@@ -11,25 +11,16 @@ class ContentItem extends Component {
     this.adult = this.props.isAdult ? searchFilters.IS_ADULT_TRUE : searchFilters.IS_ADULT_FALSE;
     this.type = this.props.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
   }
-  renderMangaContentItem() {
-    return (
-      <div>
-        <span className="image" style={{backgroundImage: `url(${this.content.image})`}} title={`Cover image for ${this.content.title}`}></span>
-        <div className="content-item-info">
-          <a href={this.content.href} target="_blank">
-            {`${this.content.title} (${this.content.authour})`}
-          </a>
-        </div>
-      </div>
-    );
+  setAdditionalInformation() {
+    return this.content.authour || this.content.versions || magicNumbers.animeType[this.content.type];
   }
-  renderAnimeContentItem() {
+  renderContentItem() {
     return (
       <div>
-        <span className="image" style={{backgroundImage: `url(${this.content.image})`}} title={`Cover image for ${this.content.title}`}></span>
+        <span className="image" style={{backgroundImage: `url('${this.content.image}')`}} title={`Cover image for ${this.content.title}`}></span>
         <div className="content-item-info">
           <a href={`${this.content.href}`} target="_blank">
-            {`${this.content.title} (${this.content.versions || magicNumbers.animeType[this.content.type]})`}
+            {`${this.content.title} (${this.setAdditionalInformation()})`}
           </a>
           { this.content.episodes !== undefined &&
             (<div>
@@ -51,11 +42,9 @@ class ContentItem extends Component {
     );
   }
   render() {
-    const listItemContent = this.type === searchFilters.IS_ANIME_TRUE ? this.renderAnimeContentItem() : this.renderMangaContentItem();
-
     return(
         <li className="content-item">
-          { listItemContent }
+          { this.renderContentItem() }
         </li>
     );
   }

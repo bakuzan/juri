@@ -27,6 +27,13 @@ class ContentItemFactory {
       endDate: dataItem.finished_airing_date
     });
   }
+  kissanime(dataItem) {
+    /*
+      <a href="http://kissanime.ru/Anime/Diamond-no-Ace">Diamond no Ace</a>
+      <a href="http://kissanime.ru/Anime/Diamond-no-Ace-OVA">Diamond no Ace OVA</a>
+      <a href="http://kissanime.ru/Anime/Diamond-no-Ace-Second-Season">Diamond no Ace: Second Season</a>
+   */
+  }
   mangafox(dataItem) {
     this.contentItem.initaliseProps({
       id: dataItem[0],
@@ -46,7 +53,7 @@ class ContentItemFactory {
       id: link.href,
       href: `${urlBase}${link.href}`,
       title: link.firstChild.textContent,
-      image: `${urlBase}${image.src.substring(2)}`,
+      image: `${urlBase}${image.src.replace(/^\.\//, '')}`,
       versions: this.getVersions(subs)
     });
   }

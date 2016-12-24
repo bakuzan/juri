@@ -3,8 +3,11 @@ const constants = require('../constants');
 const processHtml = require('../processors/process-html');
 const ContentItem = require('../processors/content-item');
 
-const fetchContentFromUrl = (url, dataType) => {
-  return fetch(url).then((response) => {
+const fetchContentFromUrl = (url, dataType, options) => {
+  let fetchOptions = { method: 'GET' };
+  if (options) fetchOptions = options;
+
+  return fetch(url, fetchOptions).then((response) => {
     return response[dataType]();
   }).catch((err) => {
     return err;
@@ -12,8 +15,14 @@ const fetchContentFromUrl = (url, dataType) => {
 }
 
 const standardSearch = (res, type, search) => {
-  const url = constants.url.favourite[type].replace(':searchString', search);
-  fetchContentFromUrl(url, 'json').then((body) => {
+  const site = constants.url.standard[type][1];
+  const url = site.url.replace(':searchString', search);
+
+  if (site.options) {
+    site.options = site.postData(search);
+  }
+
+  fetchContentFromUrl(url, 'json', site.options).then((body) => {
     let array = body.data || body;
     return array.map((dataItem) => {
       return new ContentItem(url, dataItem);
@@ -42,4 +51,13 @@ const search = (req, res) => {
   if (age === constants.age.adult) adultSearch(res, type, search);
 }
 
-module.exports = search;
+const siteList = (req, res) => {
+  res.jsonp(constants.url);
+}
+
+const contentSearch = {
+  search: search,
+  siteList: siteList
+}
+
+module.exports = contentSearch;

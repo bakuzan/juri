@@ -1,6 +1,6 @@
 const express = require('express');
 const malSearch = require('./controllers/mal-search');
-const contentSearch = require('./controllers/content-search');
+const content = require('./controllers/content-search');
 
 const router = express.Router();
 
@@ -14,6 +14,7 @@ router.use((req, res, next) => {
 router.get('/api/mal-search/:type', malSearch);
 
 // Content Site Route
-router.get('/api/content-search/:type/:age', contentSearch);
+router.get('/api/content-search/:type/:age', content.search);
+router.get('/api/content-site-list', content.siteList);
 
 module.exports = router;

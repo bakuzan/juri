@@ -1,3 +1,5 @@
+const FormData = require('form-data');
+
 const ages = {
   adult: '18+',
   standard: 'standard'
@@ -7,19 +9,40 @@ const types = {
   manga: 'manga'
 }
 const urls = {
-  favourite: {
-    anime: 'http://www.masterani.me/api/anime/filter?search=:searchString&order=title&page=1',
-    manga: 'http://mangafox.me/ajax/search.php?term=:searchString'
-  },
-  anime: {
-    // other anime to be searched by name when asked for.
-  },
-  manga: {
-    // other manga to be searched by name when asked for.
+  standard: {
+    anime: [
+      {
+        name: 'masterani',
+        url: 'http://www.masterani.me/api/anime/filter?search=:searchString&order=title&page=1'
+      },
+      {
+        name: 'kissanime',
+        url: 'http://kissanime.ru/Search/SearchSuggestx',
+        postData: (keyword) => {
+          const form = new FormData();
+          form.append('type', 'anime');
+          form.append('keyword', keyword);
+          return form;
+        },
+        options: {
+          method: 'POST'
+        }
+      }
+    ],
+    manga: [
+      {
+        name: 'mangafox',
+        url: 'http://mangafox.me/ajax/search.php?term=:searchString'
+      }
+    ]
   },
   adult: {
     anime: [
-      { url: 'http://ohentai.org/search.php?k=:searchString', selector: '.videolistcontainer > .videobrickwrap > div.videobrick' }
+      {
+        name: 'ohentai',
+        url: 'http://ohentai.org/search.php?k=:searchString',
+        selector: '.videolistcontainer > .videobrickwrap > div.videobrick'
+      }
     ],
     manga: [
 

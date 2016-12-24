@@ -12,6 +12,7 @@ export const paths = {
   latest: 'latest',
   query: {
     malSearch: '/api/mal-search/:type',
-    contentSearch: '/api/content-search/:type/:age'
+    contentSearch: '/api/content-search/:type/:age',
+    contentSiteList: '/api/content-site-list'
   }
 };

@@ -8,18 +8,12 @@ class ContentItem {
 		const factory = new ContentItemFactory(this);
 		factory.process(dataItem);
 	}
-	initaliseProps({ id, href, title, image, versions, authour, type, status, episodes, startDate, endDate }) {
-		this.id = id;
-		this.href = href;
-		this.title = title;
-		this.image = image;
-		this.versions = versions;
-		this.authour = authour;
-		this.type = type;
-		this.status = status;
-		this.episodes = episodes;
-		this.startDate = startDate;
-		this.endDate = endDate;
+	initaliseProps(props) {
+		for(let key in props) {
+			if (props.hasOwnProperty(key)) {
+				this[key] = props[key];
+			}
+		}
 	}
 }
 
