@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SearchBar from '../search-bar/search-bar.js';
 import SearchResult from '../search-result/search-result.js';
 import * as searchFilters from '../../constants/search-filters';
-import { malQuery, contentQuery } from '../../actions/query';
+import { malQuery, contentQuery, contentSiteListQuery } from '../../actions/query';
 
 class FilteredSearchResult extends Component {
   constructor(props) {
@@ -19,6 +19,12 @@ class FilteredSearchResult extends Component {
 
     this.handleUserInput = this.handleUserInput.bind(this);
   }
+  componentDidMount() {
+    contentSiteListQuery().then((response) => {
+      console.log('content site list : ', response);
+      this.contentSiteList = response;
+    });
+  }
   handleUserInput(name, value) {
     this.setState({[name]: value});
 
@@ -27,6 +33,7 @@ class FilteredSearchResult extends Component {
       if (this.state.searchString.length > 2) {
         const type = this.state.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
         const age = this.state.isAdult ? searchFilters.IS_ADULT_TRUE : searchFilters.IS_ADULT_FALSE;
+        this.siteListDropdown = this.contentSiteList ? this.contentSiteList[age.toLowerCase()][type.toLowerCase()] : [];
 
         if (name !== this.isAdultStateName) this.fetchMalItems(type);
         this.fetchContentItems(type, age);
@@ -34,7 +41,7 @@ class FilteredSearchResult extends Component {
     }, 1500);
   }
   fetchContentItems(type, age) {
-    contentQuery({ type: type.toLowerCase(), age: age.toLowerCase(), search: this.state.searchString }).then((response) => {
+    contentQuery({ type: type.toLowerCase(), age: age.toLowerCase(), search: this.state.searchString, site: 0 }).then((response) => {
       this.setState({
         contentResults: response
       });
@@ -48,6 +55,7 @@ class FilteredSearchResult extends Component {
     });
   }
   render() {
+    console.log('site list is : ', this.siteListDropdown);
     return (
       <div className="filtered-search-result">
         <SearchBar searchString={this.state.searchString}

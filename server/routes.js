@@ -14,7 +14,7 @@ router.use((req, res, next) => {
 router.get('/api/mal-search/:type', malSearch);
 
 // Content Site Route
-router.get('/api/content-search/:type/:age', content.search);
+router.get('/api/content-search/:site/:type/:age', content.search);
 router.get('/api/content-site-list', content.siteList);
 
 module.exports = router;

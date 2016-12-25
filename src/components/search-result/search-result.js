@@ -16,13 +16,16 @@ class SearchResult extends Component {
     const myanimelist = this.props.malResults.map((malItem) => {
       return (<MalItem key={malItem.id} content={malItem} isAnime={this.props.isAnime} />);
     });
-    const mycontentlist = this.props.contentResults.map((contentItem) => {
-      return (
-        <ContentItem key={contentItem.id}
-                     content={contentItem}
-                     isAnime={this.props.isAnime}
-                     isAdult={this.props.isAdult} />
-                   );
+    let mycontentlist = [];
+    let lastHost = '';
+    this.props.contentResults.forEach((contentItem) => {
+      if (contentItem.host !== lastHost) {
+        mycontentlist.push(<li className="content-item host">{contentItem.host}</li>);
+      }
+      lastHost = contentItem.host;
+      mycontentlist.push(<ContentItem key={contentItem.id} content={contentItem}
+                                      isAnime={this.props.isAnime}
+                                      isAdult={this.props.isAdult} />);
     });
 
     return (

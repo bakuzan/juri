@@ -5,6 +5,13 @@
   padding: 2px;
   margin: 2px 0;
   list-style-type: none;
+  &.host {
+    min-height: auto !important;
+    background-color: $primary-background;
+    color: $primary-colour-contrast;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
   .image {
     position: absolute;
     width: 58px;

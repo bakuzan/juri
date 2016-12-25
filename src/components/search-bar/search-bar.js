@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ToggleBox from '../toggle-box/toggle-box.js';
-import { contentSiteListQuery } from '../../actions/query';
 import * as searchFilters from '../../constants/search-filters';
 import '../../styles/float-label.css';
 import './search-bar.css';
@@ -13,12 +12,6 @@ class SearchBar extends Component {
     this.handleSearchStringInput = this.handleSearchStringInput.bind(this);
     this.handleToggleBoxInput = this.handleToggleBoxInput.bind(this);
   }
-  componentDidMount() {
-    contentSiteListQuery().then((response) => {
-      console.log('content site list : ', response);
-      this.contentSiteList = response;
-    });
-  }
   handleSearchStringInput(e) {
     const name = e.target.name;
     const value = e.target.value;
@@ -30,8 +23,6 @@ class SearchBar extends Component {
   render() {
     const currentType = this.props.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
     const currentAge = this.props.isAdult ? searchFilters.IS_ADULT_TRUE : searchFilters.IS_ADULT_FALSE;
-    const siteListDropdown = this.contentSiteList ? this.contentSiteList[currentAge.toLowerCase()][currentType.toLowerCase()] : [];
-    console.log('site list is : ', siteListDropdown);
     return (
       <div className="search-bar">
         <h2 className="center-contents">
