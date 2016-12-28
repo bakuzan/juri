@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ToggleBox from '../toggle-box/toggle-box.js';
-import * as searchFilters from '../../constants/search-filters';
+import { getType, getAge } from '../../actions/value';
 import '../../styles/float-label.css';
 import './search-bar.css';
 import '../../styles/box-model.css';
@@ -12,6 +12,9 @@ class SearchBar extends Component {
     this.handleSearchStringInput = this.handleSearchStringInput.bind(this);
     this.handleToggleBoxInput = this.handleToggleBoxInput.bind(this);
   }
+  handleSiteRequest(index) {
+    this.props.onSiteSelect(index);
+  }
   handleSearchStringInput(e) {
     const name = e.target.name;
     const value = e.target.value;
@@ -21,8 +24,8 @@ class SearchBar extends Component {
     this.props.onUserInput(name, value);
   }
   render() {
-    const currentType = this.props.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
-    const currentAge = this.props.isAdult ? searchFilters.IS_ADULT_TRUE : searchFilters.IS_ADULT_FALSE;
+    const currentType = getType(this.props.isAnime, false);
+    const currentAge = getAge(this.props.isAdult, false);
     return (
       <div className="search-bar">
         <h2 className="center-contents">
@@ -36,7 +39,16 @@ class SearchBar extends Component {
                      handleChange={this.handleToggleBoxInput}
                      name="isAdult"
                      text={currentAge} />
-          sites
+          <span className="selection-list-container">
+            <ul className="selection-list">
+            { this.props.siteSelectList &&
+              this.props.siteSelectList.map((site) => {
+                return (<li key={site.id} onClick={() => this.handleSiteRequest(site.id)}>{site.name}</li>);
+              })
+            }
+            </ul>
+            sites
+          </span>
         </h2>
         <div className="has-float-label text-input-container">
           <input id="search-input"

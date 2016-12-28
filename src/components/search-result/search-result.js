@@ -4,28 +4,34 @@ import ContentItem from '../content-item/content-item';
 import './search-result.css';
 
 class SearchResult extends Component {
+  collapseResults(siteName) {
+    this.props.onSiteCollapse(siteName);
+  }
   renderEmptyListMessage() {
-    return (
-      <li>
-        <p>Nothing was found for the current search.</p>
-      </li>
-    );
+    return (<li><p>Nothing was found for the current search.</p></li>);
   }
   render() {
     console.log('content: ', this.props.contentResults);
     const myanimelist = this.props.malResults.map((malItem) => {
       return (<MalItem key={malItem.id} content={malItem} isAnime={this.props.isAnime} />);
     });
+
     let mycontentlist = [];
     let lastHost = '';
     this.props.contentResults.forEach((contentItem) => {
       if (contentItem.host !== lastHost) {
-        mycontentlist.push(<li className="content-item host">{contentItem.host}</li>);
+        mycontentlist.push(<li key={contentItem.host}
+                               className="content-item host"
+                               onClick={() => this.collapseResults(contentItem.host)}>{contentItem.host}</li>);
       }
+
       lastHost = contentItem.host;
-      mycontentlist.push(<ContentItem key={contentItem.id} content={contentItem}
-                                      isAnime={this.props.isAnime}
-                                      isAdult={this.props.isAdult} />);
+      const site = this.props.siteSelectList.find(x => x.name === lastHost);
+      if (!site.isCollapsed) {
+        mycontentlist.push(<ContentItem key={contentItem.id} content={contentItem}
+                                        isAnime={this.props.isAnime}
+                                        isAdult={this.props.isAdult} />);
+      }
     });
 
     return (

@@ -2,7 +2,7 @@ const ContentItemFactory = require('./content-item-factory');
 
 class ContentItem {
 	constructor(url, dataItem) {
-		const REGEX_GET_HOST = /((^.*\/\/)|(.*www\.))(?=\w{5,}\.)|\..*$/g;
+		const REGEX_GET_HOST = /((^.*\/\/)|(.*www\d*\.))(?=\w{5,}\.)|\..*$/g;
 		this.host = url.replace(REGEX_GET_HOST, '');
 
 		const factory = new ContentItemFactory(this);

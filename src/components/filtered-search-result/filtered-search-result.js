@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SearchBar from '../search-bar/search-bar.js';
 import SearchResult from '../search-result/search-result.js';
-import * as searchFilters from '../../constants/search-filters';
+import { getType, getAge } from '../../actions/value';
 import { malQuery, contentQuery, contentSiteListQuery } from '../../actions/query';
 
 class FilteredSearchResult extends Component {
@@ -12,17 +12,39 @@ class FilteredSearchResult extends Component {
       isAdult: false,
       isAnime: true,
       malResults: [],
-      searchString: ''
+      searchString: '',
+      siteSelectList: []
     };
     this.isAdultStateName = 'isAdult';
+    this.searchStringStateName = 'searchString';
     this.timer = null;
 
     this.handleUserInput = this.handleUserInput.bind(this);
+    this.handleResultsCollapse = this.handleResultsCollapse.bind(this);
+    this.handleSiteSelect = this.handleSiteSelect.bind(this);
   }
   componentDidMount() {
     contentSiteListQuery().then((response) => {
-      console.log('content site list : ', response);
       this.contentSiteList = response;
+    });
+  }
+  handleSiteSelect(index) {
+    const type = getType(this.state.isAnime, true);
+    const age = getAge(this.state.isAdult, true);
+    this.fetchContentItems(type, age, index);
+  }
+  handleResultsCollapse(siteName) {
+    const siteSelectList = this.state.siteSelectList.slice();
+    const site = siteSelectList.find(x => x.name === siteName);
+    site.isCollapsed = !site.isCollapsed;
+    this.setState({ siteSelectList: siteSelectList });
+  }
+  setSiteSelectList(type, age) {
+    const siteList = this.contentSiteList ? this.contentSiteList[age][type] : [];
+    return siteList.map((site, index) => {
+      return { id: index,
+               name: site.name,
+               isCollapsed: false };
     });
   }
   handleUserInput(name, value) {
@@ -31,43 +53,46 @@ class FilteredSearchResult extends Component {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {
       if (this.state.searchString.length > 2) {
-        const type = this.state.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
-        const age = this.state.isAdult ? searchFilters.IS_ADULT_TRUE : searchFilters.IS_ADULT_FALSE;
-        this.siteListDropdown = this.contentSiteList ? this.contentSiteList[age.toLowerCase()][type.toLowerCase()] : [];
+        const type = getType(this.state.isAnime, true);
+        const age = getAge(this.state.isAdult, true);
 
         if (name !== this.isAdultStateName) this.fetchMalItems(type);
         this.fetchContentItems(type, age);
       }
     }, 1500);
   }
-  fetchContentItems(type, age) {
-    contentQuery({ type: type.toLowerCase(), age: age.toLowerCase(), search: this.state.searchString, site: 0 }).then((response) => {
-      this.setState({
-        contentResults: response
+  fetchContentItems(type, age, siteIndex = 0) {
+    contentQuery({ type: type, age: age, search: this.state.searchString, site: siteIndex }).then((response) => {
+      this.setState((previousState, props) => {
+        return {
+          contentResults: siteIndex === 0 ? response : previousState.contentResults.concat(response),
+          siteSelectList: this.setSiteSelectList(type, age)
+        };
       });
     });
   }
   fetchMalItems(type) {
-    malQuery({ type: type.toLowerCase(), search: this.state.searchString }).then((response) => {
-      this.setState({
-        malResults: response
-      });
+    malQuery({ type: type, search: this.state.searchString }).then((response) => {
+      this.setState({ malResults: response });
     });
   }
   render() {
-    console.log('site list is : ', this.siteListDropdown);
     return (
       <div className="filtered-search-result">
         <SearchBar searchString={this.state.searchString}
                    isAdult={this.state.isAdult}
                    isAnime={this.state.isAnime}
-                   onUserInput={this.handleUserInput} />
+                   onUserInput={this.handleUserInput}
+                   siteSelectList={this.state.siteSelectList}
+                   onSiteSelect={this.handleSiteSelect} />
         {
           this.state.searchString.length > 2 &&
           <SearchResult isAdult={this.state.isAdult}
                         isAnime={this.state.isAnime}
                         malResults={this.state.malResults}
-                        contentResults={this.state.contentResults} />
+                        contentResults={this.state.contentResults}
+                        siteSelectList={this.state.siteSelectList}
+                        onSiteCollapse={this.handleResultsCollapse} />
         }
       </div>
     );
