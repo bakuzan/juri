@@ -5,7 +5,7 @@ const ContentItem = require('../processors/content-item');
 
 const processResponse = (response, site, url) => {
   let array = response.data || response;
-
+  console.log(response, url);
   if (array instanceof Array) {
     return array.map((dataitem) => {
       return new ContentItem(url, dataitem);
@@ -40,7 +40,6 @@ const fetchContentFromUrl = (site, search) => {
 const standardSearch = (res, type, search, index) => {
   const site = constants.url.standard[type][index];
   fetchContentFromUrl(site, search).then((jsonResult) => {
-    console.log('standard search : ', jsonResult);
     res.jsonp(jsonResult);
   });
 }
@@ -48,7 +47,6 @@ const standardSearch = (res, type, search, index) => {
 const adultSearch = (res, type, search, index) => {
   const site = constants.url.adult[type][index];
   fetchContentFromUrl(site, search).then((jsonResult) => {
-    console.log('adult search : ', jsonResult);
     res.jsonp(jsonResult);
   });
 }

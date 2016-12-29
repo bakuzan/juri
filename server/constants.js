@@ -1,5 +1,3 @@
-const FormData = require('form-data');
-
 const ages = {
   adult: 'adult',
   standard: 'standard'
@@ -13,15 +11,15 @@ const urls = {
     anime: [
       {
         name: 'masterani',
-        url: 'http://www.masterani.me/api/anime/filter?search=:searchString&order=title&page=1',
+        url: 'http://www.masterani.me/api/anime/search?search=:searchString&sb=true',
         dataType: 'json'
       },
       {
         name: 'kissanime',
-        url: 'http://kissanime.ru/Search/SearchSuggestx',
+        url: 'http://kissanime.ru/Search/Anime', //'http://kissanime.ru/Search/SearchSuggestx',
         dataType: 'text',
-        options: { method: 'POST', body: 'type=Anime&keyword=:searchString' },
-        selector: 'a'
+        options: { method: 'POST', body: 'keyword=:searchString' },
+        selector: 'table.listing tr > td > a'
       },
       {
         name: 'gogoanime',
@@ -35,6 +33,13 @@ const urls = {
         name: 'mangafox',
         url: 'http://mangafox.me/ajax/search.php?term=:searchString',
         dataType: 'json'
+      },
+      {
+        name: 'readmanga',
+        url: 'http://www.readmanga.today/service/advanced_search',
+        dataType: 'text',
+        options: { method: 'POST', body: 'type=all&manga-name=:searchString&status=both' },
+        selector: '.box'
       }
     ]
   },

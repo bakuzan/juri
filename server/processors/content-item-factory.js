@@ -47,7 +47,7 @@ class ContentItemFactory {
       href: `${urlBase + link.href}`,
       title: link.title,
       image: image.src,
-      startDate: `Released: ${releaseDate.textContent.replace(/[\D]/g, '')}`
+      startDate: releaseDate.textContent.replace(/[\D]/g, '')
     });
     /*
     <li>
@@ -71,6 +71,72 @@ class ContentItemFactory {
       authour: dataItem[4]
     });
   }
+  readmanga(dataItem) {
+    console.log('readmanga : ', dataItem);
+    const link = dataItem.getElementsByTagName('a')[0];
+    const image = dataItem.getElementsByTagName('img')[0];
+    const idElement = dataItem.querySelector('a.add_fast_favorite');
+    const status = dataItem.querySelector('dl.hot-manga-dl-horizontal > dd');
+
+    this.contentItem.initaliseProps({
+      id: `rm-${idElement.getAttribute('data-id')}`,
+      href: link.href,
+      title: link.textContent,
+      image: image.src,
+      status: status.textContent
+    });
+    /*
+    <div class="box">
+            <div class="title">
+                <span class="icon-">1</span>
+                <h2><a href="http://www.readmanga.today/diamond-no-ace" title="Diamond no Ace">Diamond no Ace</a></h2>
+            </div><!--title-->
+            <div class="body">
+                <div class="left">
+
+                    <a href="http://www.readmanga.today/diamond-no-ace" title="Diamond no Ace">
+                    <img src="http://www.readmanga.today/uploads/posters/thumb/0001_456.jpg" alt="Diamond no Ace" width="134" height="193" /></a>
+                </div><!--thumbnail-->
+
+                <div class="right">
+                    <div class="summary">
+                        <p>It is a manga of high school baseball. The main character, who is a pitcher from a country high school, accidentally gets teamed up with a catcher from a school with an elite baseball team.&#8230;</p>
+                    </div>
+                    <dl class="hot-manga-dl-horizontal">
+                        <dt>Status:</dt>
+                        <dd>Ongoing</dd>
+                        <dt>Categories:</dt>
+                      <dd>                                <a href="http://www.readmanga.today/category/comedy" title="Comedy">Comedy</a>
+                                                          <a href="http://www.readmanga.today/category/school-life" title="School Life">School Life</a>
+                                                          <a href="http://www.readmanga.today/category/shounen" title="Shounen">Shounen</a>
+                                                          <a href="http://www.readmanga.today/category/sports" title="Sports">Sports</a>
+                            </dd>
+                        <dt>Type :</dt>
+                        <dd>Japanese</dd>
+                        <dt>Total Views:</dt>
+                        <dd>565,098</dd>
+                    </dl>
+                </div><!--right-->
+            </div><!--body-->
+            <div class="meta">
+                <ul>
+                    <li><span class="icon-smiley-2"></span> 15</li>
+                    <li><span class="icon-wondering"></span> 0</li>
+                    <li><span class="icon-sad-2"></span> 2</li>
+                    <li><span class="icon-heart"></span><a href="#" class="add_fast_favorite" data-id="1697"> Add to Favorites</a></li>
+                    <li><span class="icon-clock"></span><a href="#" class="add_fast_watch-list" data-id="1697"> Read Later</a></li>
+
+                        <li class="no-effect">
+                        <a href="http://www.readmanga.today/service/new_subscription" class="btn btn-xs btn-block btn-google must_member fast-subscribe" data-toggle="modal" data-target="#new_subscription" data-id="1697">&nbsp;<span class="icon-network"></span>&nbsp;&nbsp;Subscribe&nbsp;&nbsp;</a>
+                        </li>
+                     <li class="no-effect">
+                        <a href="http://www.readmanga.today/diamond-no-ace#chapters_container" class="btn btn-xs btn-success"><span class="icon-text"></span> Full Chapter List</a>
+                    </li>
+                </ul>
+            </div><!--meta-->
+        </div><!--box-->
+     */
+  }
   ohentai(dataItem) {
     const urlBase = 'http://ohentai.org/';
     const link = dataItem.getElementsByTagName('a')[1];
@@ -86,7 +152,6 @@ class ContentItemFactory {
     });
   }
   hentaigasm(dataItem) {
-    console.log('hentaigasm : ', dataItem);
     const link = dataItem.getElementsByTagName('a')[0];
     const image = dataItem.getElementsByTagName('img')[0];
     const videoType = link.title.replace(/^.*((?=subbed)|(?=raw))/ig, '');
@@ -124,17 +189,15 @@ class ContentItemFactory {
      */
   }
   hentaihaven(dataItem) {
-    console.log('hentaihaven : ', dataItem);
     const link = dataItem.querySelector('a.brick-title');
-    const title = dataItem.getElementsByClassName('series_title')[0];
     const image = dataItem.getElementsByTagName('img')[0];
     const idElement = dataItem.getElementsByClassName('brick-content')[0];
 
     this.contentItem.initaliseProps({
-      id: idElement.getAttribute('data-id'),
+      id: `hh-${idElement.getAttribute('data-id')}`,
       href: link.href,
-      title: title.textContent,
-      image: image.src
+      title: link.textContent,
+      image: image.getAttribute('data-src')
     });
     /*
     <div class="brick zoe-grid big-boobs blow-job boob-job creampie exclusive facial lactation maid pov vanilla brick-big">

@@ -1,0 +1,31 @@
+@import "../../styles/partials/_colours";
+
+.selection-list-container {
+  position: relative;
+  display: inline-block;
+  .selection-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    background-color: $primary-background;
+    color: $primary-colour-contrast;
+    padding: 0;
+    margin: -50% 0;
+    list-style-type: none;
+    z-index: 10;
+    li {
+      padding: 2px 5px;
+      cursor: pointer;
+      &:hover {
+        background-color: $secondary-background;
+        color: $secondary-colour-contrast;
+      }
+    }
+  }
+  &:hover {
+    .selection-list {
+      display: block;
+    }
+  }
+}

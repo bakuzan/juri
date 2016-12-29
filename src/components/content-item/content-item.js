@@ -12,31 +12,43 @@ class ContentItem extends Component {
     this.type = this.props.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
   }
   setAdditionalInformation() {
-    return this.content.authour || this.content.versions || magicNumbers.animeType[this.content.type];
+    const info = this.content.authour || this.content.versions || magicNumbers.animeType[this.content.type] || null;
+    return info ? `(${info})` : '';
   }
   renderContentItem() {
     return (
       <div>
-        <span className="image" style={{backgroundImage: `url('${this.content.image}')`}} title={`Cover image for ${this.content.title}`}></span>
+        <span className="image" style={{backgroundImage: `url("${unescape(this.content.image)}")`}} title={`Cover image for ${this.content.title}`}></span>
         <div className="content-item-info">
           <a href={`${this.content.href}`} target="_blank">
-            {`${this.content.title} (${this.setAdditionalInformation()})`}
+            {`${this.content.title} ${this.setAdditionalInformation()}`}
           </a>
-          { this.content.episodes !== undefined &&
-            (<div>
-              <span>
-                <b>Aired:</b> {`${this.content.startDate} to ${this.content.endDate}`}
-              </span>
-              <br />
-              <span>
+          <div>
+            {
+              this.content.startDate !== undefined &&
+              (<span>
+                <b>Aired:</b> {this.content.startDate}
+                {
+                  this.content.endDate !== undefined &&
+                  <span> to {this.content.endDate} </span>
+                }
+                <br />
+              </span>)
+            }
+            {
+              this.content.episodes !== undefined &&
+              (<span>
                 <b>Episodes:</b> {this.content.episodes}
-              </span>
-              <br />
-              <span>
+                <br />
+              </span>)
+            }
+            {
+              this.content.status !== undefined &&
+              (<span>
                 <b>Status:</b> {magicNumbers.animeStatus[this.content.status]}
-              </span>
-            </div>)
-         }
+              </span>)
+            }
+          </div>
         </div>
       </div>
     );

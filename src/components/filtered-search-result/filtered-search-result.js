@@ -39,12 +39,17 @@ class FilteredSearchResult extends Component {
     site.isCollapsed = !site.isCollapsed;
     this.setState({ siteSelectList: siteSelectList });
   }
-  setSiteSelectList(type, age) {
+  setSiteSelectList(previousList, type, age) {
     const siteList = this.contentSiteList ? this.contentSiteList[age][type] : [];
     return siteList.map((site, index) => {
+      let collapsed = false;
+      console.log(previousList);
+      if (previousList[index] && previousList[index].name === site.name) {
+        collapsed = previousList[index].isCollapsed;
+      }
       return { id: index,
                name: site.name,
-               isCollapsed: false };
+               isCollapsed: collapsed };
     });
   }
   handleUserInput(name, value) {
@@ -66,7 +71,7 @@ class FilteredSearchResult extends Component {
       this.setState((previousState, props) => {
         return {
           contentResults: siteIndex === 0 ? response : previousState.contentResults.concat(response),
-          siteSelectList: this.setSiteSelectList(type, age)
+          siteSelectList: this.setSiteSelectList(previousState.siteSelectList, type, age)
         };
       });
     });

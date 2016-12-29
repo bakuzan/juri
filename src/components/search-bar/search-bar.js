@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ToggleBox from '../toggle-box/toggle-box.js';
+import SelectionList from '../selection-list/selection-list.js';
 import { getType, getAge } from '../../actions/value';
 import '../../styles/float-label.css';
 import './search-bar.css';
@@ -11,9 +12,6 @@ class SearchBar extends Component {
 
     this.handleSearchStringInput = this.handleSearchStringInput.bind(this);
     this.handleToggleBoxInput = this.handleToggleBoxInput.bind(this);
-  }
-  handleSiteRequest(index) {
-    this.props.onSiteSelect(index);
   }
   handleSearchStringInput(e) {
     const name = e.target.name;
@@ -39,16 +37,9 @@ class SearchBar extends Component {
                      handleChange={this.handleToggleBoxInput}
                      name="isAdult"
                      text={currentAge} />
-          <span className="selection-list-container">
-            <ul className="selection-list">
-            { this.props.siteSelectList &&
-              this.props.siteSelectList.map((site) => {
-                return (<li key={site.id} onClick={() => this.handleSiteRequest(site.id)}>{site.name}</li>);
-              })
-            }
-            </ul>
-            sites
-          </span>
+          <SelectionList list={this.props.siteSelectList}
+                         onItemSelect={this.props.onSiteSelect}
+                         placeholder="sites" />
         </h2>
         <div className="has-float-label text-input-container">
           <input id="search-input"

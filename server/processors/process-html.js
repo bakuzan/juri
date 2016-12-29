@@ -6,7 +6,7 @@ const processHtml = (html, selector, url) => {
   const document = jsdom(html);
   const window = document.defaultView;
   const htmlItems = window.document.querySelectorAll(selector);
-  console.log(`processHtml ${selector} : `, htmlItems.length);
+  console.log(`processHtml ${selector} : `, html);
   for(let i = 0, length = htmlItems.length; i < length; i++) {
     const container = htmlItems[i];
     jsonItems.push(new ContentItem(url, container));
