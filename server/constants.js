@@ -89,6 +89,18 @@ const urls = {
         selector: '.container > .gallery'
       }
     ]
+  },
+  latest: {
+    anime: [
+      {
+        name: 'masterani',
+        url: 'http://www.masterani.me/api/releases',
+        dataType: 'json'
+      }
+    ],
+    manga: [
+
+    ]
   }
 }
 

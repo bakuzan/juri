@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import App from './views/app/app';
 import About from './views/about/about';
+import Latest from './views/latest/latest';
 import PageNotFound from './views/page-not-found/page-not-found';
 import FilteredSearchResult from './components/filtered-search-result/filtered-search-result.js';
 import { paths } from './constants/paths';
@@ -16,7 +17,7 @@ class Routes extends Component {
           <IndexRoute component={FilteredSearchResult} />
 
           <Route path={paths.about} component={About} />
-          // <Route path={paths.latest} />
+          <Route path={paths.latest} component={Latest} />
         </Route>
 
         <Route path="*" component={PageNotFound} />

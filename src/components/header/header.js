@@ -14,6 +14,9 @@ class Header extends Component {
           <JuriSvg />
         </Link>
         <h1>JURI</h1>
+        <Link className="ripple" id="latest-link" to={`${paths.base}${paths.latest}`}>
+          Latest
+        </Link>
         <Link className="ripple" id="about-link" to={`${paths.base}${paths.about}`}>
           About
         </Link>
