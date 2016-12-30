@@ -273,7 +273,7 @@ class ContentItemFactory {
 
     this.contentItem.initaliseProps({
       id: `nh-${link.href.replace(/\//g, '')}`,
-      href: `${link.href}`,
+      href: `https://nhentai.net${link.href}`,
       title: titles[0],
       subtitle: titles[1],
       image: image.src,

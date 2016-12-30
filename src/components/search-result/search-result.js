@@ -8,8 +8,10 @@ class SearchResult extends Component {
   collapseResults(siteName) {
     this.props.onSiteCollapse(siteName);
   }
-  renderLoadingSpinner() {
-    return (<LoadingSpinner size='' />);
+  renderResult(isLoading, resultList) {
+    return isLoading         ? (<LoadingSpinner size='' />) :
+           resultList.length ? resultList :
+                               this.renderEmptyListMessage();
   }
   renderEmptyListMessage() {
     return (<li><p>Nothing was found for the current search.</p></li>);
@@ -38,13 +40,9 @@ class SearchResult extends Component {
       }
     });
 
-    const malSearchResults = this.props.malLoading  ? this.renderLoadingSpinner() :
-                             myanimelist.length > 0 ? myanimelist :
-                                                      this.renderEmptyListMessage();
-
-    const contentSearchResults = this.props.contentLoading ? this.renderLoadingSpinner() :
-                                 mycontentlist.length > 0  ? mycontentlist :
-                                                             this.renderEmptyListMessage();
+    const malSearchResults = this.renderResult(this.props.malLoading, myanimelist);
+    const contentSearchResults = this.renderResult(this.props.contentLoading, mycontentlist);
+    
     return (
       <div className="search-results">
         <ul className="mal-search-result">

@@ -45,8 +45,8 @@ const urls = {
         formData: {
           type: 'all',
           'manga-name': ':searchString',
-          'author-name': null,
-          'artist-name': null,
+          'author-name': '',
+          'artist-name': '',
           status:  'both'
         },
         options: { method: 'POST', body: null },

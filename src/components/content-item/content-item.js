@@ -22,8 +22,8 @@ class ContentItem extends Component {
         <div className="content-item-info">
           <a href={`${this.content.href}`} target="_blank">
             {
-              `${this.content.title} ${this.setAdditionalInformation()}
-               ${this.content.subtitle}`
+              `${this.content.title} ${this.setAdditionalInformation()}\n
+               ${this.content.subtitle || ''}`
             }
           </a>
           <div>

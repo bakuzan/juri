@@ -34,6 +34,7 @@ class FilteredSearchResult extends Component {
     const type = getType(this.state.isAnime, true);
     const age = getAge(this.state.isAdult, true);
     this.fetchContentItems(type, age, index);
+    this.setState({ contentLoading: true });
   }
   handleResultsCollapse(siteName) {
     const siteSelectList = this.state.siteSelectList.slice();
