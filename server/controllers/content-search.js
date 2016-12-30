@@ -1,24 +1,11 @@
 const fetch = require('node-fetch');
 const constants = require('../constants');
-const processHtml = require('../processors/process-html');
-const ContentItem = require('../processors/content-item');
-
-const processResponse = (response, site, url) => {
-  let array = response.data || response;
-  console.log(response, url);
-  if (array instanceof Array) {
-    return array.map((dataitem) => {
-      return new ContentItem(url, dataitem);
-    });
-  } else {
-    return processHtml(array, site.selector, url);
-  }
-}
+const processor = require('../processors/process-content-query');
 
 const setQueryOptions = (site, search) => {
   let options = { method: 'GET' };
   if (site.options) {
-    site.options.body = site.options.body.replace(':searchString', search);
+    site.options.body = processor.form(site, search);
     options = site.options;
   }
   return options;
@@ -31,7 +18,7 @@ const fetchContentFromUrl = (site, search) => {
   return fetch(url, fetchOptions).then((fetchData) => {
     return fetchData[site.dataType]();
   }).then((response) => {
-    return processResponse(response, site, url);
+    return processor.response(response, site, url);
   }).catch((err) => {
     return err;
   });

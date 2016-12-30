@@ -220,6 +220,76 @@ class ContentItemFactory {
     <span class="fa fa-comment-o"> 37</span></div></div></div>
      */
   }
+  hentaihere(dataItem) {
+    console.log('hentaihere : ', dataItem);
+    const link = dataItem.getElementsByTagName('a')[1];
+    const image = dataItem.getElementsByTagName('img')[0];
+    const authour = dataItem.querySelector('.showMTooltip .text-muted');
+
+    this.contentItem.initaliseProps({
+      id: `hh-${link.href.replace(/^.*\//g, '')}`,
+      href: link.href,
+      title: link.textContent,
+      image: image.src,
+      authour: authour.textContent.replace('by ', '')
+    });
+    /*
+    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2-4 seriesBlock" data-tags="15-32-34-41-309-313-339-360-379-530-534-912-952-995-1037-1167-1177-1179-1246-1283-1330-1389-1403-1754-3005-3736" data-mid="6828">
+    <div class="item">
+    <div class="pos-rlt">
+    <div class="item-overlay">
+    <div class="center text-center hide m-t-n text-danger">[Blacklisted]</div>
+    <div class="center text-center arf-hide m-t-n text-info">[Visited]</div>
+    </div>
+    <div class="top">
+    <div class="text-info padder m-t-sm text-sm pull-left">
+    <i class="fa fa-star text-danger fa-lg" id="1"></i><i class="fa fa-star text-danger fa-lg" id="2"></i><i class="fa fa-star text-danger fa-lg" id="3"></i><i class="fa fa-star-o text-danger fa-lg" id="4"></i><i class="fa fa-star-o text-danger fa-lg" id="5"></i> <span class="label label-danger"><i class="fa fa-heart-o"></i> 1</span></div>
+    <span class="pull-right m-t-n-xs m-r-sm text-danger bookmark hide">
+    <i class="fa fa-bookmark i-lg"></i>
+    </span>
+    </div>
+    <a href="http://hentaihere.com/m/S6828">
+    <img src="http://hentaicdn.com/hentai/cover/_S6828.jpg" alt="Big-Sis Lil-Sis Love" class="img-full arf-border-default">
+    </a>
+    </div>
+    <div class="padder-v-top showMTooltip text-center">
+    <a href="http://hentaihere.com/m/S6828" class="text-ellipsis text-sm">Big-Sis Lil-Sis Love</a>
+    <div class="text-xs text-muted">
+    <b class="text-danger">[Original]</b>
+    by SHINOBU Tanei.
+    </div>
+    </div>
+    </div>
+    </div>
+     */
+  }
+  nhentai(dataItem) {
+    console.log('nhentai : ', dataItem);
+    const link = dataItem.getElementsByTagName('a')[0];
+    const image = dataItem.getElementsByTagName('img')[0];
+    const textElement = dataItem.getElementsByClassName('caption')[0].textContent;
+    const authour = textElement.replace(/ .*/, '');
+    const titles = textElement.replace(/^\[\w*\] /, '').split('|');
+
+    this.contentItem.initaliseProps({
+      id: `nh-${link.href.replace(/\//g, '')}`,
+      href: `${link.href}`,
+      title: titles[0],
+      subtitle: titles[1],
+      image: image.src,
+      authour: authour
+    });
+    /*
+        <div class="gallery" data-tags="1207 2937 9260 12227 13720 13989 17249 19018 20035 25050 26360 29013 29859 33173 35762 35763">
+          <a href="/g/180622/" class="cover" style="padding-bottom:147.6%;">
+            <img src="//t.nhentai.net/galleries/1002302/thumb.jpg">
+            <div class="caption">
+              [Ozy] Tonari no Yariman Kuro Gal Hitozuma no Midara na Yuuwaku | Obscene Seductions from the Slutty Black Married Gyaru Next Door (COMIC Anthurium 2016-09) [English] =TLL + CW=
+            </div>
+          </a>
+        </div>
+     */
+  }
 }
 
 module.exports = ContentItemFactory;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import LoadingSpinner from '../loading-spinner/loading-spinner';
 import MalItem from '../mal-item/mal-item';
 import ContentItem from '../content-item/content-item';
 import './search-result.css';
@@ -6,6 +7,9 @@ import './search-result.css';
 class SearchResult extends Component {
   collapseResults(siteName) {
     this.props.onSiteCollapse(siteName);
+  }
+  renderLoadingSpinner() {
+    return (<LoadingSpinner size='' />);
   }
   renderEmptyListMessage() {
     return (<li><p>Nothing was found for the current search.</p></li>);
@@ -34,21 +38,20 @@ class SearchResult extends Component {
       }
     });
 
+    const malSearchResults = this.props.malLoading  ? this.renderLoadingSpinner() :
+                             myanimelist.length > 0 ? myanimelist :
+                                                      this.renderEmptyListMessage();
+
+    const contentSearchResults = this.props.contentLoading ? this.renderLoadingSpinner() :
+                                 mycontentlist.length > 0  ? mycontentlist :
+                                                             this.renderEmptyListMessage();
     return (
       <div className="search-results">
         <ul className="mal-search-result">
-        {myanimelist.length > 0 ? (
-          myanimelist
-        ) : (
-          this.renderEmptyListMessage()
-        )}
+          { malSearchResults }
         </ul>
         <ul className="content-search-result">
-        {mycontentlist.length > 0 ? (
-          mycontentlist
-        ) : (
-          this.renderEmptyListMessage()
-        )}
+          { contentSearchResults }
         </ul>
       </div>
     );

@@ -21,7 +21,10 @@ class ContentItem extends Component {
         <span className="image" style={{backgroundImage: `url("${unescape(this.content.image)}")`}} title={`Cover image for ${this.content.title}`}></span>
         <div className="content-item-info">
           <a href={`${this.content.href}`} target="_blank">
-            {`${this.content.title} ${this.setAdditionalInformation()}`}
+            {
+              `${this.content.title} ${this.setAdditionalInformation()}
+               ${this.content.subtitle}`
+            }
           </a>
           <div>
             {

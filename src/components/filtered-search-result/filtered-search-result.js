@@ -13,7 +13,9 @@ class FilteredSearchResult extends Component {
       isAnime: true,
       malResults: [],
       searchString: '',
-      siteSelectList: []
+      siteSelectList: [],
+      contentLoading: false,
+      malLoading: false
     };
     this.isAdultStateName = 'isAdult';
     this.searchStringStateName = 'searchString';
@@ -60,9 +62,16 @@ class FilteredSearchResult extends Component {
       if (this.state.searchString.length > 2) {
         const type = getType(this.state.isAnime, true);
         const age = getAge(this.state.isAdult, true);
+        let loading = {
+          contentLoading: true
+        }
 
-        if (name !== this.isAdultStateName) this.fetchMalItems(type);
+        if (name !== this.isAdultStateName) {
+          this.fetchMalItems(type);
+          loading.malLoading = true;
+        }
         this.fetchContentItems(type, age);
+        this.setState(loading);
       }
     }, 1500);
   }
@@ -71,14 +80,15 @@ class FilteredSearchResult extends Component {
       this.setState((previousState, props) => {
         return {
           contentResults: siteIndex === 0 ? response : previousState.contentResults.concat(response),
-          siteSelectList: this.setSiteSelectList(previousState.siteSelectList, type, age)
+          siteSelectList: this.setSiteSelectList(previousState.siteSelectList, type, age),
+          contentLoading: false
         };
       });
     });
   }
   fetchMalItems(type) {
     malQuery({ type: type, search: this.state.searchString }).then((response) => {
-      this.setState({ malResults: response });
+      this.setState({ malResults: response, malLoading: false });
     });
   }
   render() {
@@ -95,7 +105,9 @@ class FilteredSearchResult extends Component {
           <SearchResult isAdult={this.state.isAdult}
                         isAnime={this.state.isAnime}
                         malResults={this.state.malResults}
+                        malLoading={this.state.malLoading}
                         contentResults={this.state.contentResults}
+                        contentLoading={this.state.contentLoading}
                         siteSelectList={this.state.siteSelectList}
                         onSiteCollapse={this.handleResultsCollapse} />
         }

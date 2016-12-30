@@ -16,9 +16,13 @@ const urls = {
       },
       {
         name: 'kissanime',
-        url: 'http://kissanime.ru/Search/Anime', //'http://kissanime.ru/Search/SearchSuggestx',
+        url: 'http://kissanime.ru/Search/SearchSuggestx', //'http://kissanime.ru/Search/Anime',
         dataType: 'text',
-        options: { method: 'POST', body: 'keyword=:searchString' },
+        formData: {
+          type: 'Anime',
+          keyword: ':searchString'
+        },
+        options: { method: 'POST', body: null },
         selector: 'table.listing tr > td > a'
       },
       {
@@ -38,7 +42,14 @@ const urls = {
         name: 'readmanga',
         url: 'http://www.readmanga.today/service/advanced_search',
         dataType: 'text',
-        options: { method: 'POST', body: 'type=all&manga-name=:searchString&status=both' },
+        formData: {
+          type: 'all',
+          'manga-name': ':searchString',
+          'author-name': null,
+          'artist-name': null,
+          status:  'both'
+        },
+        options: { method: 'POST', body: null },
         selector: '.box'
       }
     ]
@@ -65,7 +76,18 @@ const urls = {
       }
     ],
     manga: [
-
+      {
+        name: 'hentaihere',
+        url: 'http://hentaihere.com/search?s=:searchString',
+        dataType: 'text',
+        selector: '.scrollable .row > .seriesBlock'
+      },
+      {
+        name: 'nhentai',
+        url: 'https://nhentai.net/search/?q=:searchString',
+        dataType: 'text',
+        selector: '.container > .gallery'
+      }
     ]
   }
 }

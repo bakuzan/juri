@@ -4,7 +4,7 @@ import './juri-svg.css';
 class JuriSvg extends Component {
   render() {
     return (
-      <svg viewBox="-20 -60 80 80" preserveAspectRatio="xMaxYMax meet" xmlns="http://www.w3.org/2000/svg">
+      <svg className="juri-svg" viewBox="-20 -60 80 80" preserveAspectRatio="xMaxYMax meet" xmlns="http://www.w3.org/2000/svg">
         <text className="letter hideshow" id="jay" x="2" y="-0">
           J
         </text>
