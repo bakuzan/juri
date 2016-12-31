@@ -10,22 +10,30 @@
   z-index: 10;
 }
 
-#juri-svg, #about-link {
-  position: absolute;
-  cursor: pointer;
-}
 #juri-svg {
+  position: absolute;
   top: 0;
   left: 0;
+  cursor: pointer;
 }
-#about-link {
-  top: 10px;
+#navigation-links {
+  position: absolute;
+  top: 0;
   right: 10px;
-  background-color: $primary-background;
-  color: $primary-colour-contrast;
-  padding: 8px;
-  text-decoration: none;
-  &:hover {
-    background-color: darken($primary-background, $darken-amount);
+  width: 33%;
+  height: 100%;
+  a {
+    background-color: $primary-background;
+    color: $primary-colour-contrast;
+    padding: 8px;
+    text-decoration: none;
+    &:hover {
+      background-color: darken($primary-background, $darken-amount);
+    }
   }
+}
+.flex-right {
+  display: flex;
+  width: 33%;
+  margin-left: auto;
 }

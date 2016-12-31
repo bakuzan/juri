@@ -48,12 +48,21 @@ const search = (req, res) => {
   if (age === constants.age.adult) adultSearch(res, type, search, siteIndex);
 }
 
+const latest = (req, res) => {
+  const type = req.params.type;
+  const site = constants.url.latest[type][0];
+  fetchContentFromUrl(site, '').then((jsonResult) => {
+    res.jsonp(jsonResult);
+  });
+}
+
 const siteList = (req, res) => {
   res.jsonp(constants.url);
 }
 
 const contentSearch = {
   search: search,
+  latest: latest,
   siteList: siteList
 }
 

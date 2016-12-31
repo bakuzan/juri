@@ -17,6 +17,11 @@ export const malQuery = (params) => {
   return fetchFromServer(url);
 }
 
+export const contentLatest = (params) => {
+  const url = paths.build(paths.query.contentLatest, params);
+  return fetchFromServer(url);
+}
+
 export const contentQuery = (params) => {
   const url = paths.build(paths.query.contentSearch, params);
   return fetchFromServer(url);

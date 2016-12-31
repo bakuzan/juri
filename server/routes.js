@@ -15,6 +15,7 @@ router.get('/api/mal-search/:type', malSearch);
 
 // Content Site Route
 router.get('/api/content-search/:site/:type/:age', content.search);
+router.get('/api/content-latest/:type', content.latest);
 router.get('/api/content-site-list', content.siteList);
 
 module.exports = router;
