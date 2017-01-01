@@ -36,19 +36,21 @@ class Latest extends Component {
   }
   buildContentList(list) {
     return list.map((item) => {
-      return (<ContentItem key={item.id} content={item}
+      return (<ContentItem key={item.id} className="latest-item"
+                           content={item}
                            isAnime={this.state.isAnime}
                            isAdult={false} />);
     });
   }
   renderLatestResult(isLoading, resultList) {
-      return isLoading         ? (<LoadingSpinner size='' />) :
-             resultList.length ? this.buildContentList(resultList) :
+    console.log('rendering: ', isLoading, resultList);
+      return isLoading             ? (<LoadingSpinner size='' />) :
+             resultList.length > 0 ? this.buildContentList(resultList) :
                                  (<li><p>Nothing was found for the current search.</p></li>);
   }
   render() {
     const currentType = getType(this.state.isAnime, false);
-    const latestRenderResult = this.renderLatestResult(this.state.isAnime, this.state.latestResults);
+    const latestRenderResult = this.renderLatestResult(this.state.loading, this.state.latestResults);
 
     return (
       <div className="latest">

@@ -15,16 +15,30 @@ class ContentItemFactory {
 	  return versions.join(', ');
 	}
   masterani(dataItem) {
+    let href = 'https://masterani.me/anime/info/{0}';
+    //Handle latest anime format.
+    if (dataItem.anime !== undefined) {
+      for(let key in dataItem.anime) {
+        if (dataItem.anime.hasOwnProperty(key)) {
+          dataItem[key] = dataItem.anime[key];
+        }
+      }
+      href = `https://masterani.me/anime/watch/{0}/${dataItem.episode}`;
+    }
+
     this.contentItem.initaliseProps({
       id: dataItem.id,
-      href: `https://masterani.me/anime/info/${dataItem.slug}`,
+      href: href.replace('{0}', dataItem.slug),
       title: dataItem.title,
-      image: `https://cdn.masterani.me/poster/${dataItem.poster.file}`,
+      image: `https://cdn.masterani.me/poster/${dataItem.poster.file || dataItem.poster}`,
       type: dataItem.type,
       status: dataItem.status,
       episodes: dataItem.episode_count,
       startDate: dataItem.started_airing_date,
-      endDate: dataItem.finished_airing_date
+      endDate: dataItem.finished_airing_date,
+      // latest only
+      currentEpisode: dataItem.episode,
+      postedDate: dataItem.created_at
     });
   }
   kissanime(dataItem) {

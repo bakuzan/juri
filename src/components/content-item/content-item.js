@@ -11,6 +11,9 @@ class ContentItem extends Component {
     this.adult = this.props.isAdult ? searchFilters.IS_ADULT_TRUE : searchFilters.IS_ADULT_FALSE;
     this.type = this.props.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
   }
+  padEpisodeNumber(number) {
+    return number <= 999 ? ('00'+number).slice(-3) : number;
+  }
   setAdditionalInformation() {
     const info = this.content.authour || this.content.versions || magicNumbers.animeType[this.content.type] || null;
     return info ? `(${info})` : '';
@@ -37,11 +40,23 @@ class ContentItem extends Component {
                 }
                 <br />
               </span>)
+            }{
+              this.content.postedDate !== undefined &&
+              (<span>
+                <b>Posted at:</b> {this.content.postedDate}
+                <br />
+              </span>)
             }
             {
               this.content.episodes !== undefined &&
               (<span>
                 <b>Episodes:</b> {this.content.episodes}
+                <br />
+              </span>)
+            }{
+              this.content.currentEpisode !== undefined &&
+              (<span>
+                <b>Episode #</b>{this.padEpisodeNumber(this.content.currentEpisode)}
                 <br />
               </span>)
             }
@@ -58,7 +73,7 @@ class ContentItem extends Component {
   }
   render() {
     return(
-        <li className="content-item">
+        <li className={`content-item ${this.props.className}`}>
           { this.renderContentItem() }
         </li>
     );

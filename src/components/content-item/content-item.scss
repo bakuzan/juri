@@ -5,6 +5,10 @@
   padding: 2px;
   margin: 2px 0;
   list-style-type: none;
+  &.latest-item {
+    float: left;
+    width: 32%;
+  }
   &.host {
     min-height: auto !important;
     background-color: $primary-background;
