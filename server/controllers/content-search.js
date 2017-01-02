@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const constants = require('../constants');
 const processor = require('../processors/process-content-query');
+const malChecking = require('./mal-checking');
 
 const setQueryOptions = (site, search) => {
   let options = { method: 'GET' };
@@ -52,6 +53,7 @@ const latest = (req, res) => {
   const type = req.params.type;
   const site = constants.url.latest[type][0];
   fetchContentFromUrl(site, '').then((jsonResult) => {
+    malChecking.setMyAnimeListFlag(type, jsonResult)
     res.jsonp(jsonResult);
   });
 }

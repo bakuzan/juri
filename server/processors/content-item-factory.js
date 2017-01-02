@@ -77,6 +77,10 @@ class ContentItemFactory {
      */
   }
   mangafox(dataItem) {
+    console.log('mangafox : ', dataItem);
+    const links = dataItem.getElementsByTagName('a');
+    const dataLink = links[1];
+
     this.contentItem.initaliseProps({
       id: dataItem[0],
       href: `http://mangafox.me/manga/${dataItem[2]}/`,
@@ -84,6 +88,24 @@ class ContentItemFactory {
       image: `http://www.mangafox.com/store/manga/${dataItem[0]}/cover.jpg`,
       authour: dataItem[4]
     });
+    /*
+    <li>
+      <div>
+        <h3 class="title">
+          <a href="http://mangafox.me/manga/chokotto_hime/" rel="5348" class="series_preview manga_open" data-vivaldi-spatnav-clickable="1">Chokotto Hime</a>
+        </h3>
+        <dl>
+          <dt>
+            <em>Today</em>
+            <span class="chapter nowrap">
+              <a href="http://mangafox.me/manga/chokotto_hime/v02/c022/1.html" class="chapter">Chokotto Hime 22</a>
+              v02
+            </span>
+          </dt>
+        </dl>
+      </div>
+    </li>
+     */
   }
   readmanga(dataItem) {
     console.log('readmanga : ', dataItem);

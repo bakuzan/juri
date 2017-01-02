@@ -99,8 +99,17 @@ const urls = {
       }
     ],
     manga: [
-
+      {
+        name: 'mangafox',
+        url: 'http://mangafox.me/releases/',
+        dataType: 'text',
+        selector: '#updates > li'
+      }
     ]
+  },
+  spellingList: {
+    anime: 'https://raw.githubusercontent.com/bakuzan/user-scripts/master/anime-release-highlighter/anime-spellings.json',
+    manga: 'https://raw.githubusercontent.com/bakuzan/user-scripts/master/manga-release-checker/manga-spellings.json'
   }
 }
 
