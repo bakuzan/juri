@@ -6,6 +6,9 @@ const types = {
   anime: 'anime',
   manga: 'manga'
 }
+const malStatus = {
+  completed: 2
+}
 const urls = {
   standard: {
     anime: [
@@ -116,7 +119,8 @@ const urls = {
 const constants = {
   age: ages,
   type: types,
-  url: urls
+  url: urls,
+  malStatus: malStatus
 }
 
 module.exports = constants;

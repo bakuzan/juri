@@ -53,8 +53,9 @@ const latest = (req, res) => {
   const type = req.params.type;
   const site = constants.url.latest[type][0];
   fetchContentFromUrl(site, '').then((jsonResult) => {
-    malChecking.setMyAnimeListFlag(type, jsonResult)
-    res.jsonp(jsonResult);
+    return malChecking.setMyAnimeListFlag(type, jsonResult);
+  }).then((processedResult) => {
+    res.jsonp(processedResult);
   });
 }
 

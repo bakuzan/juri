@@ -36,7 +36,7 @@ class Latest extends Component {
   }
   buildContentList(list) {
     return list.map((item) => {
-      const classes = `latest-item ${item.isMalItem ? 'on-my-list' : ''}`;
+      const classes = `latest-item${item.isMalItem ? ' on-my-list' : ''}`;
       return (<ContentItem key={item.id} className={classes}
                            content={item}
                            isAnime={this.state.isAnime}

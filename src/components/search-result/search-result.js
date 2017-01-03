@@ -24,25 +24,27 @@ class SearchResult extends Component {
 
     let mycontentlist = [];
     let lastHost = '';
-    this.props.contentResults.forEach((contentItem) => {
-      if (contentItem.host !== lastHost) {
-        mycontentlist.push(<li key={contentItem.host}
-                               className="content-item host"
-                               onClick={() => this.collapseResults(contentItem.host)}>{contentItem.host}</li>);
-      }
+    if (this.props.contentResults.forEach !== undefined) {
+      this.props.contentResults.forEach((contentItem) => {
+        if (contentItem.host !== lastHost) {
+          mycontentlist.push(<li key={contentItem.host}
+                                 className="content-item host"
+                                 onClick={() => this.collapseResults(contentItem.host)}>{contentItem.host}</li>);
+        }
 
-      lastHost = contentItem.host;
-      const site = this.props.siteSelectList.find(x => x.name === lastHost);
-      if (!site.isCollapsed) {
-        mycontentlist.push(<ContentItem key={contentItem.id} content={contentItem}
-                                        isAnime={this.props.isAnime}
-                                        isAdult={this.props.isAdult} />);
-      }
-    });
+        lastHost = contentItem.host;
+        const site = this.props.siteSelectList.find(x => x.name === lastHost);
+        if (!site.isCollapsed) {
+          mycontentlist.push(<ContentItem key={contentItem.id} content={contentItem}
+                                          isAnime={this.props.isAnime}
+                                          isAdult={this.props.isAdult} />);
+        }
+      });
+    }
 
     const malSearchResults = this.renderResult(this.props.malLoading, myanimelist);
     const contentSearchResults = this.renderResult(this.props.contentLoading, mycontentlist);
-    
+
     return (
       <div className="search-results">
         <ul className="mal-search-result">

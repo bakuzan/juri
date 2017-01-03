@@ -27,7 +27,7 @@ class ContentItemFactory {
     }
 
     this.contentItem.initaliseProps({
-      id: dataItem.id,
+      id: `${dataItem.id}${dataItem.episode || ''}`,
       href: href.replace('{0}', dataItem.slug),
       title: dataItem.title,
       image: `https://cdn.masterani.me/poster/${dataItem.poster.file || dataItem.poster}`,
@@ -77,9 +77,9 @@ class ContentItemFactory {
      */
   }
   mangafox(dataItem) {
-    console.log('mangafox : ', dataItem);
-    const links = dataItem.getElementsByTagName('a');
-    const dataLink = links[1];
+    console.log('mangafox : ', dataItem, typeof dataItem);
+    // const links = dataItem.getElementsByTagName('a');
+    // const dataLink = links[1];
 
     this.contentItem.initaliseProps({
       id: dataItem[0],
