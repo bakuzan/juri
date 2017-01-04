@@ -32,15 +32,17 @@ const getAlternateSpellingList = (type) => {
 
 const getMyanimelist = {
   anime: () => {
-    return client.getAnimeList().then((response) => {
-      console.log('malist ', response.list.length);
-      let array = helperFunctions.removeCompleted(response.list);
-      return getAlternateSpellingList(type);
-    }).then((spellings) => {
-      console.log(array.length, spellings);
-      return array.concat(spellings);
-    }).catch((err) => {
-      return err;
+    return new Promise((resolve, reject) => {
+      client.getAnimeList().then((response) => {
+        console.log('malist ', response.list.length);
+        let array = helperFunctions.removeCompleted(response.list);
+        return getAlternateSpellingList(type);
+      }).then((spellings) => {
+        console.log(array.length, spellings);
+        resolve(array.concat(spellings));
+      }).catch((err) => {
+        reject(err);
+      });
     });
   },
   manga: () => {
