@@ -13,6 +13,7 @@ class Latest extends Component {
       latestResults: [],
       loading: true
     };
+    this.timer = null;
     const type = getType(this.state.isAnime, true);
     this.fetchLatest(type);
 
@@ -23,8 +24,11 @@ class Latest extends Component {
       [name]: value,
       loading: true
     });
-    const type = getType(this.state.isAnime, true);
-    this.fetchLatest(type);
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      const type = getType(this.state.isAnime, true);
+      this.fetchLatest(type);
+    }, 500);
   }
   fetchLatest(type) {
     contentLatest({ type }).then((response) => {

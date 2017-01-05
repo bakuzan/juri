@@ -1,9 +1,10 @@
 import React from 'react';
 import * as searchFilters from '../../constants/search-filters';
+import { getType } from '../../actions/value';
 import './mal-item.css';
 
 function MalItem(props) {
-  const type = props.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
+  const type = getType(props.isAnime, false);
 
   return(
     <li className="mal-item">
@@ -23,7 +24,7 @@ function MalItem(props) {
             ) : (
               <span>
                 <b>Chapters:</b> {props.content.chapters} <br />
-                <b>Volumes:</b> {props.content.volumes} 
+                <b>Volumes:</b> {props.content.volumes}
               </span>
             )}
           </span>

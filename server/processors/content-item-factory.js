@@ -78,16 +78,26 @@ class ContentItemFactory {
   }
   mangafox(dataItem) {
     console.log('mangafox : ', dataItem, typeof dataItem);
-    // const links = dataItem.getElementsByTagName('a');
-    // const dataLink = links[1];
+    if (Array.isArray(dataItem)) {
+      this.contentItem.initaliseProps({
+        id: dataItem[0],
+        href: `http://mangafox.me/manga/${dataItem[2]}/`,
+        title: dataItem[1],
+        image: `http://www.mangafox.com/store/manga/${dataItem[0]}/cover.jpg`,
+        authour: dataItem[4]
+      });
+    } else {
+      const links = dataItem.getElementsByTagName('a');
+      const id = links[0].getAttribute('rel');
+      const dataLink = links[1];
 
-    this.contentItem.initaliseProps({
-      id: dataItem[0],
-      href: `http://mangafox.me/manga/${dataItem[2]}/`,
-      title: dataItem[1],
-      image: `http://www.mangafox.com/store/manga/${dataItem[0]}/cover.jpg`,
-      authour: dataItem[4]
-    });
+      this.contentItem.initaliseProps({
+        id: `mf-${id}`,
+        href: dataLink.href,
+        title: dataLink.textContent,
+        image: `http://www.mangafox.com/store/manga/${id}/cover.jpg`
+      });
+    }
     /*
     <li>
       <div>

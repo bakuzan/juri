@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as searchFilters from '../../constants/search-filters';
+import { getType, getAge } from '../../actions/value';
 import { magicNumbers } from '../../constants/magic-numbers';
 import './content-item.css';
 
@@ -8,8 +8,8 @@ class ContentItem extends Component {
     super(props);
 
     this.content = this.props.content;
-    this.adult = this.props.isAdult ? searchFilters.IS_ADULT_TRUE : searchFilters.IS_ADULT_FALSE;
-    this.type = this.props.isAnime ? searchFilters.IS_ANIME_TRUE : searchFilters.IS_ANIME_FALSE;
+    this.adult = getAge(this.props.isAdult, false);
+    this.type = getType(this.props.isAnime, false);
   }
   padEpisodeNumber(number) {
     return number <= 999 ? ('00'+number).slice(-3) : number;

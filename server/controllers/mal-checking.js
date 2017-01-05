@@ -8,10 +8,8 @@ const helperFunctions = {
 		return text.toLowerCase().replace(/\W|\d+ *$/g, '');
 	},
   removeCompleted: (list) => {
-    console.log(constants.malStatus.completed);
     return list.filter((item) => {
-      console.log(item.status, item.status !== constants.malStatus.completed);
-      return !item.status || item.status !== constants.malStatus.completed;
+      return item.series_status === undefined || item.series_status !== constants.malStatus.completed;
     });
   }
 }
@@ -26,7 +24,6 @@ const getAlternateSpellingList = (type) => {
       for(let i = 0; i < length; i++) {
         list.push({ 'series_title': series[i] });
       }
-      console.log('spellings : ', list.length);
       resolve(list);
     }).catch((err) => {
       reject(err);
@@ -49,11 +46,16 @@ const getMyanimelist = {
     });
   },
   manga: () => {
-    return client.getMangaList().then((response) => {
-      let array = helperFunctions.removeCompleted(response.list);
-      return array.concat(getAlternateSpellingList(type));
-    }).catch((err) => {
-      return err;
+    return new Promise((resolve, reject) => {
+      let array = [];
+      client.getMangaList().then((response) => {
+        array = response.list;
+        return getAlternateSpellingList(constants.type.manga);
+      }).then((spellings) => {
+        resolve(helperFunctions.removeCompleted(array.concat(spellings)));
+      }).catch((err) => {
+        reject(err);
+      });
     });
   }
 }
@@ -61,12 +63,10 @@ const getMyanimelist = {
 const setMyAnimeListFlag = (type, latestItems) => {
   return new Promise((resolve, reject) => {
     getMyanimelist[type]().then((mylist) => {
-      console.log('mylist : ', mylist.length);
       const length = latestItems.length;
       for(let i = 0; i < length; i++) {
         const item = latestItems[i];
         const index = mylist.findIndex(x => helperFunctions.cleanText(x.series_title) === helperFunctions.cleanText(item.title));
-        console.log(item.title, index);
         item.isMalItem = index !== -1;
       }
       resolve(latestItems);
