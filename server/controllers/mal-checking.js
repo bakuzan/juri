@@ -11,7 +11,7 @@ const helperFunctions = {
     console.log(constants.malStatus.completed);
     return list.filter((item) => {
       console.log(item.status, item.status !== constants.malStatus.completed);
-      return item.status !== constants.malStatus.completed;
+      return !item.status || item.status !== constants.malStatus.completed;
     });
   }
 }
@@ -24,7 +24,7 @@ const getAlternateSpellingList = (type) => {
       const series = data.names;
       const length = series.length;
       for(let i = 0; i < length; i++) {
-        list.push({ 'series_title': helperFunctions.cleanText(series[i]) });
+        list.push({ 'series_title': series[i] });
       }
       console.log('spellings : ', list.length);
       resolve(list);
@@ -65,7 +65,7 @@ const setMyAnimeListFlag = (type, latestItems) => {
       const length = latestItems.length;
       for(let i = 0; i < length; i++) {
         const item = latestItems[i];
-        const index = mylist.findIndex(x => helperFunctions.cleanText(x.series_title) === item.title);
+        const index = mylist.findIndex(x => helperFunctions.cleanText(x.series_title) === helperFunctions.cleanText(item.title));
         console.log(item.title, index);
         item.isMalItem = index !== -1;
       }
