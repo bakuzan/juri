@@ -2,9 +2,16 @@ const constants = require('../constants');
 const popura = require('popura');
 const client = popura(process.env.MAL_USER, process.env.MAL_PASSWORD);
 
+const helperFunctions = {
+	removeNullOnEmpty: (result) => {
+		if (result[0] === null) return [];
+		return result;
+	}
+}
+
 const animeSearch = (res, search) => {
 		client.searchAnimes(search).then((result) => {
-			res.jsonp(result);
+			res.jsonp(helperFunctions.removeNullOnEmpty(result));
 		}).catch((err) => {
 			return err;
 		});
@@ -12,7 +19,7 @@ const animeSearch = (res, search) => {
 
 const mangaSearch = (res, search) => {
 		client.searchMangas(search).then((result) => {
-			res.jsonp(result);
+			res.jsonp(helperFunctions.removeNullOnEmpty(result));
 		}).catch((err) => {
 			return err;
 		});

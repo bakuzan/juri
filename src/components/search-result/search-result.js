@@ -17,7 +17,7 @@ class SearchResult extends Component {
     return (<li><p>Nothing was found for the current search.</p></li>);
   }
   render() {
-    console.log('content: ', this.props.contentResults);
+    console.log('mal: ', this.props.malResults, 'content: ', this.props.contentResults);
     const myanimelist = this.props.malResults.map((malItem) => {
       return (<MalItem key={malItem.id} content={malItem} isAnime={this.props.isAnime} />);
     });
