@@ -9,7 +9,7 @@ class About extends Component {
       <article className="about">
         <header>
           <h2>Project JURI</h2>
-          <p>Juri is a unified search application.</p>
+          <p className="subtitle">Juri is a unified search application.</p>
         </header>
         <div className="content">
           <p>
@@ -19,11 +19,24 @@ class About extends Component {
           </p>
           <p>
             Juri also provides a latest releases page, powered by
-             <a href="https://www.masterani.me/">masterani</a> and <a href="http://mangafox.me/releases">mangafox</a>
+            <a href="https://www.masterani.me/" target="_blank">masterani</a>
+			and
+			<a href="http://mangafox.me/releases/" target="_blank">mangafox</a>
             for anime and manga respectively.
           </p>
-          <Link to={paths.base}>Home</Link>
-          <Link to={paths.latest}>Latest</Link>
+		  <div id="about-juri-links">
+			<h4>Pages to visit:</h4>
+			  <ul>
+				<li>
+				  <Link to={paths.base}>Home</Link>
+				  Search myanimelist and content sites based on type and age selections.
+				</li>
+				<li>
+				  <Link to={paths.latest}>Latest</Link>
+				  View latest anime and manga releases, with entries on myanimelist appearing highlighted.
+				</li>
+			  </ul>
+		  </div>
         </div>
       </article>
     );

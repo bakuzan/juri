@@ -5,7 +5,7 @@ const client = popura(process.env.MAL_USER, process.env.MAL_PASSWORD);
 
 const helperFunctions = {
   cleanText: (text) => {
-		return text.toLowerCase().replace(/\W|\d+ *$/g, '');
+		return text.toLowerCase().replace(/\W|\d+\.*\d* *$/gm, '');
 	},
   removeCompleted: (list) => {
     return list.filter((item) => {
