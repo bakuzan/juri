@@ -4,14 +4,26 @@ const popura = require('popura');
 const client = popura(process.env.MAL_USER, process.env.MAL_PASSWORD);
 
 const helperFunctions = {
-  cleanText: (text) => {
-		return text.toLowerCase().replace(/\W|\d+\.*\d* *$/gm, '');
+    cleanText: (text) => {
+	  return text.toLowerCase().replace(/\W|\d+\.*\d* *$/gm, '');
 	},
-  removeCompleted: (list) => {
-    return list.filter((item) => {
-      return item.series_status === undefined || item.series_status !== constants.malStatus.completed;
-    });
-  }
+	processText: {
+		anime: (text) => {
+		  return helperFunctions.cleanText(text);
+		},
+		manga: (text) => {
+			const index = text.indexOf('(');
+			if (index > -1) {
+			  text = text.substring(0, index);
+			}
+			return helperFunctions.cleanText(text);
+		}
+	},
+	removeCompleted: (list) => {
+	  return list.filter((item) => {
+		return item.series_status === undefined || item.series_status !== constants.malStatus.completed;
+	  });
+	}
 }
 
 const getAlternateSpellingList = (type) => {
@@ -66,7 +78,7 @@ const setMyAnimeListFlag = (type, latestItems) => {
       const length = latestItems.length;
       for(let i = 0; i < length; i++) {
         const item = latestItems[i];
-        const index = mylist.findIndex(x => helperFunctions.cleanText(x.series_title) === helperFunctions.cleanText(item.title));
+        const index = mylist.findIndex(x => helperFunctions.cleanText(x.series_title) === helperFunctions.processText[type](item.title));
         item.isMalItem = index !== -1;
       }
       resolve(latestItems);
