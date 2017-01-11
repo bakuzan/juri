@@ -34,6 +34,6 @@
 }
 .flex-right {
   display: flex;
-  width: 33%;
-  margin-left: auto;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
