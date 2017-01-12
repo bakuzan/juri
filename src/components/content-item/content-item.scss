@@ -6,7 +6,7 @@
   margin: 2px 0;
   list-style-type: none;
   &.latest-item {
-    float: left;
+    display: inline-flex;
     width: 32%;
     &.on-my-list {
       background-color: $primary-background;
