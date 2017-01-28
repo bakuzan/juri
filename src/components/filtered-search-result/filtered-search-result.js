@@ -36,9 +36,9 @@ class FilteredSearchResult extends Component {
     this.fetchContentItems(type, age, index);
     this.setState({ contentLoading: true });
   }
-  handleResultsCollapse(siteName) {
+  handleResultsCollapse(host) {
     const siteSelectList = this.state.siteSelectList.slice();
-    const site = siteSelectList.find(x => x.name === siteName);
+    const site = siteSelectList.find(x => x.name === host);
     site.isCollapsed = !site.isCollapsed;
     this.setState({ siteSelectList: siteSelectList });
   }
@@ -51,6 +51,7 @@ class FilteredSearchResult extends Component {
         collapsed = previousList[index].isCollapsed;
       }
       return { id: index,
+               alias: site.alias,
                name: site.name,
                isCollapsed: collapsed };
     });

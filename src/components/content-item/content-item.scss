@@ -8,9 +8,12 @@
   &.latest-item {
     display: inline-flex;
     width: 32%;
+    > div {
+      width: 100%;
+      background-color: $primary-colour-contrast;
+    }
     &.on-my-list {
       background-color: $primary-background;
-      color: $primary-colour-contrast;
     }
   }
   &.host {

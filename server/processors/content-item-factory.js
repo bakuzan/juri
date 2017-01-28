@@ -5,7 +5,11 @@ class ContentItemFactory {
     this.contentItem = contentItem;
   }
   process(dataItem) {
+    console.log(`Processing with ${this.contentItem.host}`);
     this[this.contentItem.host](dataItem);
+  }
+  generateUniqueId() {
+    return Math.abs(Date.now() / Math.random() + Math.random());
   }
   getVersions(subTags) {
 	  let versions = [];
@@ -42,7 +46,7 @@ class ContentItemFactory {
     });
   }
   kissanime(dataItem) {
-    console.log('kissanime : ', dataItem);
+    //console.log('kissanime : ', dataItem);
     this.contentItem.initaliseProps({
       id: dataItem.href,
       href: dataItem.href,
@@ -77,7 +81,7 @@ class ContentItemFactory {
      */
   }
   mangafox(dataItem) {
-    console.log('mangafox : ', dataItem, typeof dataItem);
+    //console.log('mangafox : ', dataItem, typeof dataItem);
     if (Array.isArray(dataItem)) {
       this.contentItem.initaliseProps({
         id: dataItem[0],
@@ -118,7 +122,7 @@ class ContentItemFactory {
      */
   }
   readmanga(dataItem) {
-    console.log('readmanga : ', dataItem);
+    //console.log('readmanga : ', dataItem);
     const link = dataItem.getElementsByTagName('a')[0];
     const image = dataItem.getElementsByTagName('img')[0];
     const idElement = dataItem.querySelector('a.add_fast_favorite');
@@ -266,8 +270,28 @@ class ContentItemFactory {
     <span class="fa fa-comment-o"> 37</span></div></div></div>
      */
   }
+  hentaiplay(dataItem) {
+    const link = dataItem.getElementsByTagName('a')[3];
+    const image = dataItem.getElementsByTagName('img')[0];
+
+    this.contentItem.initaliseProps({
+      id: `hp-${dataItem.getAttribute('id')}`,
+      href: link.href,
+      title: link.textContent,
+      image: image.getAttribute('src')
+    });
+  }
+  hentai(dataItem) { // hentai.animeholics.org
+    ////console.log('animeholics : ', dataItem);
+    this.contentItem.initaliseProps({
+      id: `ah-${this.generateUniqueId()}`,
+      href: dataItem.url,
+      title: dataItem.nme,
+      image: dataItem.cvr
+    });
+  }
   hentaihere(dataItem) {
-    console.log('hentaihere : ', dataItem);
+    //console.log('hentaihere : ', dataItem);
     const link = dataItem.getElementsByTagName('a')[1];
     const image = dataItem.getElementsByTagName('img')[0];
     const authour = dataItem.querySelector('.showMTooltip .text-muted');
@@ -310,7 +334,7 @@ class ContentItemFactory {
      */
   }
   nhentai(dataItem) {
-    console.log('nhentai : ', dataItem);
+    //console.log('nhentai : ', dataItem);
     const link = dataItem.getElementsByTagName('a')[0];
     const image = dataItem.getElementsByTagName('img')[0];
     const textElement = dataItem.getElementsByClassName('caption')[0].textContent;

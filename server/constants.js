@@ -76,6 +76,18 @@ const urls = {
         url: 'http://hentaihaven.org/search/:searchString',
         dataType: 'text',
         selector: '#brick-wrap > .brick'
+      },
+      {
+        name: 'hentaiplay',
+        url: 'http://hentaiplay.net/?s=:searchString',
+        dataType: 'text',
+        selector: '#content > .loop-content .item-post'
+      },
+      {
+        alias: 'animeholics',
+        name: 'hentai',
+        url: `http://hentai.animeholics.org/wpa-ajx/anm-sch-lst/?q=:searchString&limit=10&timestamp=${Date.now()}`,
+        dataType: 'text'
       }
     ],
     manga: [

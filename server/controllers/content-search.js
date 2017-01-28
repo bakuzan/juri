@@ -28,6 +28,7 @@ const fetchContentFromUrl = (site, search) => {
 const standardSearch = (res, type, search, index) => {
   const site = constants.url.standard[type][index];
   fetchContentFromUrl(site, search).then((jsonResult) => {
+    if (!(jsonResult instanceof Array)) jsonResult = [];
     res.jsonp(jsonResult);
   });
 }
@@ -35,6 +36,7 @@ const standardSearch = (res, type, search, index) => {
 const adultSearch = (res, type, search, index) => {
   const site = constants.url.adult[type][index];
   fetchContentFromUrl(site, search).then((jsonResult) => {
+    if (!(jsonResult instanceof Array)) jsonResult = [];
     res.jsonp(jsonResult);
   });
 }

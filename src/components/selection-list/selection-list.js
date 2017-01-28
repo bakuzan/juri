@@ -11,10 +11,12 @@ class SelectionList extends Component {
         <ul className="selection-list">
         { this.props.list &&
           this.props.list.map((item) => {
+            const displayName = `${item.name}${item.alias ? ` (${item.alias})` : ''}`;
+
             return (
               <li key={item.id}
                   onClick={() => this.handleItemSelect(item.id)}>
-                  {item.name}
+                  { displayName }
               </li>
             );
           })

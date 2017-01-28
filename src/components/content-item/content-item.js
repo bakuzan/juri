@@ -72,8 +72,9 @@ class ContentItem extends Component {
     );
   }
   render() {
+    const className = this.props.className ? ` ${this.props.className}` : '';
     return(
-        <li className={`content-item ${this.props.className}`}>
+        <li className={`content-item${className}`}>
           { this.renderContentItem() }
         </li>
     );

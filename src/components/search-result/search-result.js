@@ -34,7 +34,7 @@ class SearchResult extends Component {
 
         lastHost = contentItem.host;
         const site = this.props.siteSelectList.find(x => x.name === lastHost);
-        if (!site.isCollapsed) {
+        if (site && !site.isCollapsed) {
           mycontentlist.push(<ContentItem key={contentItem.id} content={contentItem}
                                           isAnime={this.props.isAnime}
                                           isAdult={this.props.isAdult} />);
