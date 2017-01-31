@@ -9,7 +9,7 @@ import '../../styles/box-model.css';
 class Header extends Component {
   render() {
     return (
-      <div className="juri-header center-contents">
+      <nav className="juri-header center-contents">
         <Link className="ripple" id="juri-svg" to={paths.base}>
           <JuriSvg />
         </Link>
@@ -24,7 +24,7 @@ class Header extends Component {
             </Link>
           </div>
         </div>
-      </div>
+      </nav>
     );
   }
 }
