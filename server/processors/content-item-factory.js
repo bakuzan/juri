@@ -187,6 +187,16 @@ class ContentItemFactory {
         </div><!--box-->
      */
   }
+  mangapark(dataItem) {
+    console.log('mangapark: ', dataItem);
+    this.contentItem.initaliseProps({
+      id: dataItem[1],
+      href: `http://mangapark.me/manga/${dataItem[1]}`,
+      title: dataItem[0],
+      image: `http://2.c.mpcdn.net/${dataItem[2]}/38.jpg`,
+      authour: dataItem[3]
+    });
+  }
   ohentai(dataItem) {
     const urlBase = 'http://ohentai.org/';
     const link = dataItem.getElementsByTagName('a')[1];
@@ -281,7 +291,7 @@ class ContentItemFactory {
       image: image.getAttribute('src')
     });
   }
-  hentai(dataItem) { // hentai.animeholics.org
+  animeholics(dataItem) { // hentai.animeholics.org
     ////console.log('animeholics : ', dataItem);
     this.contentItem.initaliseProps({
       id: `ah-${this.generateUniqueId()}`,

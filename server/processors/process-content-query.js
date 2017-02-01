@@ -52,7 +52,7 @@ const processResponse = (response, site, url) => {
   if (url.indexOf('animeholics') > -1) {
     array = handleBadJsonTextResponse(array);
   }
-
+  console.log('processResponse: ', response);
   if (array instanceof Array) {
     console.log(`${array.length} items in array from ${site.name}`);
     return array.map((dataitem) => {

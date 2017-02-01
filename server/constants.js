@@ -54,6 +54,11 @@ const urls = {
         },
         options: { method: 'POST', body: null },
         selector: '.box'
+      },
+      {
+        name: 'mangapark',
+        url: 'http://h.j.mangapark.me/ajax-autocomplete.js?q=:searchString',
+        dataType: 'text'
       }
     ]
   },
@@ -84,8 +89,7 @@ const urls = {
         selector: '#content > .loop-content .item-post'
       },
       {
-        alias: 'animeholics',
-        name: 'hentai',
+        name: 'animeholics',
         url: `http://hentai.animeholics.org/wpa-ajx/anm-sch-lst/?q=:searchString&limit=10&timestamp=${Date.now()}`,
         dataType: 'text'
       }

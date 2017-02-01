@@ -2,9 +2,10 @@ const ContentItemFactory = require('./content-item-factory');
 
 class ContentItem {
 	constructor(url, dataItem) {
-		const REGEX_GET_HOST = /((^.*\/\/)|(.*www\d*\.))(?=\w{5,}\.)|\..*$/g;
-		this.host = url.replace(REGEX_GET_HOST, '');
-
+		const REGEX_GET_HOST = /(?!^.*\/\/)\w{7,}(?=\..+)|^\.(\w{6,})\./g // /((^.*\/\/)|(.*www\d*\.))(?=\w{5,}\.)|\..*$/g;
+		const hostMatches = url.match(REGEX_GET_HOST) || ['NOTHING-MATCHED-GET-HOST-REGEX'];
+		this.host = hostMatches[0];
+		console.log(url, hostMatches, this.host);
 		const factory = new ContentItemFactory(this);
 		factory.process(dataItem);
 	}
