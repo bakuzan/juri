@@ -17,7 +17,7 @@ const fetchContentFromUrl = (site, search) => {
   let fetchOptions = setQueryOptions(site, search);
 
   return fetch(url, fetchOptions).then((fetchData) => {
-    console.log('fetch: ', fetchData);
+    //console.log('fetch: ', fetchData);
     return fetchData[site.dataType]();
   }).then((response) => {
     return processor.response(response, site, url);
@@ -29,7 +29,6 @@ const fetchContentFromUrl = (site, search) => {
 const standardSearch = (res, type, search, index) => {
   const site = constants.url.standard[type][index];
   fetchContentFromUrl(site, search).then((jsonResult) => {
-    console.log('jsonResult: ', jsonResult);
     if (!(jsonResult instanceof Array)) jsonResult = [];
     res.jsonp(jsonResult);
   });

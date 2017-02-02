@@ -38,7 +38,7 @@ const tryParseJSON = (jsonString) => {
 
 const handleBadJsonTextResponse = (text) => {
   let result = [];
-  const objects = text.split(/({.+?})/);
+  const objects = text.split(/({.+?})|(\[[^\[].+?\])(?=,|\])/); // Use this, not finished yet tho ({.+?})|(\[.+?\])(?=,|\])
   for(let i = 0, length = objects.length; i < length; i++) {
     const obj = objects[i];
     const json = tryParseJSON(obj);
@@ -49,8 +49,7 @@ const handleBadJsonTextResponse = (text) => {
 
 const processResponse = (response, site, url) => {
   let array = response.data || response;
-  console.log('process response: ', array);
-  if (url.indexOf('animeholics') > -1) {
+  if (/animeholics|mangapark/i.test(url)) {
     array = handleBadJsonTextResponse(array);
   }
 

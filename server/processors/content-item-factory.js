@@ -188,7 +188,7 @@ class ContentItemFactory {
      */
   }
   mangapark(dataItem) {
-    console.log('mangapark: ', dataItem);
+    // console.log('mangapark: ', dataItem);
     this.contentItem.initaliseProps({
       id: dataItem[1],
       href: `http://mangapark.me/manga/${dataItem[1]}`,

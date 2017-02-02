@@ -57,7 +57,7 @@ const urls = {
       },
       {
         name: 'mangapark',
-        url: 'http://h.j.mangapark.me/ajax-autocomplete.js?q=:searchString',
+        url: 'http://h.j.mangapark.me/ajax-autocomplete.js?callback=&q=:searchString',
         dataType: 'text'
       }
     ]
