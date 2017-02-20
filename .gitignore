@@ -14,4 +14,4 @@ build
 .git
 .DS_Store
 .env
-npm-debug.log
+npm-debug.log*
