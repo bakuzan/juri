@@ -1,0 +1,66 @@
+@import "../../styles/partials/_colours";
+
+.svg-logo {
+  width: 50px;
+  height: 50px;
+  svg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: $primary-background;
+    padding: .25em;
+    border-radius: 20%;
+    box-sizing: border-box;
+    &:not(:hover) {
+      .letter {
+        opacity: 0;
+      }
+      .letter.hideshow {
+        animation: {
+          duration: 3s;
+          iteration-count: 1;
+          timing-function: linear;
+          name: hideshow;
+        };
+      }
+    }
+
+    &:hover {
+      background-color: darken($primary-background, $darken-amount);
+      > .word {
+        opacity: 1;
+      }
+      > .letter {
+        opacity: 0 !important;
+      }
+    }
+  }
+}
+
+.word, .letter {
+  text-anchor: middle;
+  fill: $primary-colour-contrast;
+}
+
+.word {
+  text-anchor: end;
+  font-size: 0.9em;
+  transition: all 1s ease-in-out;
+  opacity: 0;
+}
+
+.letter {
+  text-anchor: middle;
+  font-size: 3em;
+  transition: all 1s ease-in-out;
+}
+
+.diagonal {
+ transform: translateX(0.6em) translateY(0.125em) rotate(-45deg); 
+}
+
+@keyframes hideshow {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
