@@ -21,7 +21,7 @@ const helperFunctions = {
 	},
 	removeCompleted: (list) => {
 	  return list.filter((item) => {
-		return item.my_status === undefined || item.my_status !== constants.malStatus.completed;
+      return item.my_status === undefined || item.my_status === constants.malStatus.onHold || item.my_status === constants.malStatus.ongoing;
 	  });
 	}
 }
@@ -75,6 +75,7 @@ const getMyanimelist = {
 const setMyAnimeListFlag = (type, latestItems) => {
   return new Promise((resolve, reject) => {
     getMyanimelist[type]().then((mylist) => {
+      console.log(`my ${type} list returned with ${mylist.length} items`);
       const length = latestItems.length;
       for(let i = 0; i < length; i++) {
         const item = latestItems[i];

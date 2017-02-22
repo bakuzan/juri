@@ -7,7 +7,11 @@ const types = {
   manga: 'manga'
 }
 const malStatus = {
-  completed: 2
+  ongoing: 1, //watching reading
+  completed: 2,
+  onHold: 3,
+  dropped: 4,
+  planTo: 6 //plantowatch plantoread
 }
 const urls = {
   standard: {
