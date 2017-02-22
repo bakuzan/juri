@@ -32,7 +32,7 @@ class About extends Component {
 				  Search myanimelist and content sites based on type and age selections.
 				</li>
 				<li>
-				  <Link to={paths.latest}>Latest</Link>
+				  <Link to={`${paths.base}${paths.latest}`}>Latest</Link>
 				  View latest anime and manga releases, with entries on myanimelist appearing highlighted.
 				</li>
 			  </ul>
