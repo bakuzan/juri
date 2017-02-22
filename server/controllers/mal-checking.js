@@ -21,7 +21,7 @@ const helperFunctions = {
 	},
 	removeCompleted: (list) => {
 	  return list.filter((item) => {
-		return item.series_status === undefined || item.series_status !== constants.malStatus.completed;
+		return item.my_status === undefined || item.my_status !== constants.malStatus.completed;
 	  });
 	}
 }
