@@ -2,6 +2,10 @@ const fetch = require('node-fetch');
 const constants = require('../constants');
 const popura = require('popura');
 const client = popura(process.env.MAL_USER, process.env.MAL_PASSWORD);
+const cache = {
+  anime: [],
+  manga: []
+};
 
 const helperFunctions = {
     cleanText: (text) => {
@@ -45,26 +49,34 @@ const getAlternateSpellingList = (type) => {
 
 const getMyanimelist = {
   anime: () => {
+    if (cache.anime.length) return Promise.resolve(cache.anime);
+
     return new Promise((resolve, reject) => {
       let array = [];
       client.getAnimeList().then((response) => {
         array = response.list;
         return getAlternateSpellingList(constants.type.anime);
       }).then((spellings) => {
-        resolve(helperFunctions.removeCompleted(array.concat(spellings)));
+        const anime = helperFunctions.removeCompleted(array.concat(spellings));
+        cache.anime = anime;
+        resolve(anime);
       }).catch((err) => {
         reject(err);
       });
     });
   },
   manga: () => {
+    if (cache.manga.length) return Promise.resolve(cache.manga);
+
     return new Promise((resolve, reject) => {
       let array = [];
       client.getMangaList().then((response) => {
         array = response.list;
         return getAlternateSpellingList(constants.type.manga);
       }).then((spellings) => {
-        resolve(helperFunctions.removeCompleted(array.concat(spellings)));
+        const manga = helperFunctions.removeCompleted(array.concat(spellings));
+        cache.manga = manga;
+        resolve(manga);
       }).catch((err) => {
         reject(err);
       });
