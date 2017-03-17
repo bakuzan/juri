@@ -10,16 +10,22 @@ class Header extends Component {
   render() {
     return (
       <nav className="juri-header center-contents">
-        <Link className="ripple" id="juri-svg" to={paths.base}>
+        <Link className="ripple center-contents"
+              activeClassName="active"
+              id="juri-svg" to={paths.base}>
           <SvgLogo text="Juri" />
         </Link>
         <h1>JURI</h1>
         <div id="navigation-links">
-          <div className="flex-right center-vertically">
-            <Link className="ripple" to={`${paths.base}${paths.latest}`}>
+          <div className="flex-right">
+            <Link className="ripple center-contents"
+                  activeClassName="active"
+                  to={`${paths.base}${paths.latest}`}>
               Latest
             </Link>
-            <Link className="ripple" to={`${paths.base}${paths.about}`}>
+            <Link className="ripple center-contents"
+                  activeClassName="active"
+                  to={`${paths.base}${paths.about}`}>
               About
             </Link>
           </div>

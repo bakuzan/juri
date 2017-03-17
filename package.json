@@ -2,7 +2,7 @@
   "name": "juri",
   "version": "0.1.1",
   "private": true,
-  "homepage": "https://bakuzan.github.io/juri/",
+  "homepage": "http://localhost:3001/juri/",
   "proxy": "http://localhost:9000",
   "devDependencies": {
     "create-react-app-sass": "^1.1.0",
