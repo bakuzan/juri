@@ -36,6 +36,9 @@ const helperFunctions = {
 		const diff = timeNow - cache.time;
 		if (diff < (constants.time.oneHour * 3)) return cache;
 		return Object.assign({}, cacheModel);
+	},
+	setCacheTime: () => {
+		return cache.time || Date.now();
 	}
 }
 
@@ -68,6 +71,7 @@ const getMyanimelist = {
       }).then((spellings) => {
         const anime = helperFunctions.removeCompleted(array.concat(spellings));
         cache.anime = anime;
+				cache.time = helperFunctions.setCacheTime();
         resolve(anime);
       }).catch((err) => {
         reject(err);
@@ -85,6 +89,7 @@ const getMyanimelist = {
       }).then((spellings) => {
         const manga = helperFunctions.removeCompleted(array.concat(spellings));
         cache.manga = manga;
+				cache.time = helperFunctions.setCacheTime();
         resolve(manga);
       }).catch((err) => {
         reject(err);
