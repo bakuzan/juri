@@ -136,11 +136,16 @@ const urls = {
   }
 }
 
+const times = {
+  oneHour: 3600000
+}
+
 const constants = {
   age: ages,
   type: types,
   url: urls,
-  malStatus: malStatus
+  malStatus: malStatus,
+  time: times
 }
 
 module.exports = constants;
