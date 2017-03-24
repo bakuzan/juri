@@ -2,13 +2,15 @@ const fetch = require('node-fetch');
 const constants = require('../constants');
 const popura = require('popura');
 const client = popura(process.env.MAL_USER, process.env.MAL_PASSWORD);
-const cache = {
+const cacheModel = {
+  time: null,
   anime: [],
   manga: []
 };
+let cache = Object.assign({}, cacheModel);
 
 const helperFunctions = {
-    cleanText: (text) => {
+	cleanText: (text) => {
 	  return text.toLowerCase().replace(/\W|\d+\.*\d* *$/gm, '');
 	},
 	processText: {
@@ -25,8 +27,15 @@ const helperFunctions = {
 	},
 	removeCompleted: (list) => {
 	  return list.filter((item) => {
-      return item.my_status === undefined || item.my_status === constants.malStatus.onHold || item.my_status === constants.malStatus.ongoing;
+			return item.my_status === undefined || item.my_status === constants.malStatus.onHold || item.my_status === constants.malStatus.ongoing;
 	  });
+	},
+	assignCacheState: () => {
+		if (!cache.time) return cache;
+		const timeNow = Date.now();
+		const diff = timeNow - cache.time;
+		if (diff < (constants.time.oneHour * 3)) return cache;
+		return Object.assign({}, cacheModel);
 	}
 }
 
@@ -85,6 +94,7 @@ const getMyanimelist = {
 }
 
 const setMyAnimeListFlag = (type, latestItems) => {
+	cache = helperFunctions.assignCacheState();
   return new Promise((resolve, reject) => {
     getMyanimelist[type]().then((mylist) => {
       console.log(`my ${type} list returned with ${mylist.length} items`);
