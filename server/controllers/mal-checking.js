@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const fetch = require('node-fetch');
 const constants = require('../constants');
 const popura = require('popura');
@@ -35,10 +36,13 @@ const helperFunctions = {
 		const timeNow = Date.now();
 		const diff = timeNow - cache.time;
 		if (diff < (constants.time.oneHour * 3)) return cache;
+    console.log(chalk.red('Clearing cache!'));
 		return Object.assign({}, cacheModel);
 	},
 	setCacheTime: () => {
-		return cache.time || Date.now();
+		const time = cache.time || Date.now();
+    console.log(chalk.green(`Items cached at ${new Date(time).toISOString()}`));
+    return time;
 	}
 }
 
