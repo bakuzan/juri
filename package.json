@@ -23,7 +23,8 @@
     "popura": "^1.2.4",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
-    "react-router": "^3.0.0"
+    "react-router": "^3.0.0",
+    "serve-favicon": "^2.4.2"
   },
   "scripts": {
     "start": "concurrently \"npm run client\" \"npm run server\"",
