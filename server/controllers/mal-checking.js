@@ -36,12 +36,12 @@ const helperFunctions = {
 		const timeNow = Date.now();
 		const diff = timeNow - cache.time;
 		if (diff < (constants.time.oneHour * 3)) return cache;
-    console.log(chalk.red('Clearing cache!'));
+    console.log(chalk.bgWhite.red.bold('Clearing cache!'));
 		return Object.assign({}, cacheModel);
 	},
 	setCacheTime: () => {
 		const time = cache.time || Date.now();
-    console.log(chalk.green(`Items cached at ${new Date(time).toISOString()}`));
+    console.log(chalk.green.bold(`Items cached at ${new Date(time).toISOString()}`));
     return time;
 	}
 }

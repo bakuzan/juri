@@ -45,7 +45,7 @@ class SearchBar extends Component {
           <input id="search-input"
                  type="text"
                  name="searchString"
-                 placeholder="search..."
+                 placeholder=" "
                  value={this.props.searchString}
                  onChange={(e) => this.handleSearchStringInput(e)} autoFocus />
           <label>search for something</label>
