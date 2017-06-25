@@ -9,8 +9,12 @@ $juri-pink: #e627a8;
 $juri-black: #2c1d1a;
 $white: #fff;
 $black: #000;
+$onyx: #1f1f1f;
 $red: #ff0000;
 $green: #00ff00;
+$grey80: #ccc;
+$grey40: #666;
+
 
 /*
  * USAGES
@@ -21,7 +25,10 @@ $primary-colour-contrast: $white;
 
 $secondary-background: $juri-pink;
 $secondary-colour: $juri-pink;
-$secondary-colour-contrast: $black;
+$secondary-colour-contrast: $juri-black;
+
+$anchor-colour: $juri-pink;
+$anchor-colour-hover: $juri-black;
 
 $spinner-colour-one: $juri-pink;
 $spinner-colour-two: $juri-purple;

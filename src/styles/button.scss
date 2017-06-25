@@ -1,0 +1,116 @@
+@import "./partials/_colours";
+@import "./partials/_mixins";
+
+.button, .button-link, .button-icon {
+  appearance: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+  color: inherit;
+  padding: 5px;
+  border: none;
+  white-space: nowrap;
+  cursor: pointer;
+  &.rounded {
+    border-radius: 5px;
+  }
+  &.depress {
+    box-shadow: 0 0 5px $onyx;
+    &:active {
+      box-shadow: inset 0px 0px 5px $onyx;
+    }
+  }
+  &:disabled {
+    background-color: $grey80 !important;
+    color: $grey40 !important;
+    cursor: default;
+  }
+}
+
+.button {
+  min-width: 100px;
+  min-height: 25px;
+  text-decoration: none;
+
+  &:hover {
+    background-color: darken($white, $darken-amount);
+  }
+}
+
+.button-link {
+  color: $anchor-colour;
+  text-decoration: underline;
+  &:focus, &:active {
+    color: $anchor-colour;
+  }
+  &:hover {
+   color: $anchor-colour-hover;
+  }
+}
+
+.button-icon {
+  flex: 0 1 0%;
+  padding: 3px 6px;
+  margin: 2px 5px;
+  text-decoration: none;
+  
+  &:before {
+    content: attr(icon);
+    font-size: 1.5rem;
+    &:not(:disabled){
+      cursor: pointer;
+    }
+  }
+  &.small:before {
+    font-size: 0.8rem;
+  }
+}
+
+.button.primary, .button-icon.primary {
+  background-color: $primary-background;
+  color: $primary-colour-contrast;
+  &:hover {
+    @include lightenOrDarken("background-color", $primary-background, $darken-amount * 3);
+  }
+}
+
+.button-link.primary {
+  color: $primary-colour;
+  &:focus, &:active {
+    color: $primary-colour;
+  }
+  &:hover {
+   color: darken($primary-colour, $darken-amount);
+  }
+}
+
+a.button-link.active {
+  text-decoration: none;
+  color: $primary-colour-contrast;
+}
+
+.button.secondary {
+  background-color: $secondary-background;
+  color: $secondary-colour-contrast;
+  &:hover {
+    @include lightenOrDarken("background-color", $secondary-background, $darken-amount * 3);
+  }
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-around;
+  padding: 5px;
+  margin: 5px 0;
+
+  &.centered {
+    justify-content: center;
+  }
+
+}
+
+form .button-group {
+  width: 100%;
+  justify-content: flex-end;
+}

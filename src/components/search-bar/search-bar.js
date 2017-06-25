@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ToggleBox from '../toggle-box/toggle-box.js';
+import ClearableInput from '../clearable-input/clearable-input';
 import SelectionList from '../selection-list/selection-list.js';
 import { getType, getAge } from '../../actions/value';
 import '../../styles/float-label.css';
@@ -41,15 +42,15 @@ class SearchBar extends Component {
                          onItemSelect={this.props.onSiteSelect}
                          placeholder="sites" />
         </h2>
-        <div className="has-float-label text-input-container">
-          <input id="search-input"
-                 type="text"
-                 name="searchString"
-                 placeholder=" "
-                 value={this.props.searchString}
-                 onChange={(e) => this.handleSearchStringInput(e)} autoFocus />
-          <label>search for something</label>
-        </div>
+		<div className="text-input-container">
+			<ClearableInput
+				name="searchString"
+				label="search for something"
+				value={this.props.searchString}
+				onChange={this.handleSearchStringInput} 
+				autoFocus
+			/>
+		</div>
       </div>
     );
   }
