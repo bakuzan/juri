@@ -42,7 +42,7 @@ const urls = {
     manga: [
       {
         name: 'mangafox',
-        url: 'http://mangafox.me/ajax/search.php?term=:searchString',
+        url: 'https://mangafox.me/ajax/search.php?term=:searchString',
         dataType: 'json'
       },
       {
