@@ -124,7 +124,7 @@ const urls = {
     manga: [
       {
         name: 'mangafox',
-        url: 'http://mangafox.me/releases/',
+        url: 'https://mangafox.me/releases/',
         dataType: 'text',
         selector: '#updates > li'
       }
