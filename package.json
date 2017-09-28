@@ -24,7 +24,8 @@
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-router": "^3.0.0",
-    "serve-favicon": "^2.4.2"
+    "serve-favicon": "^2.4.2",
+    "ssl-root-cas": "^1.2.4"
   },
   "scripts": {
     "start": "concurrently \"npm run client\" \"npm run server\"",

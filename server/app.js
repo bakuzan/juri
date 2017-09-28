@@ -3,6 +3,13 @@ const morgan = require('morgan');
 const favicon = require('serve-favicon');
 const path = require('path');
 const dotenv = require('dotenv');
+const sslRootCAs = require('ssl-root-cas/latest');
+
+// Allows SSL certificates that browsers allow, but node doesn't
+sslRootCAs.inject()
+          .addFile(__dirname + "/certs/COMODORSADomainValidationSecureServerCA.crt")
+		  .addFile(__dirname + "/certs/COMODORSACertificationAuthority.crt")
+          .addFile(__dirname + "/certs/-.mangafox.me.crt");
 
 //loads .env file into process.env
 dotenv.config();
