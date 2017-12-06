@@ -9,10 +9,11 @@ coverage
 # production
 build
 *.css
+iisnode
 
 # misc
 .git
 .DS_Store
 .env
 npm-debug.log*
-web.config
+web.config*

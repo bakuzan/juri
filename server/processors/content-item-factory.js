@@ -85,7 +85,7 @@ class ContentItemFactory {
     if (Array.isArray(dataItem)) {
       this.contentItem.initaliseProps({
         id: dataItem[0],
-        href: `http://mangafox.me/manga/${dataItem[2]}/`,
+        href: `http://mangafox.la/manga/${dataItem[2]}/`,
         title: dataItem[1],
         image: `http://www.mangafox.com/store/manga/${dataItem[0]}/cover.jpg`,
         authour: dataItem[4]

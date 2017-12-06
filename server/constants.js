@@ -42,7 +42,7 @@ const urls = {
     manga: [
       {
         name: 'mangafox',
-        url: 'https://mangafox.me/ajax/search.php?term=:searchString',
+        url: 'http://mangafox.la/ajax/search.php?term=:searchString',
         dataType: 'json'
       },
       {
@@ -124,7 +124,7 @@ const urls = {
     manga: [
       {
         name: 'mangafox',
-        url: 'https://mangafox.me/releases/',
+        url: 'http://mangafox.la/releases/',
         dataType: 'text',
         selector: '#updates > li'
       }
