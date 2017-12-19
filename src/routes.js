@@ -9,16 +9,25 @@ import PageNotFound from './views/page-not-found/page-not-found';
 import FilteredSearchResult from './components/filtered-search-result/filtered-search-result.js';
 import { paths } from './constants/paths';
 
+const history = createHistory();
+
+const JuriRoutes = ({ match }) => (
+  <Switch>
+    <Route exact path={match.path} component={FilteredSearchResult} />
+    <Route path={`${match.path}${paths.about}`} component={About} />
+    <Route path={`${match.path}${paths.latest}`} component={Latest} />
+  </Switch>
+);
+
 class Routes extends Component {
   render() {
     return (
-      <Router history={createHistory()}>
+      <Router history={history}>
         <App>
           <Switch>
-            <Redirect from="/" to={paths.base} />
-            <Route path={paths.base} component={FilteredSearchResult} />
-            <Route path={paths.about} component={About} />
-            <Route path={paths.latest} component={Latest} />
+            <Redirect exact from="/" to={paths.base} />
+            <Route path={paths.base} component={JuriRoutes} />
+
             <Route path="*" component={PageNotFound} />
           </Switch>
         </App>
