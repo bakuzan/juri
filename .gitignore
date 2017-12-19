@@ -16,4 +16,5 @@ iisnode
 .DS_Store
 .env
 npm-debug.log*
+yarn-error.log*
 web.config*

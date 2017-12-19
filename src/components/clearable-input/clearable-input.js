@@ -1,9 +1,17 @@
-import React, { PropTypes } from 'react'
-import './clearable-input.css'
+import PropTypes from 'prop-types';
+import React from 'react';
+import './clearable-input.css';
 
-const Icons = { cross: '\u274C' }
+const Icons = { cross: '\u274C' };
 
-const ClearableInput = ({ name = "search", label = "search", value, maxLength, onChange, onKeyDown }) => (
+const ClearableInput = ({
+  name = 'search',
+  label = 'search',
+  value,
+  maxLength,
+  onChange,
+  onKeyDown
+}) => (
   <div className="has-float-label input-container clearable-input">
     <input
       type="text"
@@ -14,24 +22,21 @@ const ClearableInput = ({ name = "search", label = "search", value, maxLength, o
       onChange={onChange}
       onKeyDown={onKeyDown}
       autoComplete="off"
-      />
-    <label>{ label }</label>
-    {
-      !!value &&
+    />
+    <label>{label}</label>
+    {!!value && (
       <button
         type="button"
         className="button-icon small clear-input"
         icon={Icons.cross}
         onClick={() => onChange({ target: { name, value: '' } })}
-        >
-      </button>
-    }
-    {
-      !!maxLength &&
+      />
+    )}
+    {!!maxLength && (
       <span className="clearable-input-count">
-      { `${value.length}/${maxLength}` }
+        {`${value.length}/${maxLength}`}
       </span>
-    }
+    )}
   </div>
 );
 
@@ -42,6 +47,6 @@ ClearableInput.propTypes = {
   maxLength: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   onKeyDown: PropTypes.func
-}
+};
 
-export default ClearableInput
+export default ClearableInput;

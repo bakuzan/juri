@@ -1,18 +1,12 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
-const propTypes = {
-  location: PropTypes.object.isRequired,
-};
-
-const PageNotFound = ({ location }) => {
+const PageNotFound = ({ location = {} }) => {
   return (
     <p>
-      Page not found - the path, <code>{location.pathname}</code>,
-      did not match any React Router routes.
+      Page not found - the path, <code>{location.pathname}</code>, did not match
+      any React Router routes.
     </p>
   );
-}
-
-PageNotFound.propTypes = propTypes;
+};
 
 export default PageNotFound;
