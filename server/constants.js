@@ -1,24 +1,25 @@
 const ages = {
   adult: 'adult',
   standard: 'standard'
-}
+};
 const types = {
   anime: 'anime',
   manga: 'manga'
-}
+};
 const malStatus = {
   ongoing: 1, //watching reading
   completed: 2,
   onHold: 3,
   dropped: 4,
   planTo: 6 //plantowatch plantoread
-}
+};
 const urls = {
   standard: {
     anime: [
       {
         name: 'masterani',
-        url: 'http://www.masterani.me/api/anime/search?search=:searchString&sb=true',
+        url:
+          'http://www.masterani.me/api/anime/search?search=:searchString&sb=true',
         dataType: 'json'
       },
       {
@@ -54,14 +55,15 @@ const urls = {
           'manga-name': ':searchString',
           'author-name': '',
           'artist-name': '',
-          status:  'both'
+          status: 'both'
         },
         options: { method: 'POST', body: null },
         selector: '.box'
       },
       {
         name: 'mangapark',
-        url: 'http://h.j.mangapark.me/ajax-autocomplete.js?callback=&q=:searchString',
+        url:
+          'http://h.j.mangapark.me/ajax-autocomplete.js?callback=&q=:searchString',
         dataType: 'text'
       }
     ]
@@ -123,6 +125,12 @@ const urls = {
     ],
     manga: [
       {
+        name: 'mangahere',
+        url: 'http://www.mangahere.cc/latest/',
+        dataType: 'text',
+        selector: '.manga_updates > dl'
+      },
+      {
         name: 'mangafox',
         url: 'http://mangafox.la/releases/',
         dataType: 'text',
@@ -131,14 +139,16 @@ const urls = {
     ]
   },
   spellingList: {
-    anime: 'https://raw.githubusercontent.com/bakuzan/user-scripts/master/anime-release-highlighter/anime-spellings.json',
-    manga: 'https://raw.githubusercontent.com/bakuzan/user-scripts/master/manga-release-checker/manga-spellings.json'
+    anime:
+      'https://raw.githubusercontent.com/bakuzan/user-scripts/master/anime-release-highlighter/anime-spellings.json',
+    manga:
+      'https://raw.githubusercontent.com/bakuzan/user-scripts/master/manga-release-checker/manga-spellings.json'
   }
-}
+};
 
 const times = {
   oneHour: 3600000
-}
+};
 
 const constants = {
   age: ages,
@@ -146,6 +156,6 @@ const constants = {
   url: urls,
   malStatus: malStatus,
   time: times
-}
+};
 
 module.exports = constants;

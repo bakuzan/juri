@@ -12,17 +12,17 @@ class ContentItemFactory {
     return Math.abs(Date.now() / Math.random() + Math.random());
   }
   getVersions(subTags) {
-	  let versions = [];
-	  for(let i = 0, length = subTags.length; i < length; i++) {
-	    versions.push(subTags[i].textContent);
-	  }
-	  return versions.join(', ');
-	}
+    let versions = [];
+    for (let i = 0, length = subTags.length; i < length; i++) {
+      versions.push(subTags[i].textContent);
+    }
+    return versions.join(', ');
+  }
   masterani(dataItem) {
     let href = 'https://masterani.me/anime/info/{0}';
     //Handle latest anime format.
     if (dataItem.anime !== undefined) {
-      for(let key in dataItem.anime) {
+      for (let key in dataItem.anime) {
         if (dataItem.anime.hasOwnProperty(key)) {
           dataItem[key] = dataItem.anime[key];
         }
@@ -34,7 +34,8 @@ class ContentItemFactory {
       id: `${dataItem.id}${dataItem.episode || ''}`,
       href: href.replace('{0}', dataItem.slug),
       title: dataItem.title,
-      image: `https://cdn.masterani.me/poster/${dataItem.poster.file || dataItem.poster}`,
+      image: `https://cdn.masterani.me/poster/${dataItem.poster.file ||
+        dataItem.poster}`,
       type: dataItem.type,
       status: dataItem.status,
       episodes: dataItem.episode_count,
@@ -50,7 +51,7 @@ class ContentItemFactory {
     this.contentItem.initaliseProps({
       id: dataItem.href,
       href: dataItem.href,
-      title: dataItem.textContent,
+      title: dataItem.textContent
     });
     //<a href="http://kissanime.ru/Anime/Diamond-no-Ace">Diamond no Ace</a>
   }
@@ -87,7 +88,9 @@ class ContentItemFactory {
         id: dataItem[0],
         href: `http://mangafox.la/manga/${dataItem[2]}/`,
         title: dataItem[1],
-        image: `http://www.mangafox.com/store/manga/${dataItem[0]}/cover.jpg`,
+        image: `https://lmfcdn.secure.footprint.net/store/manga/${
+          dataItem[0]
+        }/cover.jpg?token=fa13edb95918552f6c260c3a678a62d78fd9284c&ttl=1513749600`,
         authour: dataItem[4]
       });
     } else {
@@ -99,7 +102,7 @@ class ContentItemFactory {
         id: `mf-${id}`,
         href: dataLink.href,
         title: dataLink.textContent,
-        image: `http://www.mangafox.com/store/manga/${id}/cover.jpg`
+        image: `https://lmfcdn.secure.footprint.net/store/manga/${id}/cover.jpg?token=fa13edb95918552f6c260c3a678a62d78fd9284c&ttl=1513749600`
       });
     }
     /*
@@ -197,6 +200,31 @@ class ContentItemFactory {
       authour: dataItem[3]
     });
   }
+  mangahere(dataItem) {
+    const links = dataItem.getElementsByTagName('a');
+
+    this.contentItem.initaliseProps({
+      id: this.generateUniqueId(),
+      href: links[1].href,
+      title: links[1].textContent
+    });
+    /*
+      <dl>
+        <dt>
+          <i class="manga_open"></i>
+          <a rel="Himouto! Umaru-chan" class="manga_info" href="//www.mangahere.cc/manga/himouto_umaru_chan/" data-vivaldi-spatnav-clickable="1">
+            Himouto! Umaru-chan
+          </a>
+          <span class="time">Today 10:23am</span>
+        </dt>
+        <dd>
+          <a href="//www.mangahere.cc/manga/himouto_umaru_chan/c167/" title="Himouto! Umaru-chan 167">
+          Himouto! Umaru-chan 167
+          </a>
+        </dd>
+      </dl>
+    */
+  }
   ohentai(dataItem) {
     const urlBase = 'http://ohentai.org/';
     const link = dataItem.getElementsByTagName('a')[1];
@@ -214,7 +242,7 @@ class ContentItemFactory {
   hentaigasm(dataItem) {
     const link = dataItem.getElementsByTagName('a')[0];
     const image = dataItem.getElementsByTagName('img')[0];
-    const videoType = link.title.replace(/^.*((?=subbed)|(?=raw))/ig, '');
+    const videoType = link.title.replace(/^.*((?=subbed)|(?=raw))/gi, '');
 
     this.contentItem.initaliseProps({
       id: dataItem.id,
@@ -291,7 +319,8 @@ class ContentItemFactory {
       image: image.getAttribute('src')
     });
   }
-  animeholics(dataItem) { // hentai.animeholics.org
+  animeholics(dataItem) {
+    // hentai.animeholics.org
     ////console.log('animeholics : ', dataItem);
     this.contentItem.initaliseProps({
       id: `ah-${this.generateUniqueId()}`,
@@ -347,7 +376,8 @@ class ContentItemFactory {
     //console.log('nhentai : ', dataItem);
     const link = dataItem.getElementsByTagName('a')[0];
     const image = dataItem.getElementsByTagName('img')[0];
-    const textElement = dataItem.getElementsByClassName('caption')[0].textContent;
+    const textElement = dataItem.getElementsByClassName('caption')[0]
+      .textContent;
     const authour = textElement.replace(/ .*/, '');
     const titles = textElement.replace(/^\[\w*\] /, '').split('|');
 
