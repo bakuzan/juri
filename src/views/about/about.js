@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import NewTabLink from '../../components/new-tab-link';
 import { paths } from '../../constants/paths';
 import './about.css';
 
@@ -20,21 +21,11 @@ class About extends Component {
           </p>
           <p>
             Juri also provides a latest releases page, powered by
-            <a
-              href="https://www.masterani.me/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              masterani
-            </a>
+            <NewTabLink href="https://www.masterani.me/">masterani</NewTabLink>
             and
-            <a
-              href="http://mangafox.me/releases/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <NewTabLink href="http://mangafox.me/releases/">
               mangafox
-            </a>
+            </NewTabLink>
             for anime and manga respectively.
           </p>
           <div id="about-juri-links">

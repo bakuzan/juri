@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import NewTabLink from '../../components/new-tab-link';
 import { getType, getAge } from '../../actions/value';
 import { magicNumbers } from '../../constants/magic-numbers';
 import './content-item.css';
@@ -12,60 +13,63 @@ class ContentItem extends Component {
     this.type = getType(this.props.isAnime, false);
   }
   padEpisodeNumber(number) {
-    return number <= 999 ? ('00'+number).slice(-3) : number;
+    return number <= 999 ? ('00' + number).slice(-3) : number;
   }
   setAdditionalInformation() {
-    const info = this.content.authour || this.content.versions || magicNumbers.animeType[this.content.type] || null;
+    const info =
+      this.content.authour ||
+      this.content.versions ||
+      magicNumbers.animeType[this.content.type] ||
+      null;
     return info ? `(${info})` : '';
   }
   renderContentItem() {
     return (
       <div>
-        <span className="image" style={{backgroundImage: `url("${unescape(this.content.image)}")`}} title={`Cover image for ${this.content.title}`}></span>
+        <span
+          className="image"
+          style={{ backgroundImage: `url("${unescape(this.content.image)}")` }}
+          title={`Cover image for ${this.content.title}`}
+        />
         <div className="content-item-info">
-          <a href={`${this.content.href}`} target="_blank">
-            {
-              `${this.content.title} ${this.setAdditionalInformation()}\n
-               ${this.content.subtitle || ''}`
-            }
-          </a>
+          <NewTabLink href={`${this.content.href}`}>
+            {`${this.content.title} ${this.setAdditionalInformation()}\n
+               ${this.content.subtitle || ''}`}
+          </NewTabLink>
           <div>
-            {
-              this.content.startDate !== undefined &&
-              (<span>
+            {this.content.startDate !== undefined && (
+              <span>
                 <b>Aired:</b> {this.content.startDate}
-                {
-                  this.content.endDate !== undefined &&
+                {this.content.endDate !== undefined && (
                   <span> to {this.content.endDate} </span>
-                }
+                )}
                 <br />
-              </span>)
-            }{
-              this.content.postedDate !== undefined &&
-              (<span>
+              </span>
+            )}
+            {this.content.postedDate !== undefined && (
+              <span>
                 <b>Posted at:</b> {this.content.postedDate}
                 <br />
-              </span>)
-            }
-            {
-              this.content.episodes !== undefined &&
-              (<span>
+              </span>
+            )}
+            {this.content.episodes !== undefined && (
+              <span>
                 <b>Episodes:</b> {this.content.episodes}
                 <br />
-              </span>)
-            }{
-              this.content.currentEpisode !== undefined &&
-              (<span>
-                <b>Episode #</b>{this.padEpisodeNumber(this.content.currentEpisode)}
+              </span>
+            )}
+            {this.content.currentEpisode !== undefined && (
+              <span>
+                <b>Episode #</b>
+                {this.padEpisodeNumber(this.content.currentEpisode)}
                 <br />
-              </span>)
-            }
-            {
-              this.content.status !== undefined &&
-              (<span>
+              </span>
+            )}
+            {this.content.status !== undefined && (
+              <span>
                 <b>Status:</b> {magicNumbers.animeStatus[this.content.status]}
-              </span>)
-            }
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -73,10 +77,8 @@ class ContentItem extends Component {
   }
   render() {
     const className = this.props.className ? ` ${this.props.className}` : '';
-    return(
-        <li className={`content-item${className}`}>
-          { this.renderContentItem() }
-        </li>
+    return (
+      <li className={`content-item${className}`}>{this.renderContentItem()}</li>
     );
   }
 }
