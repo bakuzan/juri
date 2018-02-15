@@ -225,6 +225,18 @@ class ContentItemFactory {
       </dl>
     */
   }
+  mangahasu(dataItem) {
+    const links = dataItem.getElementsByTagName('a');
+    const title = dataItem.getElementsByTagName('h3')[0];
+    const image = dataItem.getElementsByTagName('img')[0];
+
+    this.contentItem.initaliseProps({
+      id: this.generateUniqueId(),
+      href: links[0].href,
+      title: title.textContent,
+      image: image.src
+    });
+  }
   ohentai(dataItem) {
     const urlBase = 'http://ohentai.org/';
     const link = dataItem.getElementsByTagName('a')[1];

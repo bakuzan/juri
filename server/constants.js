@@ -48,7 +48,7 @@ const urls = {
       },
       {
         name: 'readmanga',
-        url: 'http://www.readmanga.today/service/advanced_search',
+        url: 'https://www.readmng.com/service/advanced_search',
         dataType: 'text',
         formData: {
           type: 'all',
@@ -65,6 +65,13 @@ const urls = {
         url:
           'http://h.j.mangapark.me/ajax-autocomplete.js?callback=&q=:searchString',
         dataType: 'text'
+      },
+      {
+        name: 'mangahasu',
+        url:
+          'http://mangahasu.se/advanced-search.html?keyword=:searchString&author=&artist=&status=&typeid=',
+        dataType: 'text',
+        selector: '.list_manga > li'
       }
     ]
   },
@@ -129,6 +136,12 @@ const urls = {
         url: 'http://www.mangahere.cc/latest/',
         dataType: 'text',
         selector: '.manga_updates > dl'
+      },
+      {
+        name: 'mangahasu',
+        url: 'http://mangahasu.se/latest-releases.html',
+        dataType: 'text',
+        selector: '.list_manga > li'
       },
       {
         name: 'mangafox',
