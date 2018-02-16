@@ -42,6 +42,13 @@ const urls = {
     ],
     manga: [
       {
+        name: 'mangahasu',
+        url:
+          'http://mangahasu.se/advanced-search.html?keyword=:searchString&author=&artist=&status=&typeid=',
+        dataType: 'text',
+        selector: '.list_manga > li'
+      },
+      {
         name: 'mangafox',
         url: 'http://mangafox.la/ajax/search.php?term=:searchString',
         dataType: 'json'
@@ -65,13 +72,6 @@ const urls = {
         url:
           'http://h.j.mangapark.me/ajax-autocomplete.js?callback=&q=:searchString',
         dataType: 'text'
-      },
-      {
-        name: 'mangahasu',
-        url:
-          'http://mangahasu.se/advanced-search.html?keyword=:searchString&author=&artist=&status=&typeid=',
-        dataType: 'text',
-        selector: '.list_manga > li'
       }
     ]
   },
@@ -132,16 +132,16 @@ const urls = {
     ],
     manga: [
       {
-        name: 'mangahere',
-        url: 'http://www.mangahere.cc/latest/',
-        dataType: 'text',
-        selector: '.manga_updates > dl'
-      },
-      {
         name: 'mangahasu',
         url: 'http://mangahasu.se/latest-releases.html',
         dataType: 'text',
         selector: '.list_manga > li'
+      },
+      {
+        name: 'mangahere',
+        url: 'http://www.mangahere.cc/latest/',
+        dataType: 'text',
+        selector: '.manga_updates > dl'
       },
       {
         name: 'mangafox',

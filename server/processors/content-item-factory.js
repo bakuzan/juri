@@ -4,9 +4,9 @@ class ContentItemFactory {
   constructor(contentItem) {
     this.contentItem = contentItem;
   }
-  process(dataItem) {
+  process(dataItem, isLatest) {
     console.log(`Processing with ${this.contentItem.host}`);
-    this[this.contentItem.host](dataItem);
+    this[this.contentItem.host](dataItem, isLatest);
   }
   generateUniqueId() {
     return Math.abs(Date.now() / Math.random() + Math.random());
@@ -225,15 +225,18 @@ class ContentItemFactory {
       </dl>
     */
   }
-  mangahasu(dataItem) {
+  mangahasu(dataItem, isLatest) {
     const links = dataItem.getElementsByTagName('a');
     const title = dataItem.getElementsByTagName('h3')[0];
+    const chapterText = !isLatest
+      ? ''
+      : ` ${links[2].textContent.replace(/.*?(?=\d+$)/g, '')}`;
     const image = dataItem.getElementsByTagName('img')[0];
 
     this.contentItem.initaliseProps({
       id: this.generateUniqueId(),
-      href: links[0].href,
-      title: title.textContent,
+      href: isLatest ? links[2].href : links[0].href,
+      title: `${title.textContent}${chapterText}`,
       image: image.src
     });
   }
