@@ -29,28 +29,35 @@ class SearchBar extends Component {
       <div className="search-bar">
         <h2 className="center-contents">
           Search for
-          <ToggleBox isChecked={this.props.isAnime}
-                     handleChange={this.handleToggleBoxInput}
-                     name="isAnime"
-                     text={currentType} />
+          <ToggleBox
+            isChecked={this.props.isAnime}
+            handleChange={this.handleToggleBoxInput}
+            name="isAnime"
+            text={currentType}
+          />
           on
-          <ToggleBox isChecked={this.props.isAdult}
-                     handleChange={this.handleToggleBoxInput}
-                     name="isAdult"
-                     text={currentAge} />
-          <SelectionList list={this.props.siteSelectList}
-                         onItemSelect={this.props.onSiteSelect}
-                         placeholder="sites" />
+          <ToggleBox
+            isChecked={this.props.isAdult}
+            handleChange={this.handleToggleBoxInput}
+            name="isAdult"
+            text={currentAge}
+          />
+          <SelectionList
+            list={this.props.siteSelectList}
+            selectedIndex={this.props.selectedSiteIndex}
+            onItemSelect={this.props.onSiteSelect}
+            placeholder="sites"
+          />
         </h2>
-		<div className="text-input-container">
-			<ClearableInput
-				name="searchString"
-				label="search for something"
-				value={this.props.searchString}
-				onChange={this.handleSearchStringInput} 
-				autoFocus
-			/>
-		</div>
+        <div className="text-input-container">
+          <ClearableInput
+            name="searchString"
+            label="search for something"
+            value={this.props.searchString}
+            onChange={this.handleSearchStringInput}
+            autoFocus
+          />
+        </div>
       </div>
     );
   }

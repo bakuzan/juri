@@ -21,6 +21,10 @@
         background-color: $secondary-background;
         color: $secondary-colour-contrast;
       }
+      &.selected {
+        background-color: $secondary-colour-contrast;
+        color: $secondary-background;
+      }
     }
   }
   &:hover {
