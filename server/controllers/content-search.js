@@ -18,7 +18,6 @@ const fetchContentFromUrl = (site, search) => {
 
   return fetch(url, fetchOptions)
     .then(fetchData => {
-      //console.log('fetch: ', fetchData);
       return fetchData[site.dataType]();
     })
     .then(response => {

@@ -23,21 +23,16 @@ const urls = {
         dataType: 'json'
       },
       {
-        name: 'kissanime',
-        url: 'http://kissanime.ru/Search/SearchSuggestx', //'http://kissanime.ru/Search/Anime',
-        dataType: 'text',
-        formData: {
-          type: 'Anime',
-          keyword: ':searchString'
-        },
-        options: { method: 'POST', body: null },
-        selector: 'table.listing tr > td > a'
-      },
-      {
         name: 'gogoanime',
         url: 'http://www1.gogoanime.tv/search.html?keyword=:searchString&id=-1',
         dataType: 'text',
         selector: '.last_episodes > .items > li'
+      },
+      {
+        name: '9anime',
+        url: 'https://9anime.is/search?keyword=:searchString',
+        dataType: 'text',
+        selector: '.film-list > .item'
       }
     ],
     manga: [
@@ -54,24 +49,10 @@ const urls = {
         dataType: 'json'
       },
       {
-        name: 'readmanga',
-        url: 'https://www.readmng.com/service/advanced_search',
+        name: 'mangadex',
+        url: 'https://mangadex.com/?page=search&title=:searchString',
         dataType: 'text',
-        formData: {
-          type: 'all',
-          'manga-name': ':searchString',
-          'author-name': '',
-          'artist-name': '',
-          status: 'both'
-        },
-        options: { method: 'POST', body: null },
-        selector: '.box'
-      },
-      {
-        name: 'mangapark',
-        url:
-          'http://h.j.mangapark.me/ajax-autocomplete.js?callback=&q=:searchString',
-        dataType: 'text'
+        selector: '#content table > tbody > tr'
       }
     ]
   },
