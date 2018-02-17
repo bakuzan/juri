@@ -3,3 +3,12 @@ body {
   padding: 0;
   font-family: "Roboto mono", monospace; //"Lucida Console", Courier, monospace;
 }
+
+.flex-spacer {
+  display: flex;
+  flex: 1;
+}
+
+#refresh-button {
+  min-width: 25px;
+}

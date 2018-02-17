@@ -135,7 +135,8 @@ const urls = {
         name: 'mangahasu',
         url: 'http://mangahasu.se/latest-releases.html',
         dataType: 'text',
-        selector: '.list_manga > li'
+        selector: '.list_manga > li',
+        paging: '?page='
       },
       {
         name: 'mangahere',

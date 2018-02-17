@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './toggle-box.css';
 import '../../styles/ripple.css';
 
+const capitaliseFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1);
+
 class ToggleBox extends Component {
   handleChange(e) {
     const name = e.target.name;
@@ -12,11 +14,13 @@ class ToggleBox extends Component {
     return (
       <div className="toggle-box ripple">
         <label className="toggle-box-text">
-          <input type="checkbox"
-                 name={this.props.name}
-                 checked={this.props.isChecked}
-                 onChange={(e) => this.handleChange(e)} />
-          {this.props.text}
+          <input
+            type="checkbox"
+            name={this.props.name}
+            checked={this.props.isChecked}
+            onChange={e => this.handleChange(e)}
+          />
+          {capitaliseFirstLetter(this.props.text)}
         </label>
       </div>
     );
