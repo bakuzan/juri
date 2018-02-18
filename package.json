@@ -30,7 +30,7 @@
     "ssl-root-cas": "^1.2.4"
   },
   "lint-staged": {
-    "*.{js,jsx,json,css}": ["prettier --single-quote --write", "git add"]
+    "*.{js,jsx,json,scss}": ["prettier --single-quote --write", "git add"]
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",

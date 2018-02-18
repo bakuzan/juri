@@ -26,16 +26,22 @@ class Latest extends Component {
   componentDidMount() {
     this.fetchLatest();
   }
+  componentWillReceiveProps(nextProps) {
+    const nextType = getTypeFromSearchParam(nextProps.location);
+    const currentType = getTypeFromSearchParam(this.props.location);
+    if (nextType !== currentType) {
+      this.setState(
+        {
+          page: 1,
+          loading: true
+        },
+        () => this.fetchLatest()
+      );
+    }
+  }
   handleUserInput(name, value) {
     const type = getType(value, true);
     this.props.history.replace(`${this.props.match.url}?type=${type}`);
-    this.setState(
-      {
-        page: 1,
-        loading: true
-      },
-      () => this.fetchLatest()
-    );
   }
   handleDataRefresh() {
     this.setState({ loading: true }, () => this.fetchLatest());
@@ -43,9 +49,7 @@ class Latest extends Component {
   handleLoadMore() {
     this.setState(
       prev => ({ page: prev.page + 1, loadingMore: true }),
-      () => {
-        this.fetchLatest(this.state.page);
-      }
+      () => this.fetchLatest(this.state.page)
     );
   }
   fetchLatest(page) {

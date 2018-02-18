@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import SvgLogo from '../svg-logo/svg-logo.js';
 import { NavLink } from 'react-router-dom';
 import { paths } from '../../constants/paths';
-import * as searchFilters from '../../constants/search-filters';
+
 import './header.css';
 import '../../styles/ripple.css';
 import '../../styles/box-model.css';
+
+const matchUrlWithoutSearch = (match, location) =>
+  location.pathname === '/juri/latest';
 
 class Header extends Component {
   render() {
@@ -25,9 +28,8 @@ class Header extends Component {
             <NavLink
               className="ripple center-contents"
               activeClassName="active"
-              to={`${paths.base}${paths.latest}?type=${
-                searchFilters.IS_ANIME_TRUE
-              }`}
+              isActive={matchUrlWithoutSearch}
+              to={`${paths.base}${paths.latest}`}
             >
               Latest
             </NavLink>
