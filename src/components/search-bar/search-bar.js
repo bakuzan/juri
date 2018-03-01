@@ -20,7 +20,7 @@ class SearchBar extends Component {
     this.props.onUserInput(name, value);
   }
   handleToggleBoxInput(name, value) {
-    this.props.onUserInput(name, value);
+    this.props.onCheckboxChange(name, value);
   }
   render() {
     const currentType = getType(this.props.isAnime, false);

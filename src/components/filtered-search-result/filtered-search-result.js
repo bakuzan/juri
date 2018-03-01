@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import SearchBar from '../search-bar/search-bar.js';
 import SearchResult from '../search-result/search-result.js';
-import { getType, getAge } from '../../actions/value';
+import {
+  getType,
+  getAge,
+  getSearchStringFromSearchParam,
+  getTypeFromSearchParam,
+  getAgeFromSearchParam,
+  isAnimeType,
+  isAdultAge
+} from '../../actions/value';
 import {
   malQuery,
   contentQuery,
@@ -17,8 +25,6 @@ class FilteredSearchResult extends Component {
     super(props);
     this.state = {
       contentResults: [],
-      isAdult: false,
-      isAnime: true,
       malResults: [],
       searchString: '',
       siteToSearchIndex: 0,
@@ -29,6 +35,8 @@ class FilteredSearchResult extends Component {
 
     this.timer = null;
 
+    this.handleCheckboxFilter = this.handleCheckboxFilter.bind(this);
+    this.handleLoadData = this.handleLoadData.bind(this);
     this.handleUserInput = this.handleUserInput.bind(this);
     this.handleResultsCollapse = this.handleResultsCollapse.bind(this);
     this.handleSiteSelect = this.handleSiteSelect.bind(this);
@@ -40,15 +48,60 @@ class FilteredSearchResult extends Component {
         const type = getType(prev.isAnime, true);
         const age = getAge(prev.isAdult, true);
         return {
+          searchString: getSearchStringFromSearchParam(this.props.location),
           siteSelectList: this.setSiteSelectList([], type, age)
         };
       });
     });
   }
+  componentWillReceiveProps(nextProps) {
+    const typeChanged =
+      getTypeFromSearchParam(nextProps.location) !==
+      getTypeFromSearchParam(this.props.location);
+    const ageChanged =
+      getAgeFromSearchParam(nextProps.location) !==
+      getAgeFromSearchParam(this.props.location);
+    if (typeChanged || ageChanged) {
+      const filterName = typeChanged ? ANIME_STATE_NAME : ADULT_STATE_NAME;
+      this.handleLoadData(filterName);
+    }
+  }
+  handleCheckboxFilter(name, value) {
+    const isTypeChange = name === ANIME_STATE_NAME;
+    const isAdultChange = name === ADULT_STATE_NAME;
+    const type = isTypeChange
+      ? getType(value, true)
+      : getTypeFromSearchParam(this.props.location);
+    const age = isAdultChange
+      ? getAge(value, true)
+      : getAgeFromSearchParam(this.props.location);
+
+    this.props.history.replace(
+      `${this.props.match.url}?type=${type}&age=${age}`
+    );
+  }
+  handleLoadData(changedFilterName) {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      if (this.state.searchString.length > 2) {
+        let loading = {
+          contentLoading: true
+        };
+
+        if (changedFilterName === ADULT_STATE_NAME) {
+          // this.fetchMalItems(type);
+          loading.malLoading = true;
+        }
+        console.log('L');
+        // this.fetchContentItems(type, age);
+        // this.setState(loading);
+      }
+    }, 1500);
+  }
   handleSiteSelect(siteToSearchIndex) {
     if (this.state.searchString.length > 2) {
-      const type = getType(this.state.isAnime, true);
-      const age = getAge(this.state.isAdult, true);
+      const type = getTypeFromSearchParam(this.props.location);
+      const age = getAgeFromSearchParam(this.props.location);
       this.fetchContentItems(type, age, siteToSearchIndex);
       this.setState({ contentLoading: true });
     } else {
@@ -79,37 +132,19 @@ class FilteredSearchResult extends Component {
     });
   }
   handleUserInput(name, value) {
-    const isSearchChange = name === SEARCH_STATE_NAME;
-    const isTypeChange = name === ANIME_STATE_NAME;
-    const isAdultChange = name === ADULT_STATE_NAME;
-    const type = isTypeChange
-      ? getType(value, true)
-      : getType(this.state.isAnime, true);
-    const age = isAdultChange
-      ? getAge(value, true)
-      : getAge(this.state.isAdult, true);
-
-    this.setState(prev => ({
-      [name]: value,
-      siteToSearchIndex: isSearchChange ? prev.siteToSearchIndex : 0,
-      siteSelectList: this.setSiteSelectList(prev.siteSelectList, type, age)
-    }));
-
-    clearTimeout(this.timer);
-    this.timer = setTimeout(() => {
-      if (this.state.searchString.length > 2) {
-        let loading = {
-          contentLoading: true
-        };
-
-        if (name !== ADULT_STATE_NAME) {
-          this.fetchMalItems(type);
-          loading.malLoading = true;
-        }
-        this.fetchContentItems(type, age);
-        this.setState(loading);
-      }
-    }, 1500);
+    const hasValue = !!value;
+    const type = getTypeFromSearchParam(this.props.location);
+    const age = getAgeFromSearchParam(this.props.location);
+    this.setState(
+      prev => ({
+        [name]: value,
+        contentResults: hasValue ? prev.contentResults : [],
+        malResults: hasValue ? prev.malResults : [],
+        siteToSearchIndex: prev.siteToSearchIndex,
+        siteSelectList: this.setSiteSelectList(prev.siteSelectList, type, age)
+      }),
+      () => this.handleLoadData(SEARCH_STATE_NAME)
+    );
   }
   fetchContentItems(type, age, siteIndex) {
     const noSiteSpecified = isNaN(siteIndex);
@@ -120,37 +155,38 @@ class FilteredSearchResult extends Component {
       search: this.state.searchString,
       site
     }).then(response => {
-      this.setState((previousState, props) => {
-        return {
-          contentResults: noSiteSpecified
-            ? response
-            : previousState.contentResults.concat(response),
-          contentLoading: false
-        };
-      });
+      this.setState((previousState, props) => ({
+        contentResults: noSiteSpecified
+          ? response
+          : previousState.contentResults.concat(response),
+        contentLoading: false
+      }));
     });
   }
   fetchMalItems(type) {
-    malQuery({ type: type, search: this.state.searchString }).then(response => {
-      this.setState({ malResults: response, malLoading: false });
-    });
+    malQuery({ type: type, search: this.state.searchString }).then(response =>
+      this.setState({ malResults: response, malLoading: false })
+    );
   }
   render() {
+    const isAnime = isAnimeType(getTypeFromSearchParam(this.props.location));
+    const isAdult = isAdultAge(getAgeFromSearchParam(this.props.location));
     return (
       <div className="filtered-search-result">
         <SearchBar
           searchString={this.state.searchString}
-          isAdult={this.state.isAdult}
-          isAnime={this.state.isAnime}
+          isAdult={isAdult}
+          isAnime={isAnime}
           onUserInput={this.handleUserInput}
+          onCheckboxChange={this.handleCheckboxFilter}
           selectedSiteIndex={this.state.siteToSearchIndex}
           siteSelectList={this.state.siteSelectList}
           onSiteSelect={this.handleSiteSelect}
         />
         {this.state.searchString.length > 2 && (
           <SearchResult
-            isAdult={this.state.isAdult}
-            isAnime={this.state.isAnime}
+            isAdult={isAdult}
+            isAnime={isAnime}
             malResults={this.state.malResults}
             malLoading={this.state.malLoading}
             contentResults={this.state.contentResults}
