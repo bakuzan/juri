@@ -11,7 +11,6 @@ class Latest extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAnime: true,
       page: 1,
       latestResults: [],
       loading: true,
