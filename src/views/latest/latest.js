@@ -30,13 +30,12 @@ class Latest extends Component {
     const prevType = getTypeFromSearchParam(prevProps.location);
     if (nextType === prevType) return null;
 
-    const page = 1;
     this.setState(
       {
         page: 1,
         loading: true
       },
-      () => this.fetchLatest(page)
+      () => this.fetchLatest()
     );
   }
   handleUserInput(name, value) {
