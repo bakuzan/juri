@@ -25,18 +25,17 @@ class Latest extends Component {
   componentDidMount() {
     this.fetchLatest();
   }
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     const nextType = getTypeFromSearchParam(nextProps.location);
     const currentType = getTypeFromSearchParam(this.props.location);
-    if (nextType !== currentType) {
-      this.setState(
-        {
-          page: 1,
-          loading: true
-        },
-        () => this.fetchLatest()
-      );
-    }
+    if (nextType === currentType) return null;
+
+    const page = 1;
+    this.fetchLatest(page);
+    return {
+      page,
+      loading: true
+    };
   }
   handleUserInput(name, value) {
     const type = getType(value, true);

@@ -58,13 +58,15 @@ class FilteredSearchResult extends Component {
       );
     });
   }
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const typeChanged =
-      getTypeFromSearchParam(nextProps.location) !==
+      getTypeFromSearchParam(prevProps.location) !==
       getTypeFromSearchParam(this.props.location);
+
     const ageChanged =
-      getAgeFromSearchParam(nextProps.location) !==
+      getAgeFromSearchParam(prevProps.location) !==
       getAgeFromSearchParam(this.props.location);
+
     if (typeChanged || ageChanged) {
       const filterName = typeChanged ? ANIME_STATE_NAME : ADULT_STATE_NAME;
       this.handleLoadData(filterName);
