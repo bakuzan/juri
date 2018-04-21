@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import NewTabLink from '../../components/new-tab-link';
 import * as searchFilters from '../../constants/search-filters';
@@ -6,9 +7,17 @@ import './mal-item.css';
 
 function MalItem(props) {
   const type = getType(props.isAnime, false);
-
+  const canClick = !!props.onClick;
+  const onClick = canClick ? () => props.onClick(props.content) : null;
   return (
-    <li className="mal-item">
+    <li
+      className={classNames('mal-item', {
+        clickable: canClick,
+        selected: props.isSelected
+      })}
+      role={canClick ? 'button' : null}
+      onClick={onClick}
+    >
       <span
         className="image"
         style={{ backgroundImage: `url(${props.content.image})` }}
@@ -16,6 +25,7 @@ function MalItem(props) {
       />
       <div className="mal-item-info">
         <NewTabLink
+          onClick={e => e.stopPropagation()}
           href={`https://myanimelist.net/${type.toLowerCase()}/${
             props.content.id
           }`}

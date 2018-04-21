@@ -5,6 +5,13 @@
   padding: 2px;
   margin: 2px 0;
   list-style-type: none;
+  &.clickable {
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  &.selected {
+    border: 1px solid $secondary-colour;
+  }
   &.latest-item {
     display: inline-flex;
     width: 32%;
@@ -40,7 +47,9 @@
       &:visited {
         color: $secondary-colour;
       }
-      &:focus, &:hover, &:active {
+      &:focus,
+      &:hover,
+      &:active {
         color: $primary-colour;
       }
     }

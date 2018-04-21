@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Roboto mono", monospace; //"Lucida Console", Courier, monospace;
+  font-family: 'Roboto mono', monospace; //"Lucida Console", Courier, monospace;
 }
 
 .flex-spacer {
@@ -11,4 +11,11 @@ body {
 
 #refresh-button {
   min-width: 25px;
+}
+
+.flex {
+  display: flex;
+  &.align-end {
+    justify-content: flex-end;
+  }
 }

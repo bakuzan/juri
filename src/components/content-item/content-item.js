@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { Component } from 'react';
 import NewTabLink from '../../components/new-tab-link';
 import { getType, getAge } from '../../actions/value';
@@ -32,7 +33,10 @@ class ContentItem extends Component {
           title={`Cover image for ${this.content.title}`}
         />
         <div className="content-item-info">
-          <NewTabLink href={`${this.content.href}`}>
+          <NewTabLink
+            href={`${this.content.href}`}
+            onClick={e => e.stopPropagation()}
+          >
             {`${this.content.title} ${this.setAdditionalInformation()}\n
                ${this.content.subtitle || ''}`}
           </NewTabLink>
@@ -76,9 +80,22 @@ class ContentItem extends Component {
     );
   }
   render() {
-    const className = this.props.className ? ` ${this.props.className}` : '';
+    const canClick = !!this.props.onClick;
+    const onClick = canClick
+      ? () => this.props.onClick(this.props.content)
+      : null;
     return (
-      <li className={`content-item${className}`}>{this.renderContentItem()}</li>
+      <li
+        className={classNames(
+          'content-item',
+          { clickable: canClick, selected: this.props.isSelected },
+          this.props.className
+        )}
+        role={canClick ? 'button' : null}
+        onClick={onClick}
+      >
+        {this.renderContentItem()}
+      </li>
     );
   }
 }

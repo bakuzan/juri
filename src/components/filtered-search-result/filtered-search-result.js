@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SearchBar from '../search-bar/search-bar.js';
 import SearchResult from '../search-result/search-result.js';
+import SendSelectedDataToSave from '../send-selected-data-to-save/send-selected-data-to-save';
 import {
   getType,
   getAge,
@@ -20,6 +21,11 @@ const SEARCH_STATE_NAME = 'searchString';
 const ANIME_STATE_NAME = 'isAnime';
 const ADULT_STATE_NAME = 'isAdult';
 
+const emptySelectedItems = {
+  malItem: null,
+  contentItem: null
+};
+
 class FilteredSearchResult extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +36,8 @@ class FilteredSearchResult extends Component {
       siteToSearchIndex: 0,
       siteSelectList: [],
       contentLoading: false,
-      malLoading: false
+      malLoading: false,
+      selectedItems: { ...emptySelectedItems }
     };
 
     this.timer = null;
@@ -40,6 +47,8 @@ class FilteredSearchResult extends Component {
     this.handleUserInput = this.handleUserInput.bind(this);
     this.handleResultsCollapse = this.handleResultsCollapse.bind(this);
     this.handleSiteSelect = this.handleSiteSelect.bind(this);
+    this.handleMalItemClick = this.handleMalItemClick.bind(this);
+    this.handleContentItemClick = this.handleContentItemClick.bind(this);
   }
   componentDidMount() {
     contentSiteListQuery().then(response => {
@@ -96,16 +105,22 @@ class FilteredSearchResult extends Component {
       if (this.state.searchString.length > 2) {
         const type = getTypeFromSearchParam(this.props.location);
         const age = getAgeFromSearchParam(this.props.location);
-        let loading = {
+        let stateUpdate = {
           contentLoading: true
         };
 
         if (changedFilterName !== ADULT_STATE_NAME) {
           this.fetchMalItems(type);
-          loading.malLoading = true;
+          stateUpdate.malLoading = true;
         }
         this.fetchContentItems(type, age);
-        this.setState(loading);
+        this.setState(prev => ({
+          ...stateUpdate,
+          selectedItems: {
+            contentItem: null,
+            malItem: stateUpdate.malLoading ? null : prev.selectedItems.malItem
+          }
+        }));
       }
     }, 1500);
   }
@@ -177,11 +192,36 @@ class FilteredSearchResult extends Component {
       this.setState({ malResults: response, malLoading: false })
     );
   }
+  handleItemClick(attr, item) {
+    const currentSelected = this.state.selectedItems[attr];
+    const isSame = currentSelected && currentSelected.id === item.id;
+    console.log(attr, item, isSame, this.state);
+    this.setState(prev => ({
+      selectedItems: {
+        ...prev.selectedItems,
+        [attr]: isSame ? null : item
+      }
+    }));
+  }
+  handleMalItemClick(item) {
+    this.handleItemClick('malItem', item);
+  }
+  handleContentItemClick(item) {
+    this.handleItemClick('contentItem', item);
+  }
   render() {
     const isAnime = isAnimeType(getTypeFromSearchParam(this.props.location));
     const isAdult = isAdultAge(getAgeFromSearchParam(this.props.location));
+    const selectedItems = {
+      ...this.state.selectedItems
+    };
+    const selectionActions = {
+      selectMalItem: this.handleMalItemClick,
+      selectContentItem: this.handleContentItemClick
+    };
     return (
       <div className="filtered-search-result">
+        <SendSelectedDataToSave selectedItems={selectedItems} />
         <SearchBar
           searchString={this.state.searchString}
           isAdult={isAdult}
@@ -202,6 +242,8 @@ class FilteredSearchResult extends Component {
             contentLoading={this.state.contentLoading}
             siteSelectList={this.state.siteSelectList}
             onSiteCollapse={this.handleResultsCollapse}
+            selectedItems={selectedItems}
+            selectionActions={selectionActions}
           />
         )}
       </div>

@@ -3,7 +3,11 @@
   margin: 0 auto;
 }
 
-input[type="text"] {
+input[type='text'] {
   width: 100%;
   min-width: 200px;
+}
+
+.search-bar > .title {
+  margin-top: 0;
 }

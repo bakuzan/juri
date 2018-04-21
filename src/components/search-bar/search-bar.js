@@ -27,7 +27,7 @@ class SearchBar extends Component {
     const currentAge = getAge(this.props.isAdult, false);
     return (
       <div className="search-bar">
-        <h2 className="center-contents">
+        <h2 className="title center-contents">
           Search for
           <ToggleBox
             isChecked={this.props.isAnime}
