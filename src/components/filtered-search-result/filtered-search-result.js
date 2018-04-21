@@ -44,23 +44,29 @@ class FilteredSearchResult extends Component {
   componentDidMount() {
     contentSiteListQuery().then(response => {
       this.contentSiteList = response;
-      this.setState(prev => {
-        const type = getType(prev.isAnime, true);
-        const age = getAge(prev.isAdult, true);
-        return {
+      const type = getTypeFromSearchParam(this.props.location);
+      const age = getAgeFromSearchParam(this.props.location);
+      this.setState(
+        prev => ({
           searchString: getSearchStringFromSearchParam(this.props.location),
           siteSelectList: this.setSiteSelectList([], type, age)
-        };
-      });
+        }),
+        () =>
+          this.state.searchString
+            ? this.handleLoadData(SEARCH_STATE_NAME)
+            : null
+      );
     });
   }
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const typeChanged =
-      getTypeFromSearchParam(nextProps.location) !==
+      getTypeFromSearchParam(prevProps.location) !==
       getTypeFromSearchParam(this.props.location);
+
     const ageChanged =
-      getAgeFromSearchParam(nextProps.location) !==
+      getAgeFromSearchParam(prevProps.location) !==
       getAgeFromSearchParam(this.props.location);
+
     if (typeChanged || ageChanged) {
       const filterName = typeChanged ? ANIME_STATE_NAME : ADULT_STATE_NAME;
       this.handleLoadData(filterName);
@@ -76,6 +82,10 @@ class FilteredSearchResult extends Component {
       ? getAge(value, true)
       : getAgeFromSearchParam(this.props.location);
 
+    this.setState(prev => ({
+      siteToSearchIndex: 0,
+      siteSelectList: this.setSiteSelectList(prev.siteSelectList, type, age)
+    }));
     this.props.history.replace(
       `${this.props.match.url}?type=${type}&age=${age}`
     );
@@ -84,17 +94,18 @@ class FilteredSearchResult extends Component {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {
       if (this.state.searchString.length > 2) {
+        const type = getTypeFromSearchParam(this.props.location);
+        const age = getAgeFromSearchParam(this.props.location);
         let loading = {
           contentLoading: true
         };
 
-        if (changedFilterName === ADULT_STATE_NAME) {
-          // this.fetchMalItems(type);
+        if (changedFilterName !== ADULT_STATE_NAME) {
+          this.fetchMalItems(type);
           loading.malLoading = true;
         }
-        console.log('L');
-        // this.fetchContentItems(type, age);
-        // this.setState(loading);
+        this.fetchContentItems(type, age);
+        this.setState(loading);
       }
     }, 1500);
   }
@@ -135,16 +146,14 @@ class FilteredSearchResult extends Component {
     const hasValue = !!value;
     const type = getTypeFromSearchParam(this.props.location);
     const age = getAgeFromSearchParam(this.props.location);
-    this.setState(
-      prev => ({
-        [name]: value,
-        contentResults: hasValue ? prev.contentResults : [],
-        malResults: hasValue ? prev.malResults : [],
-        siteToSearchIndex: prev.siteToSearchIndex,
-        siteSelectList: this.setSiteSelectList(prev.siteSelectList, type, age)
-      }),
-      () => this.handleLoadData(SEARCH_STATE_NAME)
-    );
+    this.setState(prev => ({
+      [name]: value,
+      contentResults: hasValue ? prev.contentResults : [],
+      malResults: hasValue ? prev.malResults : [],
+      siteToSearchIndex: prev.siteToSearchIndex,
+      siteSelectList: this.setSiteSelectList(prev.siteSelectList, type, age)
+    }));
+    this.handleLoadData(SEARCH_STATE_NAME);
   }
   fetchContentItems(type, age, siteIndex) {
     const noSiteSpecified = isNaN(siteIndex);

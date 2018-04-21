@@ -37,7 +37,7 @@ export const getTypeFromSearchParam = location =>
 export const getAgeFromSearchParam = location =>
   location.search && location.search.includes('age=')
     ? extractSearchParam('age', location.search).toLowerCase()
-    : toLowerCase(searchFilters.IS_ADULT_TRUE, true);
+    : toLowerCase(searchFilters.IS_ADULT_FALSE, true);
 
 export const getSearchStringFromSearchParam = location =>
   extractSearchParam('searchString', location.search);

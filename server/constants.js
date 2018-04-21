@@ -145,12 +145,18 @@ const times = {
   oneHour: 3600000
 };
 
+const environment = {
+  development: 'development',
+  production: 'production'
+};
+
 const constants = {
   age: ages,
   type: types,
   url: urls,
   malStatus: malStatus,
-  time: times
+  time: times,
+  environment
 };
 
 module.exports = constants;
