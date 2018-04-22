@@ -19,7 +19,11 @@ class SendSelectedDataToSave extends React.Component {
     this.handleSendData = this.handleSendData.bind(this);
   }
   handleSendData() {
-    const { type, selectedItems: { malItem, contentItem } } = this.props;
+    const {
+      type,
+      isAdult,
+      selectedItems: { malItem, contentItem }
+    } = this.props;
     const searchData = mapSelectedToData(malItem, contentItem);
     const searchStr = Object.keys(searchData).reduce((p, c, i) => {
       const join = i > 0 ? '&' : '';
@@ -27,7 +31,9 @@ class SendSelectedDataToSave extends React.Component {
       return `${p}${join}${c}=${value}`;
     }, '');
     window.open(
-      `${process.env.ERZA_BASE_URL}/${type}/create?${searchStr}`,
+      `${
+        process.env.REACT_APP_ERZA_BASE_URL
+      }/${type}/create?isAdult=${isAdult}&${searchStr}`,
       '_blank'
     );
   }
@@ -52,6 +58,7 @@ class SendSelectedDataToSave extends React.Component {
 
 SendSelectedDataToSave.propTypes = {
   type: PropTypes.string.isRequired,
+  isAdult: PropTypes.bool.isRequired,
   selectedItems: PropTypes.shape({
     malItem: PropTypes.object,
     contentItem: PropTypes.object

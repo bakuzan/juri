@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SearchBar from '../search-bar/search-bar.js';
 import SearchResult from '../search-result/search-result.js';
-import SendSelectedDataToSave from '../send-selected-data-to-save/send-selected-data-to-save';
+import SendSelectedDataToSave from '../send-selected-data-to-save';
 import {
   getType,
   getAge,
@@ -224,6 +224,7 @@ class FilteredSearchResult extends Component {
       <div className="filtered-search-result">
         <SendSelectedDataToSave
           type={searchType}
+          isAdult={isAdult}
           selectedItems={selectedItems}
         />
         <SearchBar
