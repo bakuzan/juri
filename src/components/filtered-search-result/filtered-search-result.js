@@ -210,7 +210,8 @@ class FilteredSearchResult extends Component {
     this.handleItemClick('contentItem', item);
   }
   render() {
-    const isAnime = isAnimeType(getTypeFromSearchParam(this.props.location));
+    const searchType = getTypeFromSearchParam(this.props.location);
+    const isAnime = isAnimeType(searchType);
     const isAdult = isAdultAge(getAgeFromSearchParam(this.props.location));
     const selectedItems = {
       ...this.state.selectedItems
@@ -221,7 +222,10 @@ class FilteredSearchResult extends Component {
     };
     return (
       <div className="filtered-search-result">
-        <SendSelectedDataToSave selectedItems={selectedItems} />
+        <SendSelectedDataToSave
+          type={searchType}
+          selectedItems={selectedItems}
+        />
         <SearchBar
           searchString={this.state.searchString}
           isAdult={isAdult}

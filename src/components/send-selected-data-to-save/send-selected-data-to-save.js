@@ -1,12 +1,16 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
-var searchData = {};
-
 const mapContentItem = item =>
-  item ? { link: item.href, title: item.title, image: item.image } : null;
+  item ? { link: item.href, title: item.title, image: item.image } : {};
 
 const mapMalItem = item =>
-  item ? { malId: item.id, title: item.title, image: item.image } : null;
+  item ? { malId: item.id, title: item.title, image: item.image } : {};
+
+const mapSelectedToData = (malItem, contentItem) => ({
+  ...mapContentItem(contentItem),
+  ...mapMalItem(malItem)
+});
 
 class SendSelectedDataToSave extends React.Component {
   constructor(props) {
@@ -15,14 +19,17 @@ class SendSelectedDataToSave extends React.Component {
     this.handleSendData = this.handleSendData.bind(this);
   }
   handleSendData() {
-    const { malItem, contentItem } = this.props.selectedItems;
-    searchData = {
-      contentData: mapContentItem(contentItem),
-      malData: mapMalItem(malItem)
-    };
-    // TODO
-    // need to pass type to this component
-    // open window to erza here!
+    const { type, selectedItems: { malItem, contentItem } } = this.props;
+    const searchData = mapSelectedToData(malItem, contentItem);
+    const searchStr = Object.keys(searchData).reduce((p, c, i) => {
+      const join = i > 0 ? '&' : '';
+      const value = searchData[c] || '';
+      return `${p}${join}${c}=${value}`;
+    }, '');
+    window.open(
+      `${process.env.ERZA_BASE_URL}/${type}/create?${searchStr}`,
+      '_blank'
+    );
   }
   render() {
     const hasSelected = Object.keys(this.props.selectedItems).some(
@@ -42,4 +49,13 @@ class SendSelectedDataToSave extends React.Component {
     );
   }
 }
+
+SendSelectedDataToSave.propTypes = {
+  type: PropTypes.string.isRequired,
+  selectedItems: PropTypes.shape({
+    malItem: PropTypes.object,
+    contentItem: PropTypes.object
+  }).isRequired
+};
+
 export default SendSelectedDataToSave;
