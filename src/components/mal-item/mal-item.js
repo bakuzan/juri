@@ -3,6 +3,7 @@ import React from 'react';
 import NewTabLink from '../../components/new-tab-link';
 import * as searchFilters from '../../constants/search-filters';
 import { getType } from '../../actions/value';
+import { paths } from '../../constants/paths';
 import './mal-item.css';
 
 function MalItem(props) {
@@ -20,9 +21,14 @@ function MalItem(props) {
     >
       <span
         className="image"
-        style={{ backgroundImage: `url(${props.content.image})` }}
-        title={`Cover image for ${props.content.title}`}
-      />
+        style={{ backgroundImage: `url("${paths.images.deadImage}")` }}
+      >
+        <span
+          className="image"
+          style={{ backgroundImage: `url(${props.content.image})` }}
+          title={`Cover image for ${props.content.title}`}
+        />
+      </span>
       <div className="mal-item-info">
         <NewTabLink
           onClick={e => e.stopPropagation()}

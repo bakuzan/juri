@@ -27,5 +27,8 @@ export const paths = {
     contentSearch: '/api/content-search/:site/:type/:age',
     contentLatest: '/api/content-latest/:type',
     contentSiteList: '/api/content-site-list'
+  },
+  images: {
+    deadImage: 'https://i.imgur.com/gKr1YhF.png'
   }
 };

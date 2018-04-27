@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import NewTabLink from '../../components/new-tab-link';
 import { getType, getAge } from '../../actions/value';
 import { magicNumbers } from '../../constants/magic-numbers';
+import { paths } from '../../constants/paths';
 import './content-item.css';
 
 class ContentItem extends Component {
@@ -29,9 +30,16 @@ class ContentItem extends Component {
       <div>
         <span
           className="image"
-          style={{ backgroundImage: `url("${unescape(this.content.image)}")` }}
-          title={`Cover image for ${this.content.title}`}
-        />
+          style={{ backgroundImage: `url("${paths.images.deadImage}")` }}
+        >
+          <span
+            className="image"
+            style={{
+              backgroundImage: `url("${unescape(this.content.image)}")`
+            }}
+            title={`Cover image for ${this.content.title}`}
+          />
+        </span>
         <div className="content-item-info">
           <NewTabLink
             href={`${this.content.href}`}
