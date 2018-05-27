@@ -127,8 +127,8 @@ const getMyanimelist = {
 
 const setMyAnimeListFlag = (type, latestItems) => {
   cache = helperFunctions.assignCacheState();
-  return new Promise((resolve, reject) => {
-    getMyanimelist[type]().then(mylist => {
+  return getMyanimelist[type]()
+    .then(mylist => {
       console.log(`my ${type} list returned with ${mylist.length} items`);
       const length = latestItems.length;
       for (let i = 0; i < length; i++) {
@@ -140,9 +140,12 @@ const setMyAnimeListFlag = (type, latestItems) => {
         );
         item.isMalItem = index !== -1;
       }
-      resolve(latestItems);
+      return latestItems;
+    })
+    .catch(err => {
+      console.error(chalk.red(`my ${type} list failed to return items`));
+      return latestItems;
     });
-  });
 };
 
 const malChecking = {
