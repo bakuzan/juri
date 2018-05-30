@@ -113,17 +113,18 @@ const urls = {
     ],
     manga: [
       {
+        name: 'mangahere',
+        url: 'http://www.mangahere.cc/latest/',
+        dataType: 'text',
+        selector: '.manga_updates > dl',
+        paging: '/:page/'
+      },
+      {
         name: 'mangahasu',
         url: 'http://mangahasu.se/latest-releases.html',
         dataType: 'text',
         selector: '.list_manga > li',
-        paging: '?page='
-      },
-      {
-        name: 'mangahere',
-        url: 'http://www.mangahere.cc/latest/',
-        dataType: 'text',
-        selector: '.manga_updates > dl'
+        paging: '?page=:page'
       },
       {
         name: 'mangafox',

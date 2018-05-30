@@ -59,7 +59,9 @@ const latest = (req, res) => {
   const type = req.params.type;
   const page = req.query.page;
   const site = constants.url.latest[type][0];
-  const url = !page ? site.url : `${site.url}${site.paging}${page}`;
+  const url = !page
+    ? site.url
+    : `${site.url}${site.paging.replace(':page', page)}`;
 
   fetchContentFromUrl({ ...site, url }, '')
     .then(jsonResult => {
