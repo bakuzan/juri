@@ -56,9 +56,10 @@ const search = (req, res) => {
 };
 
 const latest = (req, res) => {
+  const siteIndex = req.params.site;
   const type = req.params.type;
   const page = req.query.page;
-  const site = constants.url.latest[type][0];
+  const site = constants.url.latest[type][siteIndex];
   const url = !page
     ? site.url
     : `${site.url}${site.paging.replace(':page', page)}`;

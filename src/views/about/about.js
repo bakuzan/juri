@@ -23,9 +23,7 @@ class About extends Component {
             Juri also provides a latest releases page, powered by
             <NewTabLink href="https://www.masterani.me/">masterani</NewTabLink>
             and
-            <NewTabLink href="http://mangafox.me/releases/">
-              mangafox
-            </NewTabLink>
+            <NewTabLink href="http://fanfox.me/releases/">fanfox</NewTabLink>
             for anime and manga respectively.
           </p>
           <div id="about-juri-links">

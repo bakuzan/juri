@@ -1,4 +1,40 @@
-@import './partials/_mixins-float-label';
+@mixin float-label-container {
+  display: flex;
+  position: relative;
+}
+
+@mixin float-label {
+  label,
+  > span {
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    cursor: text;
+    font-size: 0.6em;
+    opacity: 1;
+    transition: all 0.2s;
+    @content;
+  }
+}
+
+@mixin float-label-input {
+  &::-webkit-input-placeholder {
+    opacity: 1;
+    transition: all 0.2s;
+  }
+  &:placeholder-shown:not(:focus)::-webkit-input-placeholder {
+    opacity: 0;
+  }
+}
+
+@mixin float-label-scaled {
+  &:placeholder-shown:not(:focus) + *:not(.input-has-content) {
+    font-size: 1.3em;
+    opacity: 0.5;
+    pointer-events: none;
+    @content;
+  }
+}
 
 .has-float-label {
   @include float-label-container;
@@ -7,34 +43,51 @@
 
   select {
     -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
+    -moz-appearance: none;
+    appearance: none;
   }
 
-  input, select {
+  input,
+  select {
     @include float-label-input;
     font-size: inherit;
-    padding: 0 .5em;
+    padding: 0 0.5em;
     padding-top: 1em;
+    padding-left: 0.25em;
     margin-bottom: 2px;
-    // border: 0;
-    // border-radius: 0;
-    // border-bottom: 2px solid rgba(0,0,0,.1);
+    border: 0;
+    border-radius: 0;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 
     @include float-label-scaled {
-      top: .25em;
-      left: .5em;
+      top: 0.25em;
+      left: 0.5em;
     }
 
     &:focus {
       outline: none;
-      border-color: rgba(0,0,0,.5);
+      border-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+  select {
+    margin-bottom: 0;
+  }
+
+  &.input-list-container input {
+    padding-bottom: 0.3em;
+    @include float-label-scaled {
+      top: 1em;
     }
   }
 
-  select {
-    padding-right: 1em;
-    background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right .5em bottom .25em;
-    background-size: 8px 10px;
+  &.select-container::after {
+    content: '\2335';
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    height: 20px;
+    font-weight: bold;
+    pointer-events: none;
   }
 }

@@ -1,0 +1,41 @@
+input,
+select {
+  background-color: inherit;
+}
+
+.input-container,
+.select-container {
+  flex: 1;
+  padding: 5px;
+  min-height: 35px;
+  box-sizing: content-box;
+
+  select {
+    width: 100%;
+  }
+
+  input[type='text'],
+  input[type='number'],
+  input[type='date'],
+  input[type='url'] {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  > button {
+    max-height: 32px;
+    margin: {
+      top: auto;
+      bottom: auto;
+    }
+  }
+}
+
+.select-box {
+  display: flex;
+  justify-content: center;
+  min-width: 100px;
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+}

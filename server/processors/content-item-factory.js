@@ -86,16 +86,16 @@ class ContentItemFactory {
       image: image.src
     });
   }
-  mangafox(dataItem) {
-    //console.log('mangafox : ', dataItem, typeof dataItem);
+  fanfox(dataItem) {
+    //console.log('fanfox : ', dataItem, typeof dataItem);
     if (Array.isArray(dataItem)) {
       this.contentItem.initaliseProps({
         id: dataItem[0],
-        href: `http://mangafox.la/manga/${dataItem[2]}/`,
+        href: `http://fanfox.net/manga/${dataItem[2]}/`,
         title: dataItem[1],
-        image: `https://lmfcdn.secure.footprint.net/store/manga/${
+        image: `http://s.fanfox.net/store/manga/${
           dataItem[0]
-        }/cover.jpg?token=fa13edb95918552f6c260c3a678a62d78fd9284c&ttl=1513749600`,
+        }/cover.jpg?v=${Date.now()}`,
         authour: dataItem[4]
       });
     } else {
@@ -107,20 +107,20 @@ class ContentItemFactory {
         id: `mf-${id}`,
         href: dataLink.href,
         title: dataLink.textContent,
-        image: `https://lmfcdn.secure.footprint.net/store/manga/${id}/cover.jpg?token=fa13edb95918552f6c260c3a678a62d78fd9284c&ttl=1513749600`
+        image: `http://s.fanfox.net/store/manga/${id}/cover.jpg?v=${Date.now()}`
       });
     }
     /*
     <li>
       <div>
         <h3 class="title">
-          <a href="http://mangafox.me/manga/chokotto_hime/" rel="5348" class="series_preview manga_open" data-vivaldi-spatnav-clickable="1">Chokotto Hime</a>
+          <a href="http://fanfox.me/manga/chokotto_hime/" rel="5348" class="series_preview manga_open" data-vivaldi-spatnav-clickable="1">Chokotto Hime</a>
         </h3>
         <dl>
           <dt>
             <em>Today</em>
             <span class="chapter nowrap">
-              <a href="http://mangafox.me/manga/chokotto_hime/v02/c022/1.html" class="chapter">Chokotto Hime 22</a>
+              <a href="http://fanfox.me/manga/chokotto_hime/v02/c022/1.html" class="chapter">Chokotto Hime 22</a>
               v02
             </span>
           </dt>

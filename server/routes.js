@@ -6,8 +6,8 @@ const router = express.Router();
 
 // middleware to use for all requests
 router.use((req, res, next) => {
-    console.log('Query fired! : ', req.url);
-    next(); // next route
+  console.log('Query fired! : ', req.url);
+  next(); // next route
 });
 
 //MAL route
@@ -15,7 +15,7 @@ router.get('/api/mal-search/:type', malSearch);
 
 // Content Site Route
 router.get('/api/content-search/:site/:type/:age', content.search);
-router.get('/api/content-latest/:type', content.latest);
+router.get('/api/content-latest/:site/:type', content.latest);
 router.get('/api/content-site-list', content.siteList);
 
 module.exports = router;

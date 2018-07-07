@@ -44,8 +44,8 @@ const urls = {
         selector: '.list_manga > li'
       },
       {
-        name: 'mangafox',
-        url: 'http://mangafox.la/ajax/search.php?term=:searchString',
+        name: 'fanfox',
+        url: 'http://fanfox.net/ajax/search.php?term=:searchString',
         dataType: 'json'
       },
       {
@@ -127,8 +127,8 @@ const urls = {
         paging: '?page=:page'
       },
       {
-        name: 'mangafox',
-        url: 'http://mangafox.la/releases/',
+        name: 'fanfox',
+        url: 'http://fanfox.net/releases/',
         dataType: 'text',
         selector: '#updates > li'
       }

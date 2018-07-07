@@ -41,3 +41,25 @@ export const getAgeFromSearchParam = location =>
 
 export const getSearchStringFromSearchParam = location =>
   extractSearchParam('searchString', location.search);
+
+const getObjectFromLocalStorageByProperty = property =>
+  JSON.parse(localStorage.getItem(property)) || null;
+
+const persistObjectToLocalStorage = property => newValues => {
+  const values = getObjectFromLocalStorageByProperty(property) || {};
+  const updated = { ...values, ...newValues };
+  localStorage.setItem(property, JSON.stringify(updated));
+  return updated;
+};
+const persistLatestSite = persistObjectToLocalStorage('latestSite');
+
+export const getLatestSite = type => {
+  const latestSite = getObjectFromLocalStorageByProperty('latestSite') || {};
+  const siteIndex = latestSite[type] || 0;
+  return siteIndex;
+};
+export const saveLatestSite = (type, siteIndex) => {
+  const currentSite = getObjectFromLocalStorageByProperty('latestSite') || {};
+  const latestSite = { ...currentSite, [type]: siteIndex };
+  return persistLatestSite(latestSite);
+};

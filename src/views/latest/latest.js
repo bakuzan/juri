@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
+
 import LoadingSpinner from '../../components/loading-spinner/loading-spinner';
-import ToggleBox from '../../components/toggle-box/toggle-box.js';
+import ToggleBox from '../../components/toggle-box/toggle-box';
+import SelectBox from '../../components/select-box/select-box';
 import ContentItem from '../../components/content-item/content-item';
-import { getType, getTypeFromSearchParam } from '../../actions/value';
+import {
+  getType,
+  getTypeFromSearchParam,
+  saveLatestSite,
+  getLatestSite
+} from '../../actions/value';
 import { contentLatest } from '../../actions/query';
+import LatestSites from '../../constants/latest';
 
 const ANIME = 'anime';
 
@@ -12,6 +20,7 @@ class Latest extends Component {
     super(props);
     this.state = {
       page: 1,
+      siteIndex: getLatestSite(getTypeFromSearchParam(props.location)),
       latestResults: [],
       loading: true,
       loadingMore: false
@@ -19,6 +28,7 @@ class Latest extends Component {
 
     this.timer = null;
     this.handleUserInput = this.handleUserInput.bind(this);
+    this.handleSiteChange = this.handleSiteChange.bind(this);
     this.handleDataRefresh = this.handleDataRefresh.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
   }
@@ -40,7 +50,16 @@ class Latest extends Component {
   }
   handleUserInput(name, value) {
     const type = getType(value, true);
-    this.props.history.replace(`${this.props.match.url}?type=${type}`);
+    this.setState({ siteIndex: getLatestSite(type) }, () =>
+      this.props.history.replace(`${this.props.match.url}?type=${type}`)
+    );
+  }
+  handleSiteChange(event) {
+    const type = getTypeFromSearchParam(this.props.location);
+    this.setState({ loading: true, siteIndex: event.target.value }, () => {
+      saveLatestSite(type, this.state.siteIndex);
+      this.fetchLatest();
+    });
   }
   handleDataRefresh() {
     this.setState({ loading: true }, () => this.fetchLatest());
@@ -53,7 +72,8 @@ class Latest extends Component {
   }
   fetchLatest(page) {
     const type = getTypeFromSearchParam(this.props.location);
-    contentLatest({ type, page }).then(response => {
+    const { siteIndex: site } = this.state;
+    contentLatest({ type, page, site }).then(response => {
       this.setState(prev => ({
         latestResults: !page ? response : [...prev.latestResults, ...response],
         loading: false,
@@ -94,19 +114,29 @@ class Latest extends Component {
       this.state.latestResults
     );
     const isAnime = currentType === ANIME;
+    const siteOptions = LatestSites[currentType];
+    const disableSiteChanger = siteOptions.length < 2;
 
     return (
       <div className="latest">
         <h2 className="center-contents">
-          <div className="flex-spacer" />
-          Latest releases for
-          <ToggleBox
-            isChecked={isAnime}
-            handleChange={this.handleUserInput}
-            name="isAnime"
-            text={currentType}
+          <SelectBox
+            name="site"
+            text="Site"
+            value={this.state.siteIndex}
+            options={siteOptions}
+            onSelect={this.handleSiteChange}
+            disabled={disableSiteChanger}
           />
-          <div className="flex-spacer" />
+          <div className="center-contents push-siblings">
+            Latest releases for
+            <ToggleBox
+              isChecked={isAnime}
+              handleChange={this.handleUserInput}
+              name="isAnime"
+              text={currentType}
+            />
+          </div>
           <button
             type="button"
             title="Refresh data"

@@ -25,7 +25,7 @@ export const paths = {
   query: {
     malSearch: '/api/mal-search/:type',
     contentSearch: '/api/content-search/:site/:type/:age',
-    contentLatest: '/api/content-latest/:type',
+    contentLatest: '/api/content-latest/:site/:type',
     contentSiteList: '/api/content-site-list'
   },
   images: {

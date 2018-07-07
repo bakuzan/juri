@@ -9,6 +9,10 @@ body {
   flex: 1;
 }
 
+.push-siblings {
+  flex: 1 1 70%;
+}
+
 #refresh-button {
   min-width: 25px;
 }
