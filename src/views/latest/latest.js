@@ -66,15 +66,15 @@ class Latest extends Component {
   }
   handleLoadMore() {
     this.setState(
-      prev => ({ page: prev.page + 1, loadingMore: true }),
+      (prev) => ({ page: prev.page + 1, loadingMore: true }),
       () => this.fetchLatest(this.state.page)
     );
   }
   fetchLatest(page) {
     const type = getTypeFromSearchParam(this.props.location);
     const { siteIndex: site } = this.state;
-    contentLatest({ type, page, site }).then(response => {
-      this.setState(prev => ({
+    contentLatest({ type, page, site }).then((response) => {
+      this.setState((prev) => ({
         latestResults: !page ? response : [...prev.latestResults, ...response],
         loading: false,
         loadingMore: false
@@ -83,7 +83,7 @@ class Latest extends Component {
   }
   buildContentList(list) {
     const type = getTypeFromSearchParam(this.props.location);
-    return list.map(item => {
+    return list.map((item) => {
       const classes = `latest-item${item.isMalItem ? ' on-my-list' : ''}`;
       return (
         <ContentItem
@@ -115,6 +115,7 @@ class Latest extends Component {
     );
     const isAnime = currentType === ANIME;
     const siteOptions = LatestSites[currentType];
+    const hasPaging = siteOptions[this.state.siteIndex].paging;
     const disableSiteChanger = siteOptions.length < 2;
 
     return (
@@ -148,7 +149,7 @@ class Latest extends Component {
         </h2>
         <ul className="latest-content-list">{latestRenderResult}</ul>
         <div>
-          {!isAnime &&
+          {hasPaging &&
             !this.state.loading &&
             !this.state.loadingMore && (
               <button

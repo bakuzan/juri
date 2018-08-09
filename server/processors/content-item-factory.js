@@ -52,14 +52,18 @@ class ContentItemFactory {
     const urlBase = 'http://www1.gogoanime.tv';
     const link = dataItem.getElementsByTagName('a')[0];
     const image = dataItem.getElementsByTagName('img')[0];
-    const releaseDate = dataItem.getElementsByClassName('released')[0];
+    const maybeReleaseDate = dataItem.getElementsByClassName('released') || [
+      {}
+    ];
+    const releaseDate = maybeReleaseDate[0];
 
     this.contentItem.initaliseProps({
       id: link.href,
       href: `${urlBase + link.href}`,
       title: link.title,
       image: image.src,
-      startDate: releaseDate.textContent.replace(/[\D]/g, '')
+      startDate:
+        releaseDate.textContent && releaseDate.textContent.replace(/[\D]/g, '')
     });
     /*
     <li>
@@ -74,15 +78,33 @@ class ContentItemFactory {
    </li>
      */
   }
+  watchanime(dataItem) {
+    // gogoanime latest only
+    const urlBase = 'http://www1.gogoanime.tv';
+    const link = dataItem.getElementsByTagName('a')[0];
+    const image = dataItem.getElementsByTagName('img')[0];
+    const episode = dataItem.getElementsByClassName('episode')[0];
+    const suffix = ` - ${episode.textContent}`;
+
+    this.contentItem.initaliseProps({
+      id: link.href,
+      href: `${urlBase + link.href}`,
+      title: `${link.title}${suffix}`,
+      image: image.src
+    });
+  }
   _9anime(dataItem) {
     const links = dataItem.getElementsByTagName('a');
     const link = links[1];
     const image = dataItem.getElementsByTagName('img')[0];
+    const maybeEp = dataItem.getElementsByClassName('ep');
+    let epText = maybeEp.length && maybeEp[0].textContent;
+    epText = ` - ${epText}` ? epText : '';
 
     this.contentItem.initaliseProps({
       id: link.href,
       href: link.href,
-      title: link.textContent,
+      title: `${link.textContent}${epText}`,
       image: image.src
     });
   }
@@ -219,27 +241,27 @@ class ContentItemFactory {
     });
     /*
     <div id="post-1131" class="post-1131 post type-post status-publish format-standard hentry category-victorian-maid-maria-no-houshi tag-blowjob tag-boobjob tag-maids tag-vanilla item cf item-post">
-	<div class="thumb">
-		<a class="clip-link" data-id="1131" title="Victorian Maid Maria No Houshi 1 Subbed" href="http://hentaigasm.com/victorian-maid-maria-no-houshi-1-subbed/">
-			<span class="clip">
-				<img src="http://hentaigasm.com/preview/Victorian Maid Maria No Houshi 1 Subbed.jpg" alt="Victorian Maid Maria No Houshi 1 Subbed"><span class="vertical-align"></span>
-			</span>
-			<span class="overlay"></span>
-		</a>
-	</div>
-		<div class="data">
-			<h2 class="title"><a href="http://hentaigasm.com/victorian-maid-maria-no-houshi-1-subbed/" rel="bookmark" title="Permalink to Victorian Maid Maria No Houshi 1 Subbed">Victorian Maid Maria No Houshi 1 Subbed</a></h2>
-
-			<p class="meta">
-				<span class="author">Added by <a href="http://hentaigasm.com/author/admin/" title="Posts by admin" rel="author">admin</a></span>
-				<span class="time">1 year ago</span>
-			</p>
-
-			<p class="stats"><span class="views"><i class="count">806.77K</i> <span class="suffix">Views</span></span><span class="comments"><i class="count">84</i> <span class="suffix">Comments</span></span><span class="dp-post-likes likes"><i class="count" data-pid="1131">516</i> <span class="suffix">Likes</span></span></p>
-
-			<p class="desc">...</p>
-		</div>
-	</div>
+  <div class="thumb">
+    <a class="clip-link" data-id="1131" title="Victorian Maid Maria No Houshi 1 Subbed" href="http://hentaigasm.com/victorian-maid-maria-no-houshi-1-subbed/">
+      <span class="clip">
+        <img src="http://hentaigasm.com/preview/Victorian Maid Maria No Houshi 1 Subbed.jpg" alt="Victorian Maid Maria No Houshi 1 Subbed"><span class="vertical-align"></span>
+      </span>
+      <span class="overlay"></span>
+    </a>
+  </div>
+    <div class="data">
+      <h2 class="title"><a href="http://hentaigasm.com/victorian-maid-maria-no-houshi-1-subbed/" rel="bookmark" title="Permalink to Victorian Maid Maria No Houshi 1 Subbed">Victorian Maid Maria No Houshi 1 Subbed</a></h2>
+  
+      <p class="meta">
+        <span class="author">Added by <a href="http://hentaigasm.com/author/admin/" title="Posts by admin" rel="author">admin</a></span>
+        <span class="time">1 year ago</span>
+      </p>
+  
+      <p class="stats"><span class="views"><i class="count">806.77K</i> <span class="suffix">Views</span></span><span class="comments"><i class="count">84</i> <span class="suffix">Comments</span></span><span class="dp-post-likes likes"><i class="count" data-pid="1131">516</i> <span class="suffix">Likes</span></span></p>
+  
+      <p class="desc">...</p>
+    </div>
+  </div>
      */
   }
   hentaihaven(dataItem) {

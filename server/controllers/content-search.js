@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const constants = require('../constants');
 const processor = require('../processors/process-content-query');
-const malChecking = require('./mal-checking');
+// const malChecking = require('./mal-checking');
 
 const setQueryOptions = (site, search) => {
   let options = { method: 'GET' };
@@ -17,20 +17,20 @@ const fetchContentFromUrl = (site, search) => {
   let fetchOptions = setQueryOptions(site, search);
 
   return fetch(url, fetchOptions)
-    .then(fetchData => {
+    .then((fetchData) => {
       return fetchData[site.dataType]();
     })
-    .then(response => {
+    .then((response) => {
       return processor.response(response, site, url);
     })
-    .catch(err => {
+    .catch((err) => {
       return err;
     });
 };
 
 const standardSearch = (res, type, search, index) => {
   const site = constants.url.standard[type][index];
-  fetchContentFromUrl(site, search).then(jsonResult => {
+  fetchContentFromUrl(site, search).then((jsonResult) => {
     if (!(jsonResult instanceof Array)) jsonResult = [];
     res.jsonp(jsonResult);
   });
@@ -38,7 +38,7 @@ const standardSearch = (res, type, search, index) => {
 
 const adultSearch = (res, type, search, index) => {
   const site = constants.url.adult[type][index];
-  fetchContentFromUrl(site, search).then(jsonResult => {
+  fetchContentFromUrl(site, search).then((jsonResult) => {
     if (!(jsonResult instanceof Array)) jsonResult = [];
     res.jsonp(jsonResult);
   });
@@ -65,10 +65,10 @@ const latest = (req, res) => {
     : `${site.url}${site.paging.replace(':page', page)}`;
 
   fetchContentFromUrl({ ...site, url }, '')
-    .then(jsonResult => {
-      return malChecking.setMyAnimeListFlag(type, jsonResult);
+    .then((jsonResult) => {
+      return jsonResult; //MAL API down! malChecking.setMyAnimeListFlag(type, jsonResult);
     })
-    .then(processedResult => {
+    .then((processedResult) => {
       res.jsonp(processedResult);
     });
 };

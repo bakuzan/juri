@@ -109,6 +109,20 @@ const urls = {
         name: 'masterani',
         url: 'http://www.masterani.me/api/releases',
         dataType: 'json'
+      },
+      {
+        name: 'gogoanime',
+        url: 'https://api.watchanime.cc/ajax/page-recent-release.html?type=1',
+        dataType: 'text',
+        selector: '.last_episodes > .items > li',
+        paging: '&page=:page'
+      },
+      {
+        name: '9anime',
+        url: 'https://www8.9anime.is/updated',
+        dataType: 'text',
+        selector: '.film-list > .item',
+        paging: '?page=:page'
       }
     ],
     manga: [
@@ -130,7 +144,8 @@ const urls = {
         name: 'fanfox',
         url: 'http://fanfox.net/releases/',
         dataType: 'text',
-        selector: '#updates > li'
+        selector: '#updates > li',
+        paging: ':page.htm'
       }
     ]
   },
