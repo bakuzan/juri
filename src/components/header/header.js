@@ -3,9 +3,9 @@ import SvgLogo from '../svg-logo/svg-logo.js';
 import { NavLink } from 'react-router-dom';
 import { paths } from '../../constants/paths';
 
-import './header.css';
-import '../../styles/ripple.css';
-import '../../styles/box-model.css';
+import './header.scss';
+import '../../styles/ripple.scss';
+import '../../styles/box-model.scss';
 
 const matchUrlWithoutSearch = (match, location) =>
   location.pathname === '/juri/latest';

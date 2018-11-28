@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import './select-box.css';
+import './select-box.scss';
 
 const SelectBox = ({ name, value, disabled, onSelect, text, options }) => (
   <div className={classNames('has-float-label', 'select-container')}>
@@ -13,7 +13,7 @@ const SelectBox = ({ name, value, disabled, onSelect, text, options }) => (
       onChange={onSelect}
       disabled={disabled}
     >
-      {options.map(item => (
+      {options.map((item) => (
         <option key={item.value} value={item.value}>
           {item.text}
         </option>

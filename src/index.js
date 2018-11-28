@@ -1,10 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Routes from './routes';
-import './index.css';
-import './styles/button.css';
+import './index.scss';
+import './styles/button.scss';
 
-ReactDOM.render(
-  <Routes />,
-  document.getElementById('root')
-);
+ReactDOM.render(<Routes />, document.getElementById('root'));

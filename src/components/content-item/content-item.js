@@ -4,7 +4,7 @@ import NewTabLink from '../../components/new-tab-link';
 import { getType, getAge } from '../../actions/value';
 import { magicNumbers } from '../../constants/magic-numbers';
 import { paths } from '../../constants/paths';
-import './content-item.css';
+import './content-item.scss';
 
 class ContentItem extends Component {
   constructor(props) {
@@ -43,7 +43,7 @@ class ContentItem extends Component {
         <div className="content-item-info">
           <NewTabLink
             href={`${this.content.href}`}
-            onClick={e => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
           >
             {`${this.content.title} ${this.setAdditionalInformation()}\n
                ${this.content.subtitle || ''}`}

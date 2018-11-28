@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import './clearable-input.css';
+import './clearable-input.scss';
 
 const Icons = { cross: '\u274C' };
 

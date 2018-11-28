@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import NewTabLink from '../../components/new-tab-link';
 import { paths } from '../../constants/paths';
-import './about.css';
+import './about.scss';
 
 class About extends Component {
   render() {

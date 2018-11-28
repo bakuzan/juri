@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import LoadingSpinner from '../loading-spinner/loading-spinner';
 import MalItem from '../mal-item/mal-item';
 import ContentItem from '../content-item/content-item';
-import './search-result.css';
+import './search-result.scss';
 
 class SearchResult extends Component {
   collapseResults(siteName) {
@@ -29,7 +29,7 @@ class SearchResult extends Component {
       malItem: selectedMalItem,
       contentItem: selectedContentItem
     } = this.props.selectedItems;
-    const myanimelist = this.props.malResults.map(malItem => (
+    const myanimelist = this.props.malResults.map((malItem) => (
       <MalItem
         key={malItem.id}
         content={malItem}
@@ -42,7 +42,7 @@ class SearchResult extends Component {
     let mycontentlist = [];
     let lastHost = '';
     if (this.props.contentResults.forEach !== undefined) {
-      this.props.contentResults.forEach(contentItem => {
+      this.props.contentResults.forEach((contentItem) => {
         if (contentItem.host !== lastHost) {
           mycontentlist.push(
             <li
@@ -56,7 +56,7 @@ class SearchResult extends Component {
         }
 
         lastHost = contentItem.host;
-        const site = this.props.siteSelectList.find(x => x.name === lastHost);
+        const site = this.props.siteSelectList.find((x) => x.name === lastHost);
         if (site && !site.isCollapsed) {
           mycontentlist.push(
             <ContentItem

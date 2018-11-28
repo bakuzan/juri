@@ -3,9 +3,9 @@ import ToggleBox from '../toggle-box/toggle-box.js';
 import ClearableInput from '../clearable-input/clearable-input';
 import SelectionList from '../selection-list/selection-list.js';
 import { getType, getAge } from '../../actions/value';
-import '../../styles/float-label.css';
-import './search-bar.css';
-import '../../styles/box-model.css';
+import '../../styles/float-label.scss';
+import './search-bar.scss';
+import '../../styles/box-model.scss';
 
 class SearchBar extends Component {
   constructor(props) {

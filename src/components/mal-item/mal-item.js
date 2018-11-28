@@ -4,7 +4,7 @@ import NewTabLink from '../../components/new-tab-link';
 import * as searchFilters from '../../constants/search-filters';
 import { getType } from '../../actions/value';
 import { paths } from '../../constants/paths';
-import './mal-item.css';
+import './mal-item.scss';
 
 function MalItem(props) {
   const type = getType(props.isAnime, false);
@@ -31,7 +31,7 @@ function MalItem(props) {
       </span>
       <div className="mal-item-info">
         <NewTabLink
-          onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
           href={`https://myanimelist.net/${type.toLowerCase()}/${
             props.content.id
           }`}

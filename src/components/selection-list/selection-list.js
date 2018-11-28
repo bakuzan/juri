@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
-import './selection-list.css';
+import './selection-list.scss';
 
 class SelectionList extends Component {
   handleItemSelect(id, index) {
