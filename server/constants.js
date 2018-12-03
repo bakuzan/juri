@@ -24,7 +24,7 @@ const urls = {
       },
       {
         name: 'gogoanime',
-        url: 'http://www1.gogoanime.tv/search.html?keyword=:searchString&id=-1',
+        url: 'https://gogoanimes.co/search.html?keyword=:searchString&id=-1',
         dataType: 'text',
         selector: '.last_episodes > .items > li'
       },

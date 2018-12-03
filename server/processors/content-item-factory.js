@@ -7,7 +7,10 @@ class ContentItemFactory {
     this['9anime'] = this._9anime.bind(this);
   }
   process(dataItem, isLatest) {
-    console.log(`Processing with ${this.contentItem.host}`);
+    console.log(
+      `Processing with ${this.contentItem.host}`,
+      this[this.contentItem.host]
+    );
     this[this.contentItem.host](dataItem, isLatest);
   }
   generateUniqueId() {
@@ -48,23 +51,37 @@ class ContentItemFactory {
       postedDate: dataItem.created_at
     });
   }
-  gogoanime(dataItem) {
-    const urlBase = 'http://www1.gogoanime.tv';
+  gogoanime(dataItem, isLatest) {
+    const urlBase = 'https://gogoanimes.co';
     const link = dataItem.getElementsByTagName('a')[0];
     const image = dataItem.getElementsByTagName('img')[0];
-    const maybeReleaseDate = dataItem.getElementsByClassName('released') || [
-      {}
-    ];
-    const releaseDate = maybeReleaseDate[0];
+    if (isLatest) {
+      console.log(dataItem);
+      const episode = dataItem.getElementsByClassName('episode')[0];
+      const suffix = ` - ${episode.textContent}`;
 
-    this.contentItem.initaliseProps({
-      id: link.href,
-      href: `${urlBase + link.href}`,
-      title: link.title,
-      image: image.src,
-      startDate:
-        releaseDate.textContent && releaseDate.textContent.replace(/[\D]/g, '')
-    });
+      this.contentItem.initaliseProps({
+        id: link.href,
+        href: `${urlBase + link.href}`,
+        title: `${link.title}${suffix}`,
+        image: image.src
+      });
+    } else {
+      const maybeReleaseDate = dataItem.getElementsByClassName('released') || [
+        {}
+      ];
+      const releaseDate = maybeReleaseDate[0];
+
+      this.contentItem.initaliseProps({
+        id: link.href,
+        href: `${urlBase + link.href}`,
+        title: link.title,
+        image: image.src,
+        startDate:
+          releaseDate.textContent &&
+          releaseDate.textContent.replace(/[\D]/g, '')
+      });
+    }
     /*
     <li>
           <div class="img">
@@ -77,21 +94,6 @@ class ContentItemFactory {
                                                           Released: 2013                                                                            </p>
    </li>
      */
-  }
-  watchanime(dataItem) {
-    // gogoanime latest only
-    const urlBase = 'http://www1.gogoanime.tv';
-    const link = dataItem.getElementsByTagName('a')[0];
-    const image = dataItem.getElementsByTagName('img')[0];
-    const episode = dataItem.getElementsByClassName('episode')[0];
-    const suffix = ` - ${episode.textContent}`;
-
-    this.contentItem.initaliseProps({
-      id: link.href,
-      href: `${urlBase + link.href}`,
-      title: `${link.title}${suffix}`,
-      image: image.src
-    });
   }
   _9anime(dataItem) {
     const links = dataItem.getElementsByTagName('a');
