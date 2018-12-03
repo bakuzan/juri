@@ -30,7 +30,7 @@ const urls = {
       },
       {
         name: '9anime',
-        url: 'https://9anime.is/search?keyword=:searchString',
+        url: 'https://9anime.to/search?keyword=:searchString',
         dataType: 'text',
         selector: '.film-list > .item'
       }
@@ -119,7 +119,7 @@ const urls = {
       },
       {
         name: '9anime',
-        url: 'https://www8.9anime.is/updated',
+        url: 'https://www1.9anime.to/updated',
         dataType: 'text',
         selector: '.film-list > .item',
         paging: '?page=:page'
