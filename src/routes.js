@@ -3,7 +3,6 @@ import createHistory from 'history/createBrowserHistory';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import App from './views/app/app';
-import About from './views/about/about';
 import Latest from './views/latest/latest';
 import PageNotFound from './views/page-not-found/page-not-found';
 import FilteredSearchResult from './components/filtered-search-result/filtered-search-result.js';
@@ -14,7 +13,6 @@ const history = createHistory();
 const JuriRoutes = ({ match }) => (
   <Switch>
     <Route exact path={match.path} component={FilteredSearchResult} />
-    <Route path={`${match.path}${paths.about}`} component={About} />
     <Route path={`${match.path}${paths.latest}`} component={Latest} />
   </Switch>
 );

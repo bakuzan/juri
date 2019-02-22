@@ -41,12 +41,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run precommit-msg && npm run lint"
     }
   },
   "scripts": {
-    "start-js": "react-scripts start",
+    "precommit-msg": "echo 'Precommit checks...'",
     "lint": "lint-staged",
+    "start-js": "react-scripts start",
     "start": "npm-run-all -p start-js server",
     "build": "react-scripts build",
     "server": "node server",
