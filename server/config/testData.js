@@ -1,18 +1,3 @@
-const ages = {
-  adult: 'adult',
-  standard: 'standard'
-};
-const types = {
-  anime: 'anime',
-  manga: 'manga'
-};
-const malStatus = {
-  ongoing: 1, //watching reading
-  completed: 2,
-  onHold: 3,
-  dropped: 4,
-  planTo: 6 //plantowatch plantoread
-};
 const urls = {
   standard: {
     anime: [
@@ -156,23 +141,3 @@ const urls = {
       'https://raw.githubusercontent.com/bakuzan/user-scripts/master/manga-release-checker/manga-spellings.json'
   }
 };
-
-const times = {
-  oneHour: 3600000
-};
-
-const environment = {
-  development: 'development',
-  production: 'production'
-};
-
-const constants = {
-  age: ages,
-  type: types,
-  url: urls,
-  malStatus: malStatus,
-  time: times,
-  environment
-};
-
-module.exports = constants;
