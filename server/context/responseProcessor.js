@@ -1,19 +1,13 @@
 const jsdom = require('jsdom').jsdom;
 
 const { SourceDataTypes } = require('../constants/enums');
+const { generateUniqueId, joinTextContent } = require('../utils');
 
 function processHtml(source, html) {
-  let jsonItems = [];
-  const selector = site.selector;
+  const { selector } = source;
   const document = jsdom(html);
   const window = document.defaultView;
-  const htmlItems = window.document.querySelectorAll(selector);
-
-  for (let i = 0, length = htmlItems.length; i < length; i++) {
-    const container = htmlItems[i];
-    jsonItems.push(mapResponseData(source, container));
-  }
-  return jsonItems;
+  return window.document.querySelectorAll(selector);
 }
 
 function tryParseJSON(jsonString) {
@@ -27,7 +21,7 @@ function tryParseJSON(jsonString) {
 }
 
 function handleBadJsonTextResponse(text) {
-  let result = [];
+  const result = [];
   const objects = text.split(/({.+?})|(\[[^\[].+?\])(?=,|\])/); // Use this, not finished yet tho ({.+?})|(\[.+?\])(?=,|\])
 
   for (let i = 0, length = objects.length; i < length; i++) {
@@ -41,17 +35,25 @@ function handleBadJsonTextResponse(text) {
   return result;
 }
 
+function myRunner(obj) {
+  return Function('"use strict";return (' + obj + ')')();
+}
+
 module.exports = function responseProcessor(source, response) {
   let data = response.data || response;
   if (/animeholics|mangapark/i.test(url)) {
     data = handleBadJsonTextResponse(data);
   }
 
+  const fn = myRunner(source.parser);
+  const mapper = (d) => fn(d, { generateUniqueId, joinTextContent });
+
   if (source.dataType === SourceDataTypes.json) {
     console.log(`${array.length} items in array from ${source.name}`);
-    return data.map((d) => mapResponseData(source, d));
+    return data.map(mapper);
   } else {
     console.log(`HTML response from ${source.name}`);
-    return processHtml(source, data);
+    const htmlItems = processHtml(source, data);
+    return Array.from(htmlItems).map(mapper);
   }
 };

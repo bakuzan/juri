@@ -22,11 +22,11 @@ module.exports = (db, Types) => {
       type: Types.ENUM,
       values: [...MediaType]
     },
-    selectors: {
-      type: Types.JSON,
+    parser: {
+      type: Types.String,
       allowNull: false
     },
-    paging: {
+    selector: {
       type: Types.STRING,
       allowNull: true
     },
