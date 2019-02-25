@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const Constants = require('../constants/index');
 const Utils = require('../utils');
 const migrate = require('../config');
-// const TestData = require('../config/test-data');
+const TestData = require('../config/testData');
 
 const db = new Sequelize(Constants.appName, null, null, {
   dialect: 'sqlite',
@@ -26,7 +26,8 @@ db.sync({ force: FORCE_DB_REBUILD })
   .then(() => migrate(db))
   .then(async () => {
     if (FORCE_DB_REBUILD && SEED_DB) {
-      //   const { source } = db.models;
+      const { source } = db.models;
+      await source.bulkCreate(TestData.sources);
     }
   });
 

@@ -10,7 +10,7 @@ import {
   saveLatestSite,
   getLatestSite
 } from '../../actions/value';
-import { contentLatest } from '../../actions/query';
+// import { contentLatest } from '../../actions/query';
 import LatestSites from '../../constants/latest';
 
 const ANIME = 'anime';
@@ -71,15 +71,15 @@ class Latest extends Component {
     );
   }
   fetchLatest(page) {
-    const type = getTypeFromSearchParam(this.props.location);
-    const { siteIndex: site } = this.state;
-    contentLatest({ type, page, site }).then((response) => {
-      this.setState((prev) => ({
-        latestResults: !page ? response : [...prev.latestResults, ...response],
-        loading: false,
-        loadingMore: false
-      }));
-    });
+    // const type = getTypeFromSearchParam(this.props.location);
+    // const { siteIndex: site } = this.state;
+    // contentLatest({ type, page, site }).then((response) => {
+    //   this.setState((prev) => ({
+    //     latestResults: !page ? response : [...prev.latestResults, ...response],
+    //     loading: false,
+    //     loadingMore: false
+    //   }));
+    // });
   }
   buildContentList(list) {
     const type = getTypeFromSearchParam(this.props.location);
@@ -149,17 +149,15 @@ class Latest extends Component {
         </h2>
         <ul className="latest-content-list">{latestRenderResult}</ul>
         <div>
-          {hasPaging &&
-            !this.state.loading &&
-            !this.state.loadingMore && (
-              <button
-                type="button"
-                className="button primary ripple width-100"
-                onClick={this.handleLoadMore}
-              >
-                Load more...
-              </button>
-            )}
+          {hasPaging && !this.state.loading && !this.state.loadingMore && (
+            <button
+              type="button"
+              className="button primary ripple width-100"
+              onClick={this.handleLoadMore}
+            >
+              Load more...
+            </button>
+          )}
           {this.state.loadingMore && <LoadingSpinner />}
         </div>
       </div>

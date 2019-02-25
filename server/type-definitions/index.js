@@ -6,18 +6,37 @@ module.exports = [
   ...enums,
   gql`
     type Query {
-      sourcesAll: [Source]
-      sources(sourceType: SourceType!, mediaType: MediaType!, isAdult: Boolean!): [Source]
+      sourcesAll: SourcesManagementResponse
+      sources(
+        sourceType: SourceType!
+        mediaType: MediaType!
+        isAdult: Boolean!
+      ): [Source]
+      sourceById(id: Int!): Source
 
       latest(sourceId: Int!, page: Int): [ContentItem]
       search(sourceId: Int!, search: String!): [ContentItem]
     }
 
     type Mutation {
-        
+      sourceCreate(payload: SourceInput!): SourceResponse
+      sourceUpdate(payload: SourceInput!): SourceResponse
     }
 
     type Source {
+      id: Int
+      name: String
+      url: String
+      dataType: DataType
+      sourceType: SourceType
+      mediaType: MediaType
+      parser: String
+      selector: String
+      isAdult: Boolean
+      isPaged: Boolean
+    }
+
+    input SourceInput {
       id: Int
       name: String
       url: String
@@ -38,16 +57,28 @@ module.exports = [
       title: String
       image: String
 
-      subtitle?: String
-      authour?: String
-      versions?: String
+      subtitle: String
+      authour: String
+      versions: String
 
-      type?: String
-      status?: String
-      startDate?: String
-      endDate?: String
-      currentEpisode?: Int
-      postedDate?: String
+      type: String
+      status: String
+      startDate: String
+      endDate: String
+      currentEpisode: Int
+      postedDate: String
+    }
+
+    type SourceResponse {
+      success: Boolean
+      errorMessages: [String]
+      data: Source
+    }
+
+    type SourcesManagementResponse {
+      sources: [Source]
+      urlReplacements: [String]
+      availableHelperFunctions: [String]
     }
   `
 ];

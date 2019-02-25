@@ -11,11 +11,11 @@ import {
   isAnimeType,
   isAdultAge
 } from '../../actions/value';
-import {
-  malQuery,
-  contentQuery,
-  contentSiteListQuery
-} from '../../actions/query';
+// import {
+//   malQuery,
+//   contentQuery,
+//   contentSiteListQuery
+// } from '../../actions/query';
 
 const SEARCH_STATE_NAME = 'searchString';
 const ANIME_STATE_NAME = 'isAnime';
@@ -51,21 +51,21 @@ class FilteredSearchResult extends Component {
     this.handleContentItemClick = this.handleContentItemClick.bind(this);
   }
   componentDidMount() {
-    contentSiteListQuery().then(response => {
-      this.contentSiteList = response;
-      const type = getTypeFromSearchParam(this.props.location);
-      const age = getAgeFromSearchParam(this.props.location);
-      this.setState(
-        prev => ({
-          searchString: getSearchStringFromSearchParam(this.props.location),
-          siteSelectList: this.setSiteSelectList([], type, age)
-        }),
-        () =>
-          this.state.searchString
-            ? this.handleLoadData(SEARCH_STATE_NAME)
-            : null
-      );
-    });
+    // contentSiteListQuery().then(response => {
+    //   this.contentSiteList = response;
+    //   const type = getTypeFromSearchParam(this.props.location);
+    //   const age = getAgeFromSearchParam(this.props.location);
+    //   this.setState(
+    //     prev => ({
+    //       searchString: getSearchStringFromSearchParam(this.props.location),
+    //       siteSelectList: this.setSiteSelectList([], type, age)
+    //     }),
+    //     () =>
+    //       this.state.searchString
+    //         ? this.handleLoadData(SEARCH_STATE_NAME)
+    //         : null
+    //   );
+    // });
   }
   componentDidUpdate(prevProps) {
     const typeChanged =
@@ -91,7 +91,7 @@ class FilteredSearchResult extends Component {
       ? getAge(value, true)
       : getAgeFromSearchParam(this.props.location);
 
-    this.setState(prev => ({
+    this.setState((prev) => ({
       siteToSearchIndex: 0,
       siteSelectList: this.setSiteSelectList(prev.siteSelectList, type, age)
     }));
@@ -114,7 +114,7 @@ class FilteredSearchResult extends Component {
           stateUpdate.malLoading = true;
         }
         this.fetchContentItems(type, age);
-        this.setState(prev => ({
+        this.setState((prev) => ({
           ...stateUpdate,
           selectedItems: {
             contentItem: null,
@@ -136,7 +136,7 @@ class FilteredSearchResult extends Component {
   }
   handleResultsCollapse(host) {
     const siteSelectList = this.state.siteSelectList.slice();
-    const site = siteSelectList.find(x => x.name === host);
+    const site = siteSelectList.find((x) => x.name === host);
     site.isCollapsed = !site.isCollapsed;
     this.setState({ siteSelectList: siteSelectList });
   }
@@ -161,7 +161,7 @@ class FilteredSearchResult extends Component {
     const hasValue = !!value;
     const type = getTypeFromSearchParam(this.props.location);
     const age = getAgeFromSearchParam(this.props.location);
-    this.setState(prev => ({
+    this.setState((prev) => ({
       [name]: value,
       contentResults: hasValue ? prev.contentResults : [],
       malResults: hasValue ? prev.malResults : [],
@@ -171,32 +171,32 @@ class FilteredSearchResult extends Component {
     this.handleLoadData(SEARCH_STATE_NAME);
   }
   fetchContentItems(type, age, siteIndex) {
-    const noSiteSpecified = isNaN(siteIndex);
-    const site = noSiteSpecified ? this.state.siteToSearchIndex : siteIndex;
-    contentQuery({
-      type: type,
-      age: age,
-      search: this.state.searchString,
-      site
-    }).then(response => {
-      this.setState((previousState, props) => ({
-        contentResults: noSiteSpecified
-          ? response
-          : previousState.contentResults.concat(response),
-        contentLoading: false
-      }));
-    });
+    // const noSiteSpecified = isNaN(siteIndex);
+    // const site = noSiteSpecified ? this.state.siteToSearchIndex : siteIndex;
+    // contentQuery({
+    //   type: type,
+    //   age: age,
+    //   search: this.state.searchString,
+    //   site
+    // }).then(response => {
+    //   this.setState((previousState, props) => ({
+    //     contentResults: noSiteSpecified
+    //       ? response
+    //       : previousState.contentResults.concat(response),
+    //     contentLoading: false
+    //   }));
+    // });
   }
   fetchMalItems(type) {
-    malQuery({ type: type, search: this.state.searchString }).then(response =>
-      this.setState({ malResults: response, malLoading: false })
-    );
+    // malQuery({ type: type, search: this.state.searchString }).then(response =>
+    //   this.setState({ malResults: response, malLoading: false })
+    // );
   }
   handleItemClick(attr, item) {
     const currentSelected = this.state.selectedItems[attr];
     const isSame = currentSelected && currentSelected.id === item.id;
     console.log(attr, item, isSame, this.state);
-    this.setState(prev => ({
+    this.setState((prev) => ({
       selectedItems: {
         ...prev.selectedItems,
         [attr]: isSame ? null : item

@@ -23,7 +23,7 @@ module.exports = (db, Types) => {
       values: [...MediaType]
     },
     parser: {
-      type: Types.String,
+      type: Types.STRING,
       allowNull: false
     },
     selector: {
@@ -37,12 +37,3 @@ module.exports = (db, Types) => {
     }
   });
 };
-
-/*
-
-          name: 'mangahere',
-        url: 'http://www.mangahere.cc/latest/',
-        dataType: 'text',
-        selector: '.manga_updates > dl',
-        paging: '/:page/'
-  */
