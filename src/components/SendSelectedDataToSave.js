@@ -4,12 +4,8 @@ import React from 'react';
 const mapContentItem = (item) =>
   item ? { link: item.href, title: item.title, image: item.image } : {};
 
-const mapMalItem = (item) =>
-  item ? { malId: item.id, title: item.title, image: item.image } : {};
-
-const mapSelectedToData = (malItem, contentItem) => ({
-  ...mapContentItem(contentItem),
-  ...mapMalItem(malItem)
+const mapSelectedToData = (contentItem) => ({
+  ...mapContentItem(contentItem)
 });
 
 class SendSelectedDataToSave extends React.Component {
@@ -20,17 +16,14 @@ class SendSelectedDataToSave extends React.Component {
   }
 
   handleSendData() {
-    const {
-      type,
-      isAdult,
-      selectedItems: { malItem, contentItem }
-    } = this.props;
-    const searchData = mapSelectedToData(malItem, contentItem);
+    const { type, isAdult, selectedItem } = this.props;
+    const searchData = mapSelectedToData(selectedItem);
     const searchStr = Object.keys(searchData).reduce((p, c, i) => {
       const join = i > 0 ? '&' : '';
       const value = searchData[c] || '';
       return `${p}${join}${c}=${value}`;
     }, '');
+
     window.open(
       `${
         process.env.REACT_APP_ERZA_BASE_URL
@@ -40,9 +33,7 @@ class SendSelectedDataToSave extends React.Component {
   }
 
   render() {
-    const hasSelected = Object.keys(this.props.selectedItems).some(
-      (k) => !!this.props.selectedItems[k]
-    );
+    const hasSelected = !!this.props.selectedItem;
 
     return (
       <div className="flex align-end padding-5">
@@ -62,10 +53,7 @@ class SendSelectedDataToSave extends React.Component {
 SendSelectedDataToSave.propTypes = {
   type: PropTypes.string.isRequired,
   isAdult: PropTypes.bool.isRequired,
-  selectedItems: PropTypes.shape({
-    malItem: PropTypes.object,
-    contentItem: PropTypes.object
-  }).isRequired
+  selectedItem: PropTypes.object
 };
 
 export default SendSelectedDataToSave;

@@ -1,6 +1,6 @@
-import * as searchFilters from '../constants/search-filters';
+import * as searchFilters from '../constants/searchFilters';
 
-const checkStringMatch = cstr => str =>
+const checkStringMatch = (cstr) => (str) =>
   str.toLowerCase() === cstr.toLowerCase();
 export const isAnimeType = checkStringMatch(searchFilters.IS_ANIME_TRUE);
 export const isAdultAge = checkStringMatch(searchFilters.IS_ADULT_TRUE);
@@ -29,23 +29,23 @@ const extractSearchParam = (name, searchParam = '') =>
     .split('&')
     .reduce((p, c) => (c.includes(`${name}=`) ? c.replace(/^.+=/, '') : p), '');
 
-export const getTypeFromSearchParam = location =>
+export const getTypeFromSearchParam = (location) =>
   location.search && location.search.includes('type=')
     ? extractSearchParam('type', location.search).toLowerCase()
     : toLowerCase(searchFilters.IS_ANIME_TRUE, true);
 
-export const getAgeFromSearchParam = location =>
+export const getAgeFromSearchParam = (location) =>
   location.search && location.search.includes('age=')
     ? extractSearchParam('age', location.search).toLowerCase()
     : toLowerCase(searchFilters.IS_ADULT_FALSE, true);
 
-export const getSearchStringFromSearchParam = location =>
+export const getSearchStringFromSearchParam = (location) =>
   extractSearchParam('searchString', location.search);
 
-const getObjectFromLocalStorageByProperty = property =>
+const getObjectFromLocalStorageByProperty = (property) =>
   JSON.parse(localStorage.getItem(property)) || null;
 
-const persistObjectToLocalStorage = property => newValues => {
+const persistObjectToLocalStorage = (property) => (newValues) => {
   const values = getObjectFromLocalStorageByProperty(property) || {};
   const updated = { ...values, ...newValues };
   localStorage.setItem(property, JSON.stringify(updated));
@@ -53,7 +53,7 @@ const persistObjectToLocalStorage = property => newValues => {
 };
 const persistLatestSite = persistObjectToLocalStorage('latestSite');
 
-export const getLatestSite = type => {
+export const getLatestSite = (type) => {
   const latestSite = getObjectFromLocalStorageByProperty('latestSite') || {};
   const siteIndex = latestSite[type] || 0;
   return siteIndex;

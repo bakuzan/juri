@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import LoadingSpinner from '../loading-spinner/loading-spinner';
-import MalItem from '../mal-item/mal-item';
+
 import ContentItem from '../content-item/content-item';
 import './search-result.scss';
 
@@ -8,6 +8,7 @@ class SearchResult extends Component {
   collapseResults(siteName) {
     this.props.onSiteCollapse(siteName);
   }
+
   renderResult(isLoading, resultList) {
     return isLoading ? (
       <LoadingSpinner size="" />
@@ -17,6 +18,7 @@ class SearchResult extends Component {
       this.renderEmptyListMessage()
     );
   }
+
   renderEmptyListMessage() {
     return (
       <li>
@@ -24,20 +26,9 @@ class SearchResult extends Component {
       </li>
     );
   }
+
   render() {
-    const {
-      malItem: selectedMalItem,
-      contentItem: selectedContentItem
-    } = this.props.selectedItems;
-    const myanimelist = this.props.malResults.map((malItem) => (
-      <MalItem
-        key={malItem.id}
-        content={malItem}
-        isAnime={this.props.isAnime}
-        isSelected={selectedMalItem && selectedMalItem.id === malItem.id}
-        onClick={this.props.selectionActions.selectMalItem}
-      />
-    ));
+    const { selectedItem } = this.props;
 
     let mycontentlist = [];
     let lastHost = '';
@@ -64,9 +55,7 @@ class SearchResult extends Component {
               content={contentItem}
               isAnime={this.props.isAnime}
               isAdult={this.props.isAdult}
-              isSelected={
-                selectedContentItem && selectedContentItem.id === contentItem.id
-              }
+              isSelected={selectedItem && selectedItem.id === contentItem.id}
               onClick={this.props.selectionActions.selectContentItem}
             />
           );
@@ -74,10 +63,6 @@ class SearchResult extends Component {
       });
     }
 
-    const malSearchResults = this.renderResult(
-      this.props.malLoading,
-      myanimelist
-    );
     const contentSearchResults = this.renderResult(
       this.props.contentLoading,
       mycontentlist
@@ -85,7 +70,6 @@ class SearchResult extends Component {
 
     return (
       <div className="search-results">
-        <ul className="mal-search-result">{malSearchResults}</ul>
         <ul className="content-search-result">{contentSearchResults}</ul>
       </div>
     );
