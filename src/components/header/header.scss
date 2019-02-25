@@ -1,48 +1,22 @@
-@import "../../styles/partials/_colours";
+@import '../../styles/_variables';
 
-.juri-header {
+.application-header {
   position: fixed;
-  height: 40px;
-  width: calc(100% - 10px);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: $header--height;
+  width: 100%;
   background-color: $primary-background;
   color: $primary-colour-contrast;
-  padding: 5px;
-  z-index: 10;
+  z-index: map-get($z-index, header);
 }
 
-#juri-svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  cursor: pointer;
-}
-#navigation-links {
-  position: absolute;
-  top: 0;
-  right: 10px;
-  width: 33%;
+.links-block {
+  position: relative;
   height: 100%;
   div {
     height: 100%;
-  }
-  a {
-    background-color: $primary-background;
-    color: $primary-colour-contrast;
-    height: 100%;
-    padding: 8px;
-    text-decoration: none;
-    box-sizing: border-box;
-    &:hover {
-      background-color: darken($primary-background, $darken-amount);
-    }
-    &.active {
-      background-color: $secondary-background;
-      color: $secondary-colour-contrast;
-      &:hover {
-        background-color: darken($secondary-background, $darken-amount);
-      }
-    }
   }
 }
 .flex-right {

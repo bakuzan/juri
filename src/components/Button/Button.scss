@@ -1,0 +1,67 @@
+@import '~styles/_variables';
+
+.button,
+.button-link,
+.button-icon {
+  appearance: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+  color: inherit;
+  padding: 5px;
+  border: none;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &.rounded {
+    border-radius: 5px;
+  }
+  &.depress {
+    box-shadow: 0 0 5px $onyx;
+    &:active {
+      box-shadow: inset 0px 0px 5px $onyx;
+    }
+  }
+  &:disabled {
+    background-color: $grey80 !important;
+    color: $grey40 !important;
+    cursor: default;
+  }
+}
+
+.button {
+  min-width: 100px;
+  min-height: 25px;
+  text-decoration: none;
+}
+
+.button-link {
+  color: $anchor-colour;
+  text-decoration: underline;
+  &:focus,
+  &:active {
+    color: $anchor-colour;
+  }
+  &:hover {
+    color: $anchor-colour-hover;
+  }
+}
+
+.button-icon {
+  flex: 0 1 0%;
+  padding: 3px 6px;
+  margin: 2px 5px;
+  text-decoration: none;
+
+  &:before {
+    content: attr(icon);
+    font-size: 1.5rem;
+    &:not(:disabled) {
+      cursor: pointer;
+    }
+  }
+  &.small:before {
+    font-size: 0.8rem;
+  }
+}

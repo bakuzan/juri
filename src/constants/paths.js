@@ -1,4 +1,4 @@
-export const paths = {
+export default {
   build: (path, params) => {
     let hasSearch = false;
     let hasPageNumber = false;

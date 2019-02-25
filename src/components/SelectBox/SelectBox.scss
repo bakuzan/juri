@@ -1,0 +1,21 @@
+.select-container {
+  flex: 1;
+  padding: 5px;
+  min-height: 35px;
+  box-sizing: content-box;
+
+  select {
+    width: 100%;
+    background-color: inherit;
+  }
+}
+
+.select-box {
+  display: flex;
+  justify-content: center;
+  min-width: 100px;
+  min-height: 25px;
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+}

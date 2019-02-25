@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import React from 'react';
-import NewTabLink from '../../components/new-tab-link';
+import NewTabLink from 'components/NewTabLink';
 import * as searchFilters from '../../constants/search-filters';
 import { getType } from '../../actions/value';
-import { paths } from '../../constants/paths';
+import paths from '../../constants/paths';
 import './mal-item.scss';
 
 function MalItem(props) {

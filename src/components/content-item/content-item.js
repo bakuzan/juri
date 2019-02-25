@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
-import NewTabLink from '../../components/new-tab-link';
+import NewTabLink from 'components/NewTabLink';
 import { getType, getAge } from '../../actions/value';
 import { magicNumbers } from '../../constants/magic-numbers';
-import { paths } from '../../constants/paths';
+import paths from '../../constants/paths';
 import './content-item.scss';
 
 class ContentItem extends Component {

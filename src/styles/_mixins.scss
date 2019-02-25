@@ -1,0 +1,70 @@
+@mixin appearance($appearance) {
+  -webkit-appearance: $appearance;
+  -moz-appearance: $appearance;
+  appearance: $appearance;
+}
+
+@mixin transition($transition) {
+  -webkit-transition: $transition;
+  -o-transition: $transition;
+  -moz-transition: $transition;
+  transition: $transition;
+}
+
+@mixin justify-content($justify-content) {
+  -webkit-justify-content: $justify-content;
+  justify-content: $justify-content;
+}
+@mixin align-items($align-items) {
+  -webkit-align-items: $align-items;
+  align-items: $align-items;
+}
+@mixin box-shadow($w, $h, $d, $colour) {
+  -webkit-box-shadow: $w $h $d $colour;
+  -moz-box-shadow: $w $h $d $colour;
+  box-shadow: $w $h $d $colour;
+}
+@mixin background-image($from, $to) {
+  background-image: -webkit-gradient(
+    linear,
+    left 0,
+    left 100%,
+    from($from),
+    to($to)
+  );
+  background-image: -webkit-linear-gradient(top, $from 0, $to 100%);
+  background-image: -moz-linear-gradient(top, $from 0, $to 100%);
+  background-image: -o-linear-gradient(top, $from 0, $to 100%);
+  background-image: linear-gradient(to bottom, $from 0, $to 100%);
+}
+@mixin backface($back) {
+  -webkit-backface-visibility: $back;
+  -moz-backface-visibility: $back;
+  backface-visibility: $back;
+}
+@mixin transform($transform) {
+  -webkit-transform: $transform;
+  -ms-transform: $transform;
+  transform: $transform;
+}
+@mixin popout-shadow($colour) {
+  @if lightness($colour) < 50% {
+    @include box-shadow(0, 2px, 100px, rgba(255, 255, 255, 0.5));
+  } @else {
+    @include box-shadow(0, 2px, 100px, rgba(0, 0, 0, 0.2));
+  }
+  @include transition(all 250ms);
+  @include backface(hidden);
+}
+@mixin calc($key, $value) {
+  #{$key}: -webkit-calc(#{$value});
+  #{$key}: -moz-calc(#{$value});
+  #{$key}: calc(#{$value});
+}
+@mixin lightenOrDarken($key, $colour, $percentage) {
+  @if lightness($colour) < 50% {
+    #{$key}: lighten($colour, $percentage);
+  } @else {
+    #{$key}: darken($colour, $percentage);
+  }
+}

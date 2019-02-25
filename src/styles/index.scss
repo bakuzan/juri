@@ -1,4 +1,6 @@
-@import './button.scss';
+@import './_floatLabel';
+@import './_ripple';
+@import './_variables';
 
 @font-face {
   font-family: 'Roboto Mono';
@@ -15,7 +17,17 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto mono', 'Lucida Console', 'Courier New', monospace;
+  font-family: $app--font-family;
+  font-size: $app--font-size;
+}
+
+main {
+  padding: $header--height 5px 5px;
+}
+
+button {
+  font-family: $app--font-family;
+  font-size: $app--font-size;
 }
 
 .flex-spacer {
@@ -23,12 +35,10 @@ body {
   flex: 1;
 }
 
-.push-siblings {
-  flex: 1 1 70%;
-}
-
-#refresh-button {
-  min-width: 25px;
+.center-contents {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .flex {
@@ -37,4 +47,12 @@ body {
   &.align-end {
     justify-content: flex-end;
   }
+}
+
+.push-siblings {
+  flex: 1 1 70%;
+}
+
+#refresh-button {
+  min-width: 25px;
 }

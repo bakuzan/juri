@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import ToggleBox from '../toggle-box/toggle-box.js';
-import ClearableInput from '../clearable-input/clearable-input';
+import ToggleBox from '../ToggleBox';
+import ClearableInput from '../ClearableInput';
 import SelectionList from '../selection-list/selection-list.js';
 import { getType, getAge } from '../../actions/value';
-import '../../styles/float-label.scss';
+
 import './search-bar.scss';
-import '../../styles/box-model.scss';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -14,14 +13,17 @@ class SearchBar extends Component {
     this.handleSearchStringInput = this.handleSearchStringInput.bind(this);
     this.handleToggleBoxInput = this.handleToggleBoxInput.bind(this);
   }
+
   handleSearchStringInput(e) {
     const name = e.target.name;
     const value = e.target.value;
     this.props.onUserInput(name, value);
   }
+
   handleToggleBoxInput(name, value) {
     this.props.onCheckboxChange(name, value);
   }
+
   render() {
     const currentType = getType(this.props.isAnime, false);
     const currentAge = getAge(this.props.isAdult, false);

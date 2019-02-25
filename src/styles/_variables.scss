@@ -1,0 +1,17 @@
+@import '_colours.scss';
+
+// For media queries.
+$break-small: 768px;
+$break-medium: 992px;
+$break-large: 1200px;
+
+// App Vars
+$app--font-family: 'Roboto mono', 'Lucida Console', 'Courier New', monospace;
+$app--font-size: 16px;
+
+// Component Vars
+$header--height: 50px;
+
+$z-index: (
+  header: 100
+);
