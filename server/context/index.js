@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 const responseProcessor = require('./responseProcessor');
 
 function generateTrueUrl(url, { searchString, page }) {

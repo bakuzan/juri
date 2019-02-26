@@ -41,7 +41,7 @@ function myRunner(obj) {
 
 module.exports = function responseProcessor(source, response) {
   let data = response.data || response;
-  if (/animeholics|mangapark/i.test(url)) {
+  if (/animeholics|mangapark/i.test(source.url)) {
     data = handleBadJsonTextResponse(data);
   }
 
