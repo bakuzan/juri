@@ -15,7 +15,11 @@ function Header({
   return (
     <nav
       id={id}
-      className={classNames('application-header', className)}
+      className={classNames(
+        'application-header',
+        'themed-background',
+        className
+      )}
       {...props}
     >
       {!!navLeft && <div className={classNames('links-block')}>{navLeft}</div>}

@@ -86,7 +86,7 @@ class SvgLogo extends React.Component {
         id={this.props.id}
         className={classNames('svg-logo', 'center-contents')}
       >
-        <svg xmlns="http://www.w3.org/2000/svg">
+        <svg xmlns="http://www.w3.org/2000/svg" className="svg-logo__svg">
           {letters}
           <text
             className={classNames('word', 'diagonal')}

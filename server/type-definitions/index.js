@@ -6,16 +6,16 @@ module.exports = [
   ...enums,
   gql`
     type Query {
-      sourcesAll: SourcesManagementResponse
+      sourcesManagement: SourcesManagementResponse
       sources(
-        sourceType: SourceType!
-        mediaType: MediaType!
-        isAdult: Boolean!
+        sourceType: SourceType
+        mediaType: MediaType
+        isAdult: Boolean
       ): [Source]
       sourceById(id: Int!): Source
 
       latest(sourceId: Int!, page: Int): [ContentItem]
-      search(sourceId: Int!, search: String!): [ContentItem]
+      search(sourceId: Int!, searchString: String!): [ContentItem]
     }
 
     type Mutation {

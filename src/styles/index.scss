@@ -1,6 +1,7 @@
 @import './_floatLabel';
 @import './_ripple';
 @import './_variables';
+@import './_themes';
 
 @font-face {
   font-family: 'Roboto Mono';
@@ -41,18 +42,17 @@ button {
   align-items: center;
 }
 
-.flex {
-  display: flex;
-
-  &.align-end {
-    justify-content: flex-end;
-  }
-}
-
 .push-siblings {
   flex: 1 1 70%;
 }
 
 #refresh-button {
   min-width: 25px;
+}
+
+// SendSelectedDataToSave
+.send-data {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px;
 }

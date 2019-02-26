@@ -1,30 +1,44 @@
-import React, { Component } from 'react';
-import './toggle-box.scss';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const capitaliseFirstLetter = (str) =>
-  str.charAt(0).toUpperCase() + str.slice(1);
+import { capitalise } from 'utils';
 
-class ToggleBox extends Component {
-  handleChange(e) {
-    const name = e.target.name;
-    const value = e.target.checked;
-    this.props.handleChange(name, value);
-  }
-  render() {
-    return (
-      <div className="toggle-box ripple">
-        <label className="toggle-box-text">
-          <input
-            type="checkbox"
-            name={this.props.name}
-            checked={this.props.isChecked}
-            onChange={(e) => this.handleChange(e)}
-          />
-          {capitaliseFirstLetter(this.props.text)}
-        </label>
-      </div>
-    );
-  }
+import './ToggleBox.scss';
+
+function ToggleBox({ label, text, handleChange, ...props }) {
+  return (
+    <div className="toggle-box ripple">
+      <label
+        className="toggle-box__text"
+        role="checkbox"
+        tabIndex={0}
+        aria-checked={props.checked}
+        aria-label={label}
+      >
+        <input
+          type="checkbox"
+          {...props}
+          onChange={(e) => {
+            const name = e.target.name;
+            const value = e.target.checked;
+            handleChange(name, value);
+          }}
+        />
+        {capitalise(text[props.checked])}
+      </label>
+    </div>
+  );
 }
+
+ToggleBox.propTypes = {
+  label: PropTypes.string.isRequired,
+  text: PropTypes.shape({
+    true: PropTypes.string.isRequired,
+    false: PropTypes.string.isRequired
+  }).isRequired,
+  name: PropTypes.string.isRequired,
+  checked: PropTypes.bool.isRequired,
+  handleChange: PropTypes.func.isRequired
+};
 
 export default ToggleBox;

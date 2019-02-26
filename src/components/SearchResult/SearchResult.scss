@@ -1,0 +1,16 @@
+.search-results {
+  display: flex;
+  flex-direction: row;
+}
+
+.search-source {
+  padding: 10px 0;
+
+  &__title {
+    padding: 5px;
+    border-bottom: 1px solid;
+  }
+  &__query-trigger {
+    padding: 5px 0;
+  }
+}

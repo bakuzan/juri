@@ -9,9 +9,64 @@ $break-large: 1200px;
 $app--font-family: 'Roboto mono', 'Lucida Console', 'Courier New', monospace;
 $app--font-size: 16px;
 
+$app--info-colour: $cyan;
+$app--success-colour: $green;
+$app--alert-colour: $orange;
+$app--danger-colour: $red;
+
 // Component Vars
 $header--height: 50px;
 
+$ui-messaging: (
+  success: (
+    background: $app--success-colour,
+    colour: #000,
+    icon: '\2713'
+  ),
+  error: (
+    background: $app--danger-colour,
+    colour: #fff,
+    icon: '\0021'
+  ),
+  warning: (
+    background: $app--alert-colour,
+    colour: #000,
+    icon: '\26a0'
+  ),
+  info: (
+    background: $app--info-colour,
+    colour: #000,
+    icon: '\2139'
+  )
+);
+
 $z-index: (
-  header: 100
+  wafer: 1,
+  above-siblings: 10,
+  header: 50,
+  popover: 100,
+  menu: 250,
+  alert: 1000
+);
+
+// Themes
+$theme-maps: (
+  one: (
+    base-background: #fff,
+    base-colour: #000,
+    primary-background: $juri-purple,
+    primary-colour: #fff,
+    active-background: $juri-pink,
+    active-colour: $juri-black,
+    faded-out: $grey80
+  ),
+  two: (
+    base-background: $juri-black,
+    base-colour: #fff,
+    primary-background: $juri-pink,
+    primary-colour: $juri-black,
+    active-background: $juri-purple,
+    active-colour: #fff,
+    faded-out: $grey80
+  )
 );

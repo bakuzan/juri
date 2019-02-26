@@ -5,7 +5,7 @@ const SourceResolvers = require('./source');
 
 module.exports = {
   Query: {
-    async sourcesAll() {
+    async sourcesManagement() {
       const sources = await Source.findAll();
       return {
         sources,
@@ -13,12 +13,10 @@ module.exports = {
         availableHelperFunctions: []
       };
     },
-    async sources(_, { sourceType, mediaType, isAdult }) {
+    async sources(_, args = {}) {
       return await Source.findAll({
         where: {
-          sourceType: { [Op.eq]: sourceType },
-          mediaType: { [Op.eq]: mediaType },
-          isAdult: { [Op.eq]: isAdult }
+          ...args
         }
       });
     },
@@ -30,9 +28,9 @@ module.exports = {
       const siteData = await Source.findByPk(sourceId, { raw: true });
       return await context.fetchContentFromSource(siteData, { page });
     },
-    async search(_, { sourceId, search }, context) {
+    async search(_, { sourceId, searchString }, context) {
       const siteData = await Source.findByPk(sourceId, { raw: true });
-      return await context.fetchContentFromSource(siteData, { search });
+      return await context.fetchContentFromSource(siteData, { searchString });
     }
   },
   Mutation: {

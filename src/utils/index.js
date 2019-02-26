@@ -1,5 +1,16 @@
 import SearchFilters from '../constants/searchFilters';
 
+export const isString = (s) => typeof s === 'string';
+
+export const generateUniqueId = () =>
+  (`${1e7}` + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (s) => {
+    const c = Number(s);
+    return (
+      c ^
+      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+    ).toString(16);
+  });
+
 const timers = {};
 export function debounce(f, t) {
   const key = f.toString();
@@ -21,3 +32,11 @@ export const isAgeAdult = checkStringMatch(
   SearchFilters.adult,
   SearchFilters.allAges
 );
+
+export const capitalise = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+
+export const capitaliseEachWord = (str) =>
+  str
+    .split(' ')
+    .map(capitalise)
+    .join(' ');

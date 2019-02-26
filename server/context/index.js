@@ -1,8 +1,8 @@
 const responseProcessor = require('./responseProcessor');
 
-function generateTrueUrl(url, { search, page }) {
+function generateTrueUrl(url, { searchString, page }) {
   return url
-    .replace(':searchString', search)
+    .replace(':searchString', searchString)
     .replace(':page', page)
     .replace(':timestamp', Date.now());
 }

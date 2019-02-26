@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { Button } from 'components/Button';
+
 const mapContentItem = (item) =>
   item ? { link: item.href, title: item.title, image: item.image } : {};
 
@@ -36,15 +38,10 @@ class SendSelectedDataToSave extends React.Component {
     const hasSelected = !!this.props.selectedItem;
 
     return (
-      <div className="flex align-end padding-5">
-        <button
-          type="button"
-          className="button ripple primary"
-          onClick={this.handleSendData}
-          disabled={!hasSelected}
-        >
+      <div className="send-data">
+        <Button onClick={this.handleSendData} disabled={!hasSelected}>
           Add to list
-        </button>
+        </Button>
       </div>
     );
   }

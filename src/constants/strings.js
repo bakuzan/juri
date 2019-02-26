@@ -1,3 +1,4 @@
 export default {
-  localSettings: 'juriSettings'
+  localSettings: 'juriSettings',
+  noItemsAvailable: 'No items found.'
 };

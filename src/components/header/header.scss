@@ -7,9 +7,16 @@
   align-items: center;
   height: $header--height;
   width: 100%;
-  background-color: $primary-background;
-  color: $primary-colour-contrast;
   z-index: map-get($z-index, header);
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    padding: 8px;
+    text-decoration: none;
+    box-sizing: border-box;
+  }
 }
 
 .links-block {

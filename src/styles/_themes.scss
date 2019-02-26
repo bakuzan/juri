@@ -1,0 +1,94 @@
+@import './_mixins';
+@import './_variables';
+
+@each $theme, $values in $theme-maps {
+  $base-background: map-get($values, base-background);
+  $base-colour: map-get($values, base-colour);
+  $primary-background: map-get($values, primary-background);
+  $primary-colour: map-get($values, primary-colour);
+  $active-background: map-get($values, active-background);
+  $active-colour: map-get($values, active-colour);
+  $faded-out: map-get($values, faded-out);
+
+  .theme--#{$theme} {
+    background-color: $base-background;
+    color: $base-colour;
+
+    .select-box__input,
+    .input-box__input {
+      color: $base-colour;
+    }
+
+    // Inherit base background
+    .multi-select__dropdown-container,
+    .select-box__input,
+    .dropdown__menu {
+      background-color: $base-background;
+    }
+    .dropdown__arrow {
+      border-bottom-color: $base-background;
+    }
+
+    // Primary
+    .themed-background {
+      background-color: $primary-background;
+      color: $primary-colour;
+    }
+    .svg-logo text {
+      fill: $primary-colour;
+    }
+    .has-float-label input:focus,
+    .has-float-label select:focus {
+      border-color: $primary-background;
+    }
+    .toggle-box {
+      background-color: $primary-background;
+      color: $primary-colour;
+
+      &:hover {
+        background-color: darken($primary-background, 10%);
+      }
+    }
+
+    // Navigation
+    .nav-link {
+      color: $base-colour;
+
+      &:hover {
+        color: $active-colour;
+      }
+    }
+
+    .application-header__link {
+      color: $primary-colour;
+
+      &:hover,
+      &.active {
+        background-color: $active-background;
+        color: $active-colour;
+      }
+    }
+
+    // Buttons
+    .button--primary {
+      background-color: $primary-background;
+      color: $primary-colour;
+      &:focus,
+      &:hover {
+        background-color: darken($primary-background, 10%);
+      }
+    }
+    .button--accent {
+      &:focus,
+      &:hover {
+        @include lightenOrDarken('background-color', $primary-colour, 10%);
+      }
+    }
+    .dropdown__toggler {
+      &:focus,
+      &:hover {
+        @include lightenOrDarken('color', $primary-colour, 10%);
+      }
+    }
+  }
+}

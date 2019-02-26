@@ -1,0 +1,19 @@
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  margin-top: -25px;
+
+  &__title {
+    margin-top: 0;
+  }
+
+  &__input-container {
+    width: 50vw;
+    margin: 0 auto;
+
+    input[type='text'] {
+      width: 100%;
+      min-width: 200px;
+    }
+  }
+}

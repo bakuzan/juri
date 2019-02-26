@@ -17,12 +17,13 @@ function getButtonClasses({
   const hasBtnSize = !!btnSize;
   const hasLink = !!link;
   const hasIcon = !!icon;
-  return classNames(className, {
-    button: !hasLink && !hasIcon,
+  const isButton = !hasLink && !hasIcon;
+
+  return classNames(className, isButton && ['button', 'ripple'], {
     'button-link': hasLink,
     'button-icon': hasIcon,
-    [btnStyle]: hasBtnStyle,
-    [btnSize]: hasBtnSize,
+    [`button--${btnStyle}`]: hasBtnStyle,
+    [`button--${btnSize}`]: hasBtnSize,
     rounded,
     depress
   });
