@@ -8,21 +8,20 @@ module.exports = {
       sourceType: 'Search',
       mediaType: 'Anime',
       parser: `
-        function masterani(dataItem) {
+        function masterani(dataItem, { generateUniqueId }) {
           const href = 'https://masterani.me/anime/info/{0}';
       
-          this.contentItem.initaliseProps({
-            id: dataItem.id + dataItem.episode || '',
+          return {
+            id: generateUniqueId(),
             href: href.replace('{0}', dataItem.slug),
             title: dataItem.title,
-            image: 'https://cdn.masterani.me/poster/' + dataItem.poster.file ||
-              dataItem.poster,
+            image: 'https://cdn.masterani.me/poster/' + dataItem.poster.file,
             type: dataItem.type,
             status: dataItem.status,
             episodes: dataItem.episode_count,
             startDate: dataItem.started_airing_date,
             endDate: dataItem.finished_airing_date,
-          });
+          };
         }
       `,
       selector: null,
@@ -45,7 +44,7 @@ module.exports = {
         ];
         const releaseDate = maybeReleaseDate[0];
   
-        this.contentItem.initaliseProps({
+        return {
           id: link.href,
           href: urlBase + link.href,
           title: link.title,
@@ -53,7 +52,7 @@ module.exports = {
           startDate:
             releaseDate.textContent &&
             releaseDate.textContent.replace(/[\D]/g, '')
-        });
+        };
       }
       `,
       selector: '.last_episodes > .items > li',
@@ -74,12 +73,12 @@ module.exports = {
         let epText = maybeEp.length && maybeEp[0].textContent;
         epText = epText ? ' - ' + epText : '';
     
-        this.contentItem.initaliseProps({
+        return {
           id: link.href,
           href: link.href,
           title: link.textContent + epText,
           image: image.src
-        });
+        };
       }
       `,
       selector: '.film-list > .item',
@@ -99,12 +98,12 @@ module.exports = {
         const chapterText = '';
         const image = dataItem.getElementsByTagName('img')[0];
     
-        this.contentItem.initaliseProps({
+        return {
           id: generateUniqueId(),
           href: links[0].href,
           title: title.textContent + chapterText,
           image: image.src
-        });
+        };
       }
       `,
       selector: '.list_manga > li',
@@ -119,24 +118,24 @@ module.exports = {
       parser: `
       function fanfox(dataItem) {
         if (Array.isArray(dataItem)) {
-          this.contentItem.initaliseProps({
+          return {
             id: dataItem[0],
             href: 'http://fanfox.net/manga/' + dataItem[2] + '/',
             title: dataItem[1],
             image: 'http://s.fanfox.net/store/manga/' + dataItem[0] + '/cover.jpg?v=' + Date.now(),
             authour: dataItem[4]
-          });
+          };
         } else {
           const links = dataItem.getElementsByTagName('a');
           const id = links[0].getAttribute('rel');
           const dataLink = links[1];
     
-          this.contentItem.initaliseProps({
+          return {
             id: 'mf-' + id,
             href: dataLink.href,
             title: dataLink.textContent,
             image: 'http://s.fanfox.net/store/manga/' + id + '/cover.jpg?v=' + Date.now()
-          });
+          };
         }
       }
       `,
@@ -155,12 +154,12 @@ module.exports = {
         const link = links[0];
         const authour = links[1].textContent;
     
-        this.contentItem.initaliseProps({
+        return {
           id: generateUniqueId(),
           href: 'https://mangadex.com/' + link.href,
           title: link.textContent,
           authour
-        });
+        };
       }
       `,
       selector: '#content table > tbody > tr',
@@ -179,13 +178,13 @@ module.exports = {
         const image = dataItem.getElementsByTagName('img')[0];
         const subs = dataItem.getElementsByClassName('subtag');
     
-        this.contentItem.initaliseProps({
+        return {
           id: link.href,
           href: urlBase + link.href,
           title: link.firstChild.textContent,
           image: urlBase + image.src.replace(/^\.\//, ''),
           versions: joinTextContent(subs)
-        });
+        };
       }
       `,
       selector: '.videolistcontainer > .videobrickwrap > div.videobrick',
@@ -203,13 +202,13 @@ module.exports = {
         const image = dataItem.getElementsByTagName('img')[0];
         const videoType = link.title.replace(/^.*((?=subbed)|(?=raw))/gi, '');
     
-        this.contentItem.initaliseProps({
+        return {
           id: dataItem.id,
           href: link.href,
           title: link.title,
           image: image.src,
           versions: videoType
-        });
+        };
       }
       `,
       selector: '.loop-content > div > .post',
@@ -227,12 +226,12 @@ module.exports = {
         const image = dataItem.getElementsByTagName('img')[0];
         const idElement = dataItem.getElementsByClassName('brick-content')[0];
     
-        this.contentItem.initaliseProps({
+        return {
           id: 'hh-' + idElement.getAttribute('data-id'),
           href: link.href,
           title: link.textContent,
           image: image.getAttribute('data-src')
-        });
+        };
       }
       `,
       selector: '#brick-wrap > .brick',
@@ -249,12 +248,12 @@ module.exports = {
         const link = dataItem.getElementsByTagName('a')[3];
         const image = dataItem.getElementsByTagName('img')[0];
     
-        this.contentItem.initaliseProps({
+        return {
           id: 'hp-' + dataItem.getAttribute('id'),
           href: link.href,
           title: link.textContent,
           image: image.getAttribute('src')
-        });
+        };
       }
       `,
       selector: '#content > .loop-content .item-post',
@@ -269,12 +268,12 @@ module.exports = {
       mediaType: 'Anime',
       parser: `
       function animeholics(dataItem, { generateUniqueId }) {
-        this.contentItem.initaliseProps({
+        return {
           id: 'ah-' + generateUniqueId(),
           href: dataItem.url,
           title: dataItem.nme,
           image: dataItem.cvr
-        });
+        };
       }
       `,
       selector: null,
@@ -292,13 +291,13 @@ module.exports = {
         const image = dataItem.getElementsByTagName('img')[0];
         const authour = dataItem.querySelector('.showMTooltip .text-muted');
     
-        this.contentItem.initaliseProps({
+        return {
           id: 'hh-' + link.href.replace(/^.*\//g, ''),
           href: link.href,
           title: link.textContent,
           image: image.src,
           authour: authour.textContent.replace('by ', '')
-        });
+        };
       }
       `,
       selector: '.scrollable .row > .seriesBlock',
@@ -319,14 +318,14 @@ module.exports = {
         const authour = textElement.replace(/ .*/, '');
         const titles = textElement.replace(/^\[\w*\] /, '').split('|');
     
-        this.contentItem.initaliseProps({
+        return {
           id: "nh-" + link.href.replace(/\//g, ''),
           href: 'https://nhentai.net' + link.href,
           title: titles[0],
           subtitle: titles[1],
           image: image.src,
           authour: authour
-        });
+        };
       }
       `,
       selector: '.container > .gallery',
@@ -347,12 +346,11 @@ module.exports = {
         }
         const href = 'https://masterani.me/anime/watch/{0}/' + dataItem.episode;
     
-        this.contentItem.initaliseProps({
+        return {
           id: dataItem.id + dataItem.episode || '',
           href: href.replace('{0}', dataItem.slug),
-          title: dataItem.title,
-          image: 'https://cdn.masterani.me/poster/' + dataItem.poster.file ||
-            dataItem.poster,
+          title: dataItem.title + ' ' + dataItem.episode,
+          image: 'https://cdn.masterani.me/poster/' + dataItem.poster,
           type: dataItem.type,
           status: dataItem.status,
           episodes: dataItem.episode_count,
@@ -360,7 +358,7 @@ module.exports = {
           endDate: dataItem.finished_airing_date,
           currentEpisode: dataItem.episode,
           postedDate: dataItem.created_at
-        });
+        };
       }
       `,
       selector: null,
@@ -382,12 +380,12 @@ module.exports = {
         const episode = dataItem.getElementsByClassName('episode')[0];
         const suffix = ' - ' + episode.textContent;
   
-        this.contentItem.initaliseProps({
+        return {
           id: link.href,
           href: urlBase + link.href,
           title: link.title + suffix,
           image: image.src
-        });
+        };
       }
       `,
       selector: '.last_episodes > .items > li',
@@ -408,12 +406,12 @@ module.exports = {
         let epText = maybeEp.length && maybeEp[0].textContent;
         epText = epText ? ' - ' + epText : '';
     
-        this.contentItem.initaliseProps({
+        return {
           id: link.href,
           href: link.href,
           title: link.textContent + epText,
           image: image.src
-        });
+        };
       }
       `,
       selector: '.film-list > .item',
@@ -429,11 +427,11 @@ module.exports = {
       function mangahere(dataItem, { generateUniqueId }) {
         const links = dataItem.getElementsByTagName('a');
     
-        this.contentItem.initaliseProps({
+        return {
           id: generateUniqueId(),
           href: links[1].href,
           title: links[1].textContent
-        });
+        };
       }`,
       selector: '.manga_updates > dl',
       isAdult: false
@@ -451,12 +449,12 @@ module.exports = {
         const chapterText = ' ' + links[2].textContent.replace(/.*?(?=\d+$)/g, '');
         const image = dataItem.getElementsByTagName('img')[0];
     
-        this.contentItem.initaliseProps({
+        return {
           id: generateUniqueId(),
           href: links[2].href,
           title: title.textContent + chapterText,
           image: image.src
-        });
+        };
       }
       `,
       selector: '.list_manga > li',
@@ -471,24 +469,24 @@ module.exports = {
       parser: `
       function fanfox(dataItem) {
         if (Array.isArray(dataItem)) {
-          this.contentItem.initaliseProps({
+          return {
             id: dataItem[0],
             href: 'http://fanfox.net/manga/' + dataItem[2] + '/',
             title: dataItem[1],
             image: 'http://s.fanfox.net/store/manga/' + dataItem[0] + '/cover.jpg?v=' + Date.now(),
             authour: dataItem[4]
-          });
+          };
         } else {
           const links = dataItem.getElementsByTagName('a');
           const id = links[0].getAttribute('rel');
           const dataLink = links[1];
     
-          this.contentItem.initaliseProps({
+          return {
             id: 'mf-' + id,
             href: dataLink.href,
             title: dataLink.textContent,
             image: 'http://s.fanfox.net/store/manga/' + id + '/cover.jpg?v=' + Date.now()
-          });
+          };
         }
       }
       `,

@@ -10,7 +10,8 @@ const Icons = {
   right: '\u203A',
   settings: '\u2699',
   calendar: '\uD83D\uDCC5',
-  info: '\uD83D\uDEC8'
+  info: '\uD83D\uDEC8',
+  circleArrow: '\u21BB'
 };
 
 export default Icons;

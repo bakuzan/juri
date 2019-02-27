@@ -1,0 +1,13 @@
+@import '../../styles/_variables';
+@import '../../styles/_mixins';
+
+.latest-content-grid {
+  $grid-values: (
+    xs: 50,
+    sm: 33,
+    md: 25,
+    lg: 20
+  );
+
+  @include gridColumnGenerator($grid-values);
+}

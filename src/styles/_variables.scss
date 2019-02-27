@@ -1,9 +1,15 @@
 @import '_colours.scss';
 
-// For media queries.
-$break-small: 768px;
-$break-medium: 992px;
-$break-large: 1200px;
+// Screen Variables
+$screen-xs: 480px;
+$screen-sm: 768px;
+$screen-md: 992px;
+$screen-lg: 1200px;
+
+// Prevent overlapping
+$screen-xs-max: ($screen-sm - 1);
+$screen-sm-max: ($screen-md - 1);
+$screen-md-max: ($screen-lg - 1);
 
 // App Vars
 $app--font-family: 'Roboto mono', 'Lucida Console', 'Courier New', monospace;

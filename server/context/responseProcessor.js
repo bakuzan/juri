@@ -47,13 +47,13 @@ module.exports = function responseProcessor(source, response) {
 
   const fn = myRunner(source.parser);
   const mapper = (d) => fn(d, { generateUniqueId, joinTextContent });
-
+  console.log('Response Data: ', data);
   if (source.dataType === SourceDataTypes.json) {
-    console.log(`${array.length} items in array from ${source.name}`);
+    console.log(`${data.length} array items from ${source.name}`);
     return data.map(mapper);
   } else {
-    console.log(`HTML response from ${source.name}`);
     const htmlItems = processHtml(source, data);
+    console.log(`${htmlItems.length} HTML items from ${source.name}`);
     return Array.from(htmlItems).map(mapper);
   }
 };

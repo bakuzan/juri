@@ -1,3 +1,6 @@
+@import '../../styles/_variables';
+@import '../../styles/_mixins';
+
 .search-results {
   display: flex;
   flex-direction: row;
@@ -7,10 +10,22 @@
   padding: 10px 0;
 
   &__title {
+    font-size: 1.2em;
     padding: 5px;
     border-bottom: 1px solid;
   }
   &__query-trigger {
     padding: 5px 0;
   }
+}
+
+.search-results__sources {
+  $grid-values: (
+    xs: 50,
+    sm: 33,
+    md: 25,
+    lg: 20
+  );
+
+  @include gridColumnGenerator($grid-values);
 }

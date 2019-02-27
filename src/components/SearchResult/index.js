@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 
-import ContentItem from '../content-item/content-item';
+import ContentItem from '../ContentItem';
 import Grid from 'components/Grid';
 import { Button } from 'components/Button';
 import LoadingBouncer from 'components/LoadingBouncer';
@@ -11,8 +11,6 @@ import { SourceContext } from 'context';
 import './SearchResult.scss';
 
 function SearchResult({
-  isAnime,
-  isAdult,
   isLoading,
   results,
   selectedItem,
@@ -54,8 +52,6 @@ function SearchResult({
                         <ContentItem
                           key={item.id}
                           content={item}
-                          isAnime={this.props.isAnime}
-                          isAdult={this.props.isAdult}
                           isSelected={
                             selectedItem && selectedItem.id === item.id
                           }
@@ -75,8 +71,6 @@ function SearchResult({
 }
 
 SearchResult.propTypes = {
-  isAnime: PropTypes.bool.isRequired,
-  isAdult: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   results: PropTypes.object, // a Map([])
   selectedItem: PropTypes.object,

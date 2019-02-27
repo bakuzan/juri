@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 const enumArrayToObject = (arr) =>
   arr
     .slice(0)
@@ -13,7 +15,7 @@ const castStringToBool = (val) =>
   val === 'true' ? true : val === 'false' ? false : !!val;
 
 function generateUniqueId() {
-  return Math.abs(Date.now() / Math.random() + Math.random());
+  return crypto.randomBytes(16).toString('hex');
 }
 
 function joinTextContent(nodes) {

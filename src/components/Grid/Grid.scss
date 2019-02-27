@@ -1,28 +1,3 @@
-@mixin gridColumnsForPercentage($value) {
-  $percentage: $value * 1%;
-  grid-template-columns: repeat(auto-fit, $percentage);
-}
-
-@mixin gridColumnGenerator($grid-values) {
-  $xs-grid: map-get($grid-values, xs);
-  $sm-grid: map-get($grid-values, sm);
-  $md-grid: map-get($grid-values, md);
-  $lg-grid: map-get($grid-values, lg);
-
-  @include respond-to(xs) {
-    @include gridColumnsForPercentage($xs-grid);
-  }
-  @include respond-to(sm) {
-    @include gridColumnsForPercentage($sm-grid);
-  }
-  @include respond-to(md) {
-    @include gridColumnsForPercentage($md-grid);
-  }
-  @include respond-to(lg) {
-    @include gridColumnsForPercentage($lg-grid);
-  }
-}
-
 .grid {
   display: grid;
   padding: 5px;

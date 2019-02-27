@@ -25,3 +25,28 @@
     }
   }
 }
+
+@mixin gridColumnsForPercentage($value) {
+  $percentage: $value * 1%;
+  grid-template-columns: repeat(auto-fit, $percentage);
+}
+
+@mixin gridColumnGenerator($grid-values) {
+  $xs-grid: map-get($grid-values, xs);
+  $sm-grid: map-get($grid-values, sm);
+  $md-grid: map-get($grid-values, md);
+  $lg-grid: map-get($grid-values, lg);
+
+  @include respondTo(xs) {
+    @include gridColumnsForPercentage($xs-grid);
+  }
+  @include respondTo(sm) {
+    @include gridColumnsForPercentage($sm-grid);
+  }
+  @include respondTo(md) {
+    @include gridColumnsForPercentage($md-grid);
+  }
+  @include respondTo(lg) {
+    @include gridColumnsForPercentage($lg-grid);
+  }
+}

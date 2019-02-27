@@ -1,12 +1,30 @@
 import React from 'react';
+import Loadable from 'react-loadable';
 import createHistory from 'history/createBrowserHistory';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import App from 'components/App';
-import Latest from 'views/Latest';
-import PageNotFound from 'views/PageNotFound';
-import Search from 'views/Search';
+import LoadingBouncer from 'components/LoadingBouncer';
 import Paths from 'constants/paths';
+
+const loadableSettings = { loading: LoadingBouncer, delay: 300 };
+const Search = Loadable({
+  loader: () => import(/* webpackChunkName: 'search' */ './views/Search'),
+  ...loadableSettings
+});
+const Latest = Loadable({
+  loader: () => import(/* webpackChunkName: 'latest' */ './views/Latest'),
+  ...loadableSettings
+});
+const Manage = Loadable({
+  loader: () => import(/* webpackChunkName: 'manage' */ './views/Manage'),
+  ...loadableSettings
+});
+const PageNotFound = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: 'notFound' */ './views/PageNotFound'),
+  ...loadableSettings
+});
 
 const history = createHistory();
 
@@ -15,6 +33,7 @@ function JuriRoutes({ match }) {
     <Switch>
       <Route exact path={match.path} component={Search} />
       <Route path={`${match.path}${Paths.latest}`} component={Latest} />
+      <Route path={`${match.path}${Paths.manage}`} component={Manage} />
     </Switch>
   );
 }

@@ -77,6 +77,7 @@ module.exports = [
 
     type SourcesManagementResponse {
       sources: [Source]
+      returnObject: String
       urlReplacements: [String]
       availableHelperFunctions: [String]
     }

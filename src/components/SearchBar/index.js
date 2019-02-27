@@ -4,15 +4,9 @@ import React from 'react';
 import ToggleBox from 'components/ToggleBox';
 import ClearableInput from 'components/ClearableInput';
 
-import SearchFilters from 'constants/searchFilters';
+import { mediaTypeText, contentAgeText } from 'constants/searchFilters';
 
 import './SearchBar.scss';
-
-const mediaTypeText = { true: SearchFilters.anime, false: SearchFilters.manga };
-const contentAgeText = {
-  true: SearchFilters.adult,
-  false: SearchFilters.allAges
-};
 
 function SearchBar({
   isAnime,

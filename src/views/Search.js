@@ -141,13 +141,13 @@ function SearchPage(props) {
         />
 
         <SearchResult
-          isAdult={isAdult}
-          isAnime={isAnime}
           isLoading={state.isLoading}
           results={state.results}
           selectedItem={selectedItem}
           onSelectItem={(item) =>
-            setSelectedItem((prev) => (prev.id === item.id ? null : item))
+            setSelectedItem((prev) =>
+              prev && prev.id === item.id ? null : item
+            )
           }
           onSelectSource={setSourceId}
         />

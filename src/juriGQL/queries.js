@@ -1,5 +1,23 @@
 import gql from 'graphql-tag';
 
+const contentFragment = gql`
+  fragment Fields on ContentItem {
+    id
+    href
+    title
+    image
+
+    subtitle
+    authour
+    versions
+
+    type
+    status
+    startDate
+    endDate
+  }
+`;
+
 export const getSources = gql`
   query GetSources(
     $sourceType: SourceType
@@ -20,19 +38,17 @@ export const getSources = gql`
 export const getContentSearch = gql`
   query GetContentSearch($sourceId: Int!, $searchString: String!) {
     search(sourceId: $sourceId, searchString: $searchString) {
-      id
-      href
-      title
-      image
-
-      subtitle
-      authour
-      versions
-
-      type
-      status
-      startDate
-      endDate
+      ...Fields
     }
   }
+  ${contentFragment}
+`;
+
+export const getContentLatest = gql`
+  query GetContentLatest($sourceId: Int!, $page: Int) {
+    latest(sourceId: $sourceId, page: $page) {
+      ...Fields
+    }
+  }
+  ${contentFragment}
 `;

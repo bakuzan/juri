@@ -1,5 +1,3 @@
-const Op = require('sequelize').Op;
-
 const { Source } = require('../connectors');
 const SourceResolvers = require('./source');
 
@@ -9,8 +7,27 @@ module.exports = {
       const sources = await Source.findAll();
       return {
         sources,
+        returnObject: `
+        type ContentItem {
+          id: String
+          href: String
+          title: String
+          image: String
+    
+          subtitle: String
+          authour: String
+          versions: String
+    
+          type: String
+          status: String
+          startDate: String
+          endDate: String
+          currentEpisode: Int
+          postedDate: String
+        }
+        `,
         urlReplacements: [':searchString', ':paging', ':timestamp'],
-        availableHelperFunctions: []
+        availableHelperFunctions: ['generateUniqueId', 'joinTextContent']
       };
     },
     async sources(_, args = {}) {

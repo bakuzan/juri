@@ -9,7 +9,8 @@ import Paths from 'constants/paths';
 
 const headerLinks = [
   { text: 'Search', to: '' },
-  { text: 'Latest', to: Paths.latest }
+  { text: 'Latest', to: Paths.latest },
+  { text: 'Manage', to: Paths.manage }
 ];
 
 function App(props) {

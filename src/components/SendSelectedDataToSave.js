@@ -39,7 +39,11 @@ class SendSelectedDataToSave extends React.Component {
 
     return (
       <div className="send-data">
-        <Button onClick={this.handleSendData} disabled={!hasSelected}>
+        <Button
+          btnStyle="primary"
+          onClick={this.handleSendData}
+          disabled={!hasSelected}
+        >
           Add to list
         </Button>
       </div>

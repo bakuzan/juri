@@ -22,6 +22,7 @@ export default {
   base: '/juri/',
   about: 'about',
   latest: 'latest',
+  manage: 'manage',
   query: {
     malSearch: '/api/mal-search/:type',
     contentSearch: '/api/content-search/:site/:type/:age',

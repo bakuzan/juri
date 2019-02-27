@@ -1,11 +1,17 @@
-export const IS_ADULT_FALSE = 'Standard';
-export const IS_ADULT_TRUE = 'Adult';
-export const IS_ANIME_FALSE = 'Manga';
-export const IS_ANIME_TRUE = 'Anime';
-
-export default Object.freeze({
+const SearchFilters = Object.freeze({
   anime: 'anime',
   manga: 'manga',
   adult: 'adult',
   allAges: 'all ages'
 });
+
+export default SearchFilters;
+
+export const mediaTypeText = {
+  true: SearchFilters.anime,
+  false: SearchFilters.manga
+};
+export const contentAgeText = {
+  true: SearchFilters.adult,
+  false: SearchFilters.allAges
+};
