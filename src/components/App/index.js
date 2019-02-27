@@ -4,18 +4,28 @@ import { NavLink } from 'react-router-dom';
 import Header from 'components/Header';
 import SVGLogo from 'components/SVGLogo';
 import Alert from 'components/Alert';
+import ThemeToggle from 'components/ThemeToggle';
 
 import Paths from 'constants/paths';
 
 const headerLinks = [
-  { text: 'Search', to: '' },
+  { text: 'Search', to: '', exact: true },
   { text: 'Latest', to: Paths.latest },
   { text: 'Manage', to: Paths.manage }
 ];
 
 function App(props) {
+  // TODO read theme from localStorage into useState
+  const theme = 'one';
+  const themeState = [];
+
   return (
-    <div className="juri">
+    <div
+      className={classNames('juri', {
+        theme: true,
+        [`theme--${theme}`]: !!theme
+      })}
+    >
       <Header
         title="Juri"
         navLeft={
@@ -34,6 +44,9 @@ function App(props) {
                 {text}
               </NavLink>
             ))}
+            <ThemeContext.Provider value={themeState}>
+              <ThemeToggle />
+            </ThemeContext.Provider>
           </React.Fragment>
         }
       />

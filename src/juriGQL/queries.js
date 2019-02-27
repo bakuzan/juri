@@ -27,9 +27,6 @@ export const getSources = gql`
     sources(sourceType: $sourceType, mediaType: $mediaType, isAdult: $isAdult) {
       id
       name
-      mediaType
-      sourceType
-      isAdult
       isPaged
     }
   }

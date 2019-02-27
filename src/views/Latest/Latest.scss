@@ -1,13 +1,50 @@
 @import '../../styles/_variables';
 @import '../../styles/_mixins';
 
-.latest-content-grid {
-  $grid-values: (
-    xs: 50,
-    sm: 33,
-    md: 25,
-    lg: 20
-  );
+.latest-page {
+  &__content-grid {
+    $grid-values: (
+      xs: 50,
+      sm: 33,
+      md: 25,
+      lg: 20
+    );
 
-  @include gridColumnGenerator($grid-values);
+    @include gridColumnGenerator($grid-values);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  &__title {
+    flex: 1 1 70%;
+  }
+
+  &__refresh-button {
+    $size: 1.5em;
+    min-width: $size;
+    box-sizing: content-box;
+
+    &,
+    &::before {
+      width: $size;
+      height: $size;
+    }
+
+    &:hover::before {
+      animation: circleRotate 1s infinite linear;
+    }
+  }
+}
+
+@keyframes circleRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }

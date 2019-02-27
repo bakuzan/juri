@@ -92,8 +92,8 @@ function LatestPage({ location, ...props }) {
     : null;
 
   return (
-    <div className="latest">
-      <h2 className="center-contents">
+    <div className="latest-page">
+      <h2 className="latest-page__header">
         <SelectBox
           name="site"
           text="Site"
@@ -105,7 +105,7 @@ function LatestPage({ location, ...props }) {
           }}
           disabled={disableSiteChanger}
         />
-        <div className="center-contents push-siblings">
+        <div className="center-contents latest-page__title">
           Latest releases for
           <ToggleBox
             name="isAnime"
@@ -124,7 +124,7 @@ function LatestPage({ location, ...props }) {
           />
         </div>
         <Button
-          id="refresh-button"
+          className="latest-page__refresh-button"
           aria-label="Refresh data"
           icon={Icons.circleArrow}
           onClick={() =>
@@ -137,7 +137,7 @@ function LatestPage({ location, ...props }) {
         />
       </h2>
       <Grid
-        className="latest-content-grid"
+        className="latest-page__content-grid"
         items={state.results}
         isLoading={state.isLoading}
         onLoadMore={handleLoadMore}

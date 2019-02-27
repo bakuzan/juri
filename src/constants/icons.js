@@ -11,7 +11,9 @@ const Icons = {
   settings: '\u2699',
   calendar: '\uD83D\uDCC5',
   info: '\uD83D\uDEC8',
-  circleArrow: '\u21BB'
+  circleArrow: '\u21BB',
+  moon: '\uD83C\uDF19',
+  sun: '\u2600'
 };
 
 export default Icons;
