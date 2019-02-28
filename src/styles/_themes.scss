@@ -49,6 +49,16 @@
         background-color: darken($primary-background, 10%);
       }
     }
+    .application-header,
+    .sticky-header__fixed--stuck {
+      background-color: $primary-background;
+      color: $primary-colour;
+
+      .select-box {
+        background-color: $primary-background;
+        color: $primary-colour;
+      }
+    }
 
     // Navigation
     .nav-link {

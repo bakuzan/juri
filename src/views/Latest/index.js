@@ -5,6 +5,7 @@ import SelectBox from 'components/SelectBox';
 import ContentItem from 'components/ContentItem';
 import Grid from 'components/Grid';
 import { Button } from 'components/Button';
+import StickyHeader from 'components/StickyHeader';
 
 import Query from 'juriGQL';
 import { getSources, getContentLatest } from 'juriGQL/queries';
@@ -20,7 +21,7 @@ import {
   getTypeFromBool
 } from 'utils/searchParams';
 
-import testData from './testData';
+// import testData from './testData';
 
 import './Latest.scss';
 
@@ -54,15 +55,12 @@ async function fetchSources(setSourceData, { type, latestDefaultSources }) {
 }
 
 async function fetchContentResults(dispatch, params) {
-  const result = await new Promise((resolve) =>
-    setTimeout(() => resolve(testData), 1500)
-  );
-  // const result = await Query({
-  //   query: getContentLatest,
-  //   variables: {
-  //     ...params
-  //   }
-  // });
+  const result = await Query({
+    query: getContentLatest,
+    variables: {
+      ...params
+    }
+  });
   const { latest } = result.data || {};
   console.log('LatestPage > Queried! > ', params, result);
   dispatch({ type: LOAD, latest });
@@ -152,44 +150,46 @@ function LatestPage({ location, ...props }) {
 
   return (
     <div className="latest-page">
-      <h2 className="latest-page__header">
-        <SelectBox
-          name="site"
-          text="Site"
-          value={sourceData.sourceId}
-          options={siteOptions}
-          onSelect={(event) => {
-            const sourceId = Number(event.target.value);
-            setLatestDefaultSources({ [type]: sourceId });
-            setSourceData((prev) => ({ ...prev, sourceId }));
-          }}
-          disabled={disableSiteChanger}
-        />
-        <div className="center-contents latest-page__title">
-          Latest releases for
-          <ToggleBox
-            name="isAnime"
-            label="Is anime"
-            checked={isAnime}
-            handleChange={(name, value) => {
-              const type = getTypeFromBool(value, true);
-              setSourceData(initialSourceData);
-              props.history.replace(
-                `${props.match.url}${buildSearchParams({
-                  type
-                })}`
-              );
+      <StickyHeader>
+        <h2 className="latest-page__header">
+          <SelectBox
+            name="site"
+            text="Site"
+            value={sourceData.sourceId}
+            options={siteOptions}
+            onSelect={(event) => {
+              const sourceId = Number(event.target.value);
+              setLatestDefaultSources({ [type]: sourceId });
+              setSourceData((prev) => ({ ...prev, sourceId }));
             }}
-            text={mediaTypeText}
+            disabled={disableSiteChanger}
           />
-        </div>
-        <Button
-          className="latest-page__refresh-button"
-          aria-label="Refresh data"
-          icon={Icons.circleArrow}
-          onClick={() => dispatch({ type: REFRESH })}
-        />
-      </h2>
+          <div className="center-contents latest-page__title">
+            Latest releases for
+            <ToggleBox
+              name="isAnime"
+              label="Is anime"
+              checked={isAnime}
+              handleChange={(name, value) => {
+                const type = getTypeFromBool(value, true);
+                setSourceData(initialSourceData);
+                props.history.replace(
+                  `${props.match.url}${buildSearchParams({
+                    type
+                  })}`
+                );
+              }}
+              text={mediaTypeText}
+            />
+          </div>
+          <Button
+            className="latest-page__refresh-button"
+            aria-label="Refresh data"
+            icon={Icons.circleArrow}
+            onClick={() => dispatch({ type: REFRESH })}
+          />
+        </h2>
+      </StickyHeader>
       <Grid
         className="latest-page__content-grid"
         items={state.results}
