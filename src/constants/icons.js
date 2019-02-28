@@ -12,8 +12,9 @@ const Icons = {
   calendar: '\uD83D\uDCC5',
   info: '\uD83D\uDEC8',
   circleArrow: '\u21BB',
-  moon: '\uD83C\uDF19',
-  sun: '\u2600'
+  moon: '\uD83C\uDF19\uFE0E',
+  sun: '\u2600',
+  cross2: '\u274C\uFE0E'
 };
 
 export default Icons;

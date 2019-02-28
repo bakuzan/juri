@@ -3,11 +3,6 @@
   padding: 5px;
   min-height: 35px;
   box-sizing: content-box;
-
-  select {
-    width: 100%;
-    background-color: inherit;
-  }
 }
 
 .select-box {
@@ -15,7 +10,13 @@
   justify-content: center;
   min-width: 100px;
   min-height: 25px;
+  width: 100%;
+  color: inherit;
   padding: 5px;
   border: none;
   cursor: pointer;
+
+  option {
+    background-color: inherit;
+  }
 }

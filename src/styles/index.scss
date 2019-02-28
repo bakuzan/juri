@@ -26,7 +26,10 @@ button {
 }
 
 main {
-  padding: $header--height 5px 5px;
+  min-height: calc(100vh - 5px - #{$header--height});
+  padding: 5px {
+    top: $header--height;
+  }
 }
 
 .flex-spacer {

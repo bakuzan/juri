@@ -1,12 +1,15 @@
+import classNames from 'classnames';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Header from 'components/Header';
 import SVGLogo from 'components/SVGLogo';
 import Alert from 'components/Alert';
-import ThemeToggle from 'components/ThemeToggle';
+import RadioToggle from 'components/RadioToggle';
 
 import Paths from 'constants/paths';
+import Icons from 'constants/icons';
+import useStorage from 'hooks/useStorage';
 
 const headerLinks = [
   { text: 'Search', to: '', exact: true },
@@ -15,15 +18,14 @@ const headerLinks = [
 ];
 
 function App(props) {
-  // TODO read theme from localStorage into useState
-  const theme = 'one';
-  const themeState = [];
+  const [isDarkTheme, setTheme] = useStorage('isDarkTheme');
 
   return (
     <div
       className={classNames('juri', {
         theme: true,
-        [`theme--${theme}`]: !!theme
+        'theme--light': !isDarkTheme,
+        'theme--dark': isDarkTheme
       })}
     >
       <Header
@@ -35,18 +37,23 @@ function App(props) {
         }
         navRight={
           <React.Fragment>
-            {headerLinks.map(({ text, ...other }) => (
+            {headerLinks.map(({ text, to, ...other }) => (
               <NavLink
                 key={text}
                 className="application-header__link"
+                to={`${Paths.base}${to}`}
                 {...other}
               >
                 {text}
               </NavLink>
             ))}
-            <ThemeContext.Provider value={themeState}>
-              <ThemeToggle />
-            </ThemeContext.Provider>
+            <RadioToggle
+              className="theme-toggle"
+              name="theme"
+              icons={[Icons.moon, Icons.sun]}
+              checked={isDarkTheme}
+              onChange={setTheme}
+            />
           </React.Fragment>
         }
       />

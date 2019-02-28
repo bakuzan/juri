@@ -1,19 +1,26 @@
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useRef, useState } from 'react';
 
+import Icons from 'constants/icons';
+
 import './RadioToggle.scss';
 
-const defaultIcons = ['\u274C', '\u2713'];
+const defaultIcons = [Icons.cross2, Icons.tick];
 function RadioToggle({ className, icons = defaultIcons, ...props }) {
   const ref = useRef();
   const [focused, setFocus] = useState(false);
 
   return (
     <div
-      className={classNames('radio-toggle', {
-        'radio-toggle--checked': props.checked,
-        'radio-toggle--focused': focused
-      })}
+      className={classNames(
+        'radio-toggle',
+        {
+          'radio-toggle--checked': props.checked,
+          'radio-toggle--focused': focused
+        },
+        className
+      )}
       onClick={(event) => {
         const checkbox = ref.current;
         const { target } = event;
@@ -50,5 +57,10 @@ function RadioToggle({ className, icons = defaultIcons, ...props }) {
     </div>
   );
 }
+
+RadioToggle.propTypes = {
+  icons: PropTypes.arrayOf(PropTypes.string),
+  onChange: PropTypes.func.isRequired
+};
 
 export default RadioToggle;

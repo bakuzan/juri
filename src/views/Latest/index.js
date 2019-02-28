@@ -11,6 +11,7 @@ import { getSources, getContentLatest } from 'juriGQL/queries';
 import SourceType from 'constants/sourceTypes';
 import Icons from 'constants/icons';
 import { mediaTypeText } from 'constants/searchFilters';
+import useStorage from 'hooks/useStorage';
 import { capitalise, generateUniqueId } from 'utils';
 import {
   buildSearchParams,
@@ -20,7 +21,20 @@ import {
 
 import './Latest.scss';
 
-async function fetchSources(setSourceData, type) {
+function resolveLatestSourceId(sources, sourceId) {
+  const source = sources && sources[0];
+  if (!source) {
+    return sourceId;
+  }
+
+  if (sources.some((x) => x.id === sourceId)) {
+    return sourceId;
+  }
+
+  return source.id;
+}
+
+async function fetchSources(setSourceData, { type, latestDefaultSources }) {
   const result = await Query({
     query: getSources,
     variables: {
@@ -30,16 +44,20 @@ async function fetchSources(setSourceData, type) {
   });
 
   const { sources } = result.data || {};
-  setSourceData({ sources, sourceId: sources ? sources[0].id : 0 });
+  const sourceId = Number(
+    resolveLatestSourceId(sources, latestDefaultSources[type])
+  );
+  setSourceData({ sources, sourceId });
 }
 
 async function fetchContentResults(setState, params) {
-  const result = await Query({
-    query: getContentLatest,
-    variables: {
-      ...params
-    }
-  });
+  const result = { data: { latest: [] } };
+  // const result = await Query({
+  //   query: getContentLatest,
+  //   variables: {
+  //     ...params
+  //   }
+  // });
   const { latest } = result.data || {};
   console.log('LatestPage > Queried! > ', params, result);
   setState((prev) => ({
@@ -52,7 +70,8 @@ async function fetchContentResults(setState, params) {
 const initialSourceData = { sources: [], sourceId: 0 };
 
 function LatestPage({ location, ...props }) {
-  const { isAnime, type: currentType } = getFilterFlags(location);
+  const { isAnime, type } = getFilterFlags(location);
+  const [latestDefaultSources, setLatestDefaultSources] = useStorage('latest');
   const [sourceData, setSourceData] = useState(initialSourceData);
   const [state, setState] = useState({
     refreshKey: generateUniqueId(),
@@ -62,8 +81,13 @@ function LatestPage({ location, ...props }) {
   });
 
   useEffect(() => {
-    fetchSources(setSourceData, currentType);
-  }, [currentType]);
+    function setSourceInformation(values) {
+      setLatestDefaultSources({ [type]: values.sourceId });
+      setSourceData(values);
+    }
+
+    fetchSources(setSourceInformation, { type, latestDefaultSources });
+  }, [type]);
 
   useEffect(() => {
     if (sourceData.sourceId) {
@@ -91,6 +115,7 @@ function LatestPage({ location, ...props }) {
       }
     : null;
 
+  console.log(latestDefaultSources);
   return (
     <div className="latest-page">
       <h2 className="latest-page__header">
@@ -100,7 +125,8 @@ function LatestPage({ location, ...props }) {
           value={sourceData.sourceId}
           options={siteOptions}
           onSelect={(event) => {
-            const sourceId = event.target.value;
+            const sourceId = Number(event.target.value);
+            setLatestDefaultSources({ [type]: sourceId });
             setSourceData((prev) => ({ ...prev, sourceId }));
           }}
           disabled={disableSiteChanger}

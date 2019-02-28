@@ -22,18 +22,6 @@ function SearchBar({
   return (
     <div className="search-bar">
       <div>
-        {/* 
-          Need a site multiselect box here.
-          The goal being to provide a way to turn sites off. 
-        */}
-        {/* <SelectBox
-          name="site"
-          text="Site"
-          value={this.state.siteIndex}
-          options={siteOptions}
-          onSelect={this.handleSiteChange}
-          disabled={disableSiteChanger}
-        /> */}
         <h2
           className="search-bar__title center-contents"
           aria-label={titleLabel}

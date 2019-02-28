@@ -1,9 +1,6 @@
-body {
-  font-size: 16px;
-}
 .radio-toggle {
   position: relative;
-  display: flex;
+  display: inline-flex;
   user-select: none;
   cursor: pointer;
 
@@ -53,11 +50,10 @@ body {
   &--checked .radio-toggle__control {
     left: 1.5em;
   }
-  // TODO MOVE TO THEMES
   &--focused .radio-toggle__control {
-    box-shadow: 0px 0px 2px 3px #0099e0;
+    box-shadow: 0px 0px 2px 3px var(--radio-toggle--box-shadow-colour);
   }
   &:active .radio-toggle__control {
-    box-shadow: 0px 0px 5px 5px #0099e0;
+    box-shadow: 0px 0px 5px 5px var(--radio-toggle--box-shadow-colour);
   }
 }

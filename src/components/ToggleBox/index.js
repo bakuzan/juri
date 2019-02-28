@@ -1,23 +1,28 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import classNames from 'classnames';
+import React, { useState } from 'react';
 
 import { capitalise } from 'utils';
 
 import './ToggleBox.scss';
 
-function ToggleBox({ label, text, handleChange, ...props }) {
+function ToggleBox({ className, label, text, handleChange, ...props }) {
+  const [focused, setFocus] = useState(false);
+
   return (
-    <div className="toggle-box ripple">
-      <label
-        className="toggle-box__text"
-        role="checkbox"
-        tabIndex={0}
-        aria-checked={props.checked}
-        aria-label={label}
-      >
+    <div
+      className={classNames('toggle-box', 'ripple', {
+        'toggle-box--focused': focused
+      })}
+    >
+      <label className="toggle-box__text">
         <input
           type="checkbox"
           {...props}
+          className="toggle-box__for-screenreader"
+          aria-label={label}
+          onFocus={(e) => setFocus(true)}
+          onBlur={(e) => setFocus(false)}
           onChange={(e) => {
             const name = e.target.name;
             const value = e.target.checked;

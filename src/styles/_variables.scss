@@ -57,22 +57,24 @@ $z-index: (
 
 // Themes
 $theme-maps: (
-  one: (
+  light: (
     base-background: #fff,
     base-colour: #000,
     primary-background: $juri-purple,
     primary-colour: #fff,
     active-background: $juri-pink,
     active-colour: $juri-black,
-    faded-out: $grey80
+    faded-out: $grey80,
+    toggle-box--focused: $juri-pink
   ),
-  two: (
+  dark: (
     base-background: $juri-black,
     base-colour: #fff,
     primary-background: $juri-pink,
     primary-colour: $juri-black,
     active-background: $juri-purple,
     active-colour: #fff,
-    faded-out: $grey80
+    faded-out: $grey80,
+    toggle-box--focused: #fff
   )
 );

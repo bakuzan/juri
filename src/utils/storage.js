@@ -1,11 +1,19 @@
 import Strings from 'constants/strings';
 
 export default {
-  DEFAULTS: {},
-  get() {
-    return JSON.parse(localStorage.getItem(Strings.localSettings)) || DEFAULTS;
+  DEFAULTS: {
+    isDarkTheme: false,
+    latest: {
+      anime: 0,
+      manga: 0
+    }
   },
-  save() {
+  get() {
+    return (
+      JSON.parse(localStorage.getItem(Strings.localSettings)) || this.DEFAULTS
+    );
+  },
+  set(newValues) {
     const values = this.get();
     const updated = { ...values, ...newValues };
     localStorage.setItem(Strings.localSettings, JSON.stringify(updated));

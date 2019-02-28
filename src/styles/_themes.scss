@@ -14,14 +14,14 @@
     background-color: $base-background;
     color: $base-colour;
 
-    .select-box__input,
-    .input-box__input {
+    .select-box,
+    .input-container__input {
       color: $base-colour;
     }
 
     // Inherit base background
     .multi-select__dropdown-container,
-    .select-box__input,
+    .select-box,
     .dropdown__menu {
       background-color: $base-background;
     }
@@ -88,6 +88,24 @@
       &:focus,
       &:hover {
         @include lightenOrDarken('color', $primary-colour, 10%);
+      }
+    }
+
+    // Toggle box
+    .toggle-box {
+      --toggle-box--box-shadow-colour: #{map-get($values, toggle-box--focused)};
+    }
+
+    // Radio toggle
+    .radio-toggle {
+      --radio-toggle--box-shadow-colour: #{$active-background};
+    }
+    .theme-toggle {
+      .radio-toggle__unchecked {
+        color: $yellow;
+      }
+      .radio-toggle__checked {
+        color: $white;
       }
     }
   }

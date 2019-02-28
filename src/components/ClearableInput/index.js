@@ -54,6 +54,7 @@ class ClearableInput extends React.Component {
       >
         <input
           ref={(input) => (this.inputField = input)}
+          className={classNames('input-container__input')}
           placeholder=" "
           autoComplete="off"
           type={type}
