@@ -8,6 +8,7 @@
 
 .search-source {
   padding: 10px 0;
+  margin: 0 1px;
 
   &__title {
     font-size: 1.2em;
@@ -27,5 +28,6 @@
     lg: 20
   );
 
+  width: 100%;
   @include gridColumnGenerator($grid-values);
 }

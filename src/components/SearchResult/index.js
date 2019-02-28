@@ -12,6 +12,7 @@ import './SearchResult.scss';
 
 function SearchResult({
   isLoading,
+  sourceId,
   results,
   selectedItem,
   onSelectItem,
@@ -28,12 +29,13 @@ function SearchResult({
           {(src) => {
             const items = results.get(src.id);
             const hasSearched = !!items;
+            const isCurrentSource = sourceId === src.id;
 
             return (
               <li key={src.id} className="search-source">
                 <div className="search-source__title">{src.name}</div>
                 {!hasSearched &&
-                  (isLoading ? (
+                  (isLoading && isCurrentSource ? (
                     <LoadingBouncer />
                   ) : (
                     <div className="search-source__query-trigger">
@@ -72,6 +74,7 @@ function SearchResult({
 
 SearchResult.propTypes = {
   isLoading: PropTypes.bool.isRequired,
+  sourceId: PropTypes.number.isRequired,
   results: PropTypes.object, // a Map([])
   selectedItem: PropTypes.object,
   onSelectItem: PropTypes.func.isRequired,

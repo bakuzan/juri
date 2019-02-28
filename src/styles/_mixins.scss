@@ -28,7 +28,7 @@
 
 @mixin gridColumnsForPercentage($value) {
   $percentage: $value * 1%;
-  grid-template-columns: repeat(auto-fit, $percentage);
+  grid-template-columns: repeat(auto-fit, minmax($percentage, 1fr));
 }
 
 @mixin gridColumnGenerator($grid-values) {

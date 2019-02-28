@@ -69,6 +69,7 @@ class ClearableInput extends React.Component {
         {!!value && isTextInput && (
           <Button
             className={classNames('clear-input', clearInputButtonClass)}
+            aria-label="Clear input"
             btnSize="small"
             icon={Icons.cross}
             onClick={this.clearAndFocusInput}

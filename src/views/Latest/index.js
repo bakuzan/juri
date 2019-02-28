@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 
 import ToggleBox from 'components/ToggleBox';
 import SelectBox from 'components/SelectBox';
@@ -12,12 +12,15 @@ import SourceType from 'constants/sourceTypes';
 import Icons from 'constants/icons';
 import { mediaTypeText } from 'constants/searchFilters';
 import useStorage from 'hooks/useStorage';
+import useNotRecommendedEventCallback from 'hooks/useNotRecommendedEventCallback';
 import { capitalise, generateUniqueId } from 'utils';
 import {
   buildSearchParams,
   getFilterFlags,
   getTypeFromBool
 } from 'utils/searchParams';
+
+import testData from './testData';
 
 import './Latest.scss';
 
@@ -50,8 +53,10 @@ async function fetchSources(setSourceData, { type, latestDefaultSources }) {
   setSourceData({ sources, sourceId });
 }
 
-async function fetchContentResults(setState, params) {
-  const result = { data: { latest: [] } };
+async function fetchContentResults(dispatch, params) {
+  const result = await new Promise((resolve) =>
+    setTimeout(() => resolve(testData), 1500)
+  );
   // const result = await Query({
   //   query: getContentLatest,
   //   variables: {
@@ -60,20 +65,48 @@ async function fetchContentResults(setState, params) {
   // });
   const { latest } = result.data || {};
   console.log('LatestPage > Queried! > ', params, result);
-  setState((prev) => ({
-    ...prev,
-    isLoading: false,
-    results: params.page === 1 ? latest : [...prev.latest, ...latest]
-  }));
+  dispatch({ type: LOAD, latest });
 }
 
 const initialSourceData = { sources: [], sourceId: 0 };
+
+const LOAD = 'load';
+const REFRESH = 'refresh';
+const LOAD_MORE = 'load-more';
+
+function latestReducer(state, action) {
+  console.log('%c DISPATCH!', 'color: hotpink', state, action);
+  switch (action.type) {
+    case LOAD:
+      return {
+        ...state,
+        isLoading: false,
+        results:
+          state.page === 1
+            ? action.latest
+            : [
+                ...state.results,
+                ...action.latest.map((x) => ({ ...x, id: generateUniqueId() }))
+              ]
+      };
+    case REFRESH:
+      return {
+        ...state,
+        page: 1,
+        refreshKey: generateUniqueId()
+      };
+    case LOAD_MORE:
+      return { ...state, page: state.page + 1, isLoading: true };
+    default:
+      return state;
+  }
+}
 
 function LatestPage({ location, ...props }) {
   const { isAnime, type } = getFilterFlags(location);
   const [latestDefaultSources, setLatestDefaultSources] = useStorage('latest');
   const [sourceData, setSourceData] = useState(initialSourceData);
-  const [state, setState] = useState({
+  const [state, dispatch] = useReducer(latestReducer, {
     refreshKey: generateUniqueId(),
     isLoading: true,
     page: 1,
@@ -91,7 +124,7 @@ function LatestPage({ location, ...props }) {
 
   useEffect(() => {
     if (sourceData.sourceId) {
-      fetchContentResults(setState, {
+      fetchContentResults(dispatch, {
         sourceId: sourceData.sourceId,
         page: state.page
       });
@@ -102,20 +135,21 @@ function LatestPage({ location, ...props }) {
     value: o.id,
     text: o.name
   }));
+
   const disableSiteChanger = siteOptions.length < 2;
-  const activeSite = siteOptions.find((x) => x.value === sourceData.sourceId);
+  const activeSite = sourceData.sources.find(
+    (x) => x.id === sourceData.sourceId
+  );
   const hasPaging = activeSite && activeSite.isPaged;
-  const handleLoadMore = hasPaging
-    ? function onLoadMore() {
-        if (state.isLoading) {
-          return;
-        }
 
-        setState((prev) => ({ ...prev, page: prev.page + 1, isLoading: true }));
-      }
-    : null;
+  const handleLoadMore = useNotRecommendedEventCallback(() => {
+    if (hasPaging && !state.isLoading) {
+      dispatch({ type: LOAD_MORE });
+    }
+  }, [hasPaging, state.isLoading]);
 
-  console.log(latestDefaultSources);
+  console.log('%c RENDER LATEST', 'color: forestgreen', state);
+
   return (
     <div className="latest-page">
       <h2 className="latest-page__header">
@@ -153,13 +187,7 @@ function LatestPage({ location, ...props }) {
           className="latest-page__refresh-button"
           aria-label="Refresh data"
           icon={Icons.circleArrow}
-          onClick={() =>
-            setState((prev) => ({
-              ...prev,
-              page: 1,
-              refreshKey: generateUniqueId()
-            }))
-          }
+          onClick={() => dispatch({ type: REFRESH })}
         />
       </h2>
       <Grid

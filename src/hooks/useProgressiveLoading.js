@@ -1,61 +1,56 @@
-import { useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 
-function useOnScreen(ref, callback, rootMargin = '0px') {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry && entry.isIntersecting) {
-          callback();
-        }
-      },
-      {
-        rootMargin
+function setItemOnScreenWatch(targetNode, callback, rootMargin = '0px') {
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry && entry.isIntersecting && callback) {
+        callback();
       }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
+    },
+    {
+      rootMargin
     }
+  );
 
-    return () => {
-      observer.disconnect(ref.current);
-    };
-  }, []); // Empty array ensures that effect is only run on mount and unmount
+  if (targetNode) {
+    observer.observe(targetNode);
+  }
+
+  return observer;
 }
 
 export default function useProgressiveLoading(ref, onIntersect) {
-  let watched = useRef();
+  const hasRef = !!ref.current;
 
   useEffect(() => {
-    if (onIntersect) {
-      const observer = new MutationObserver((mutations) => {
-        const record = mutations
-          .filter((x) => x.addedNodes.length || x.removedNodes.length)
-          .pop();
+    let itemObserver = null;
 
-        if (record) {
-          const source = record.addedNodes.length
-            ? record.addedNodes
-            : [record.previousSibling];
+    const observer = new MutationObserver((mutations) => {
+      const record = mutations
+        .filter((x) => x.addedNodes.length || x.removedNodes.length)
+        .pop();
 
-          watched.current = Array.from(source).pop();
-          useOnScreen(watched, onIntersect, '200px');
-        }
-      });
+      if (record) {
+        const source = record.addedNodes.length
+          ? record.addedNodes
+          : [record.previousSibling];
 
-      if (ref.current) {
-        observer.observe(ref.current, {
-          attributes: false,
-          childList: true,
-          subtree: false
-        });
+        const watched = Array.from(source).pop();
+        itemObserver = setItemOnScreenWatch(watched, onIntersect, '50px');
       }
+    });
 
-      return () => {
-        observer.disconnect();
-      };
+    if (ref.current) {
+      observer.observe(ref.current, {
+        attributes: false,
+        childList: true,
+        subtree: false
+      });
     }
-  }, []);
 
-  return watched.current;
+    return () => {
+      observer && observer.disconnect();
+      itemObserver && itemObserver.disconnect();
+    };
+  }, [hasRef]);
 }

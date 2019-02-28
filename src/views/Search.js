@@ -142,6 +142,7 @@ function SearchPage(props) {
 
         <SearchResult
           isLoading={state.isLoading}
+          sourceId={sourceId}
           results={state.results}
           selectedItem={selectedItem}
           onSelectItem={(item) =>

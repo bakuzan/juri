@@ -16,13 +16,12 @@ function Grid({
   noItemsText,
   children,
   isLoading,
+  isPaged,
   onLoadMore,
   ...other
 }) {
   const ref = useRef();
-  const watchedItem = useProgressiveLoading(ref, onLoadMore);
-
-  console.log('RENDER GRID ', watchedItem);
+  useProgressiveLoading(ref, onLoadMore);
 
   const passedNothing = !items;
   const hasItems = !passedNothing && items.length > 0;

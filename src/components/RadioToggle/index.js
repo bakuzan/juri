@@ -6,8 +6,8 @@ import Icons from 'constants/icons';
 
 import './RadioToggle.scss';
 
-const defaultIcons = [Icons.cross2, Icons.tick];
-function RadioToggle({ className, icons = defaultIcons, ...props }) {
+const defaultIcons = [Icons.cross, Icons.tick];
+function RadioToggle({ className, label, icons = defaultIcons, ...props }) {
   const ref = useRef();
   const [focused, setFocus] = useState(false);
 
@@ -52,13 +52,14 @@ function RadioToggle({ className, icons = defaultIcons, ...props }) {
         }}
         className="radio-toggle__for-screenreader"
         type="checkbox"
-        aria-label="Switch between Dark and Light mode"
+        aria-label={label}
       />
     </div>
   );
 }
 
 RadioToggle.propTypes = {
+  label: PropTypes.string.isRequired,
   icons: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func.isRequired
 };

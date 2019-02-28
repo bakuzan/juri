@@ -47,7 +47,7 @@ module.exports = function responseProcessor(source, response) {
 
   const fn = myRunner(source.parser);
   const mapper = (d) => fn(d, { generateUniqueId, joinTextContent });
-  console.log('Response Data: ', data);
+
   if (source.dataType === SourceDataTypes.json) {
     console.log(`${data.length} array items from ${source.name}`);
     return data.map(mapper);

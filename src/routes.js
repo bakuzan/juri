@@ -34,6 +34,7 @@ function JuriRoutes({ match }) {
       <Route exact path={match.path} component={Search} />
       <Route path={`${match.path}${Paths.latest}`} component={Latest} />
       <Route path={`${match.path}${Paths.manage}`} component={Manage} />
+      <Route path="*" component={PageNotFound} />
     </Switch>
   );
 }

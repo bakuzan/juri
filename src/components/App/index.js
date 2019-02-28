@@ -49,6 +49,7 @@ function App(props) {
             ))}
             <RadioToggle
               className="theme-toggle"
+              label="Switch between Dark and Light mode"
               name="theme"
               icons={[Icons.moon, Icons.sun]}
               checked={isDarkTheme}
