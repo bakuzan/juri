@@ -1,18 +1,21 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import React from 'react';
+import React, { useContext } from 'react';
 
 import NewTabLink from 'components/NewTabLink';
+import SendSelectedDataToSave from 'components/SendSelectedDataToSave';
 
 import MagicNumbers from 'constants/magicNumbers';
 import Paths from 'constants/paths';
+import { SearchParamContext } from 'context';
 import { padNumber } from 'utils';
 
 import './ContentItem.scss';
 
-function ContentItem({ className, content, onClick, isSelected }) {
-  const canClick = !!onClick;
-  const handleClick = canClick ? () => onClick(content) : null;
+// TODO clean up styles!! use themes now!
+function ContentItem({ className, content, isLatest }) {
+  const searchParams = useContext(SearchParamContext);
+  const hasSearchParams = !!searchParams;
 
   const info =
     content.authour ||
@@ -23,33 +26,25 @@ function ContentItem({ className, content, onClick, isSelected }) {
 
   return (
     <li
-      className={classNames(
-        'content-item',
-        { clickable: canClick, selected: isSelected },
-        className
-      )}
-      role={canClick ? 'button' : null}
-      tabIndex={canClick ? 0 : null}
-      onClick={handleClick}
+      className={classNames('content-item', className, {
+        'content-item__latest': isLatest
+      })}
     >
       <div>
         <span
-          className="image"
+          className="content-item__image"
           style={{ backgroundImage: `url("${Paths.images.deadImage}")` }}
         >
           <span
-            className="image"
+            className="content-item__image"
             style={{
               backgroundImage: `url("${unescape(content.image)}")`
             }}
-            title={`Cover image for ${content.title}`}
+            aria-label={`Cover image for ${content.title}`}
           />
         </span>
-        <div className="content-item-info">
-          <NewTabLink
-            href={`${content.href}`}
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="content-item__info">
+          <NewTabLink className="content-item__link" to={`${content.href}`}>
             {`${content.title} ${additionalInformation}\n
                ${content.subtitle || ''}`}
           </NewTabLink>
@@ -86,6 +81,9 @@ function ContentItem({ className, content, onClick, isSelected }) {
               </span>
             )}
           </div>
+          {hasSearchParams && (
+            <SendSelectedDataToSave {...searchParams} selectedItem={content} />
+          )}
         </div>
       </div>
     </li>
@@ -93,9 +91,8 @@ function ContentItem({ className, content, onClick, isSelected }) {
 }
 
 ContentItem.propTypes = {
-  content: PropTypes.object.isRequired,
-  isSelected: PropTypes.bool,
-  onClick: PropTypes.func
+  isLatest: PropTypes.bool,
+  content: PropTypes.object.isRequired
 };
 
 export default ContentItem;

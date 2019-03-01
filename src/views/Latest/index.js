@@ -21,7 +21,7 @@ import {
   getTypeFromBool
 } from 'utils/searchParams';
 
-// import testData from './testData';
+import testData from './testData';
 
 import './Latest.scss';
 
@@ -55,12 +55,15 @@ async function fetchSources(setSourceData, { type, latestDefaultSources }) {
 }
 
 async function fetchContentResults(dispatch, params) {
-  const result = await Query({
-    query: getContentLatest,
-    variables: {
-      ...params
-    }
-  });
+  const result = await new Promise((resolve) =>
+    setTimeout(() => resolve(testData), 1000)
+  );
+  // const result = await Query({
+  //   query: getContentLatest,
+  //   variables: {
+  //     ...params
+  //   }
+  // });
   const { latest } = result.data || {};
   console.log('LatestPage > Queried! > ', params, result);
   dispatch({ type: LOAD, latest });
@@ -196,7 +199,7 @@ function LatestPage({ location, ...props }) {
         isLoading={state.isLoading}
         onLoadMore={handleLoadMore}
       >
-        {(item) => <ContentItem key={item.id} content={item} />}
+        {(item) => <ContentItem key={item.id} isLatest content={item} />}
       </Grid>
     </div>
   );

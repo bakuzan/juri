@@ -23,7 +23,9 @@ function getButtonClasses({
     'button-link': hasLink,
     'button-icon': hasIcon,
     [`button--${btnStyle}`]: hasBtnStyle,
-    [`button--${btnSize}`]: hasBtnSize,
+    [`button--${btnSize}`]: isButton && hasBtnSize,
+    [`button-icon--${btnSize}`]: hasIcon && hasBtnSize,
+    [`button-link--${btnSize}`]: hasLink && hasBtnSize,
     rounded,
     depress
   });

@@ -6,7 +6,7 @@ module.exports = [
   ...enums,
   gql`
     type Query {
-      sourcesManagement: SourcesManagementResponse
+      sourcesManagementInformation: SourcesManagementResponse
       sources(
         sourceType: SourceType
         mediaType: MediaType
@@ -76,7 +76,6 @@ module.exports = [
     }
 
     type SourcesManagementResponse {
-      sources: [Source]
       returnObject: String
       urlReplacements: [String]
       availableHelperFunctions: [String]

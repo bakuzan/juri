@@ -2,12 +2,11 @@ import React, { useReducer, useState, useEffect } from 'react';
 
 import SearchBar from 'components/SearchBar';
 import SearchResult from 'components/SearchResult';
-import SendSelectedDataToSave from 'components/SendSelectedDataToSave';
 
 import Query from 'juriGQL';
 import { getSources, getContentSearch } from 'juriGQL/queries';
 import SourceType from 'constants/sourceTypes';
-import { SourceContext } from 'context';
+import { SourceContext, SearchParamContext } from 'context';
 import useDebounce from 'hooks/useDebounce';
 import usePrevious from 'hooks/usePrevious';
 import { capitalise } from 'utils';
@@ -17,6 +16,8 @@ import {
   getTypeFromBool,
   getAgeFromBool
 } from 'utils/searchParams';
+
+import testData from './Search__TEST_DATA';
 
 async function fetchSources({ setSources, setSourceId }, { type, ...params }) {
   const result = await Query({
@@ -34,12 +35,15 @@ async function fetchSources({ setSources, setSourceId }, { type, ...params }) {
 }
 
 async function fetchSearchResults(dispatch, params) {
-  const result = await Query({
-    query: getContentSearch,
-    variables: {
-      ...params
-    }
-  });
+  const result = await new Promise((resolve) =>
+    setTimeout(() => resolve({ data: { search: testData } }), 1000)
+  );
+  // const result = await Query({
+  //   query: getContentSearch,
+  //   variables: {
+  //     ...params
+  //   }
+  // });
   const { search } = result.data || {};
   console.log('SearchPage > Queried! > ', params, result);
   dispatch({ type: SUCCESS, data: search, sourceId: params.sourceId });
@@ -81,7 +85,7 @@ function SearchPage(props) {
 
   const [sources, setSources] = useState([]);
   const [sourceId, setSourceId] = useState(0);
-  const [selectedItem, setSelectedItem] = useState(null);
+
   const [state, dispatch] = useReducer(searchReducer, {
     isLoading: false,
     results: new Map([]),
@@ -111,12 +115,6 @@ function SearchPage(props) {
   return (
     <SourceContext.Provider value={[sources, setSources]}>
       <div className="search">
-        <SendSelectedDataToSave
-          type={type}
-          isAdult={isAdult}
-          selectedItem={selectedItem}
-        />
-
         <SearchBar
           searchString={state.searchString}
           isAdult={isAdult}
@@ -140,18 +138,14 @@ function SearchPage(props) {
           }}
         />
 
-        <SearchResult
-          isLoading={state.isLoading}
-          sourceId={sourceId}
-          results={state.results}
-          selectedItem={selectedItem}
-          onSelectItem={(item) =>
-            setSelectedItem((prev) =>
-              prev && prev.id === item.id ? null : item
-            )
-          }
-          onSelectSource={setSourceId}
-        />
+        <SearchParamContext.Provider value={{ type, isAdult }}>
+          <SearchResult
+            isLoading={state.isLoading}
+            sourceId={sourceId}
+            results={state.results}
+            onSelectSource={setSourceId}
+          />
+        </SearchParamContext.Provider>
       </div>
     </SourceContext.Provider>
   );

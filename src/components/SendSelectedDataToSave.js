@@ -40,7 +40,7 @@ class SendSelectedDataToSave extends React.Component {
     return (
       <div className="send-data">
         <Button
-          btnStyle="primary"
+          btnStyle="accent"
           onClick={this.handleSendData}
           disabled={!hasSelected}
         >

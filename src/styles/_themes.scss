@@ -62,10 +62,12 @@
 
     // Navigation
     .nav-link {
-      color: $base-colour;
+      color: $primary-background;
 
-      &:hover {
-        color: $active-colour;
+      &:focus,
+      &:hover,
+      &:active {
+        color: $active-background;
       }
     }
 
@@ -85,13 +87,16 @@
       color: $primary-colour;
       &:focus,
       &:hover {
-        background-color: darken($primary-background, 10%);
+        @include lightenOrDarken('background-color', $primary-background, 10%);
       }
     }
     .button--accent {
+      background-color: $active-background;
+      color: $active-colour;
+
       &:focus,
       &:hover {
-        @include lightenOrDarken('background-color', $primary-colour, 10%);
+        @include lightenOrDarken('background-color', $active-background, 10%);
       }
     }
     .dropdown__toggler {

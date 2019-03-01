@@ -5,33 +5,8 @@
   padding: 2px;
   margin: 2px 0;
   list-style-type: none;
-  &.clickable {
-    border: 1px solid transparent;
-    cursor: pointer;
-  }
-  &.selected {
-    border: 1px solid $secondary-colour;
-  }
-  &.latest-item {
-    display: inline-flex;
-    width: 32%;
-    > div {
-      width: 100%;
-      background-color: $primary-colour-contrast;
-    }
-    &.on-my-list {
-      background-color: $primary-background;
-    }
-  }
-  &.host {
-    min-height: auto !important;
-    background-color: $primary-background;
-    color: $primary-colour-contrast;
-    font-weight: bold;
-    text-transform: capitalize;
-    cursor: pointer;
-  }
-  .image {
+
+  &__image {
     position: absolute;
     width: 58px;
     height: 90px;
@@ -39,19 +14,19 @@
     background-repeat: no-repeat;
     background-position: center top;
   }
-  .content-item-info {
+
+  &__info {
     padding-left: 65px;
-    a {
-      text-decoration: none;
-      color: $secondary-colour;
-      &:visited {
-        color: $secondary-colour;
-      }
-      &:focus,
-      &:hover,
-      &:active {
-        color: $primary-colour;
-      }
-    }
   }
+
+  &__link {
+    text-decoration: none;
+  }
+}
+
+// SendSelectedDataToSave
+.send-data {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px;
 }

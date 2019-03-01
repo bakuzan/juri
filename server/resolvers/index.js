@@ -3,10 +3,8 @@ const SourceResolvers = require('./source');
 
 module.exports = {
   Query: {
-    async sourcesManagement() {
-      const sources = await Source.findAll();
+    async sourcesManagementInformation() {
       return {
-        sources,
         returnObject: `
         type ContentItem {
           id: String

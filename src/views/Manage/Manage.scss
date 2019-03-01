@@ -1,0 +1,26 @@
+@import '../../styles/_variables';
+@import '../../styles/_mixins';
+
+.manage-page {
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+  }
+
+  &__grid {
+    $grid-values: (
+      xs: 33,
+      sm: 25,
+      md: 20,
+      lg: 10
+    );
+
+    @include gridColumnGenerator($grid-values);
+  }
+}
+
+.source-item {
+  padding: 5px;
+}

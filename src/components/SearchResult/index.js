@@ -10,14 +10,7 @@ import { SourceContext } from 'context';
 
 import './SearchResult.scss';
 
-function SearchResult({
-  isLoading,
-  sourceId,
-  results,
-  selectedItem,
-  onSelectItem,
-  onSelectSource
-}) {
+function SearchResult({ isLoading, sourceId, results, onSelectSource }) {
   const [sources] = useContext(SourceContext);
   const hasResults = !!results.size;
   console.log('Render Search Results', sources, results);
@@ -50,16 +43,7 @@ function SearchResult({
                 {hasSearched && (
                   <Grid className="search-results__content-grid" items={items}>
                     {(item) => {
-                      return (
-                        <ContentItem
-                          key={item.id}
-                          content={item}
-                          isSelected={
-                            selectedItem && selectedItem.id === item.id
-                          }
-                          onClick={onSelectItem}
-                        />
-                      );
+                      return <ContentItem key={item.id} content={item} />;
                     }}
                   </Grid>
                 )}
@@ -76,8 +60,6 @@ SearchResult.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   sourceId: PropTypes.number.isRequired,
   results: PropTypes.object, // a Map([])
-  selectedItem: PropTypes.object,
-  onSelectItem: PropTypes.func.isRequired,
   onSelectSource: PropTypes.func.isRequired
 };
 

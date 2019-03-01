@@ -12,8 +12,13 @@ $screen-sm-max: ($screen-md - 1);
 $screen-md-max: ($screen-lg - 1);
 
 // App Vars
+$app--anchor-colour: $juri-pink;
+$app--anchor-colour-hover: $juri-black;
+
 $app--font-family: 'Roboto mono', 'Lucida Console', 'Courier New', monospace;
 $app--font-size: 16px;
+
+$app--ripple-colour: $juri-pink;
 
 $app--info-colour: $cyan;
 $app--success-colour: $green;

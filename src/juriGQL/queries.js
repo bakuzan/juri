@@ -1,5 +1,7 @@
 import gql from 'graphql-tag';
 
+// Fragments
+
 const contentFragment = gql`
   fragment Fields on ContentItem {
     id
@@ -18,6 +20,8 @@ const contentFragment = gql`
   }
 `;
 
+// Source Queries
+
 export const getSources = gql`
   query GetSources(
     $sourceType: SourceType
@@ -31,6 +35,46 @@ export const getSources = gql`
     }
   }
 `;
+
+export const getSourcesList = gql`
+  query GetSourcesList {
+    sources {
+      id
+      name
+      mediaType
+      sourceType
+    }
+  }
+`;
+
+export const getSourceById = gql`
+  query GetSourceById($id: Int!) {
+    sourceById(id: $id) {
+      id
+      name
+      url
+      dataType
+      sourceType
+      mediaType
+      parser
+      selector
+      isAdult
+      isPaged
+    }
+  }
+`;
+
+export const getSourcesManagement = gql`
+  query GetSourcesManagement {
+    sourcesManagementInformation {
+      returnObject
+      urlReplacements
+      availableHelperFunctions
+    }
+  }
+`;
+
+// Content Queries
 
 export const getContentSearch = gql`
   query GetContentSearch($sourceId: Int!, $searchString: String!) {

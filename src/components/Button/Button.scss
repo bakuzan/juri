@@ -37,14 +37,15 @@
 }
 
 .button-link {
-  color: $anchor-colour;
+  color: $app--anchor-colour;
   text-decoration: underline;
+
   &:focus,
   &:active {
-    color: $anchor-colour;
+    color: $app--anchor-colour;
   }
   &:hover {
-    color: $anchor-colour-hover;
+    color: $app--anchor-colour-hover;
   }
 }
 
@@ -61,7 +62,8 @@
       cursor: pointer;
     }
   }
-  &.small:before {
-    font-size: 0.8rem;
+
+  &--small:before {
+    font-size: 1em;
   }
 }

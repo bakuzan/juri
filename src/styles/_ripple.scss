@@ -1,4 +1,4 @@
-@import './_colours';
+@import './_variables';
 
 .ripple {
   position: relative;
@@ -14,7 +14,7 @@
     left: 0;
     pointer-events: none;
     background-image: radial-gradient(
-      $secondary-colour,
+      $app--ripple-colour,
       #000 10%,
       transparent 10.01%
     );
