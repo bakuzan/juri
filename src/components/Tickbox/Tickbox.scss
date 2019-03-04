@@ -1,4 +1,9 @@
 @import '~styles/_variables';
+@import '~styles/_extensions';
+
+.tickbox-container {
+  @extend %controls;
+}
 
 .tickbox {
   display: flex;
@@ -6,6 +11,7 @@
   align-items: center;
   padding: 2px;
   cursor: pointer;
+
   input[type='checkbox'] {
     appearance: none;
     transition: all 0.3s;

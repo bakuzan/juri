@@ -13,7 +13,7 @@ import './SearchResult.scss';
 function SearchResult({ isLoading, sourceId, results, onSelectSource }) {
   const [sources] = useContext(SourceContext);
   const hasResults = !!results.size;
-  console.log('Render Search Results', sources, results);
+
   return (
     <div className="search-results">
       {!hasResults && isLoading && <LoadingBouncer />}

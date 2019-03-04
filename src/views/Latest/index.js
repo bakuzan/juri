@@ -1,4 +1,5 @@
 import React, { useReducer, useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 import ToggleBox from 'components/ToggleBox';
 import SelectBox from 'components/SelectBox';
@@ -20,8 +21,6 @@ import {
   getFilterFlags,
   getTypeFromBool
 } from 'utils/searchParams';
-
-import testData from './testData';
 
 import './Latest.scss';
 
@@ -55,15 +54,12 @@ async function fetchSources(setSourceData, { type, latestDefaultSources }) {
 }
 
 async function fetchContentResults(dispatch, params) {
-  const result = await new Promise((resolve) =>
-    setTimeout(() => resolve(testData), 1000)
-  );
-  // const result = await Query({
-  //   query: getContentLatest,
-  //   variables: {
-  //     ...params
-  //   }
-  // });
+  const result = await Query({
+    query: getContentLatest,
+    variables: {
+      ...params
+    }
+  });
   const { latest } = result.data || {};
   console.log('LatestPage > Queried! > ', params, result);
   dispatch({ type: LOAD, latest });
@@ -149,10 +145,9 @@ function LatestPage({ location, ...props }) {
     }
   }, [hasPaging, state.isLoading]);
 
-  console.log('%c RENDER LATEST', 'color: forestgreen', state);
-
   return (
     <div className="latest-page">
+      <Helmet title="Latest" />
       <StickyHeader>
         <h2 className="latest-page__header">
           <SelectBox

@@ -23,6 +23,11 @@ const SelectBox = ({
       onChange={onSelect}
       disabled={disabled}
     >
+      {!value && (
+        <option key="NONE" value="">
+          Select a {text}
+        </option>
+      )}
       {options.map((item) => (
         <option key={item.value} value={item.value}>
           {item.text}

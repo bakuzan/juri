@@ -15,18 +15,19 @@ $default-colour: #8385aa;
   display: flex;
   justify-content: center;
 
-  > div {
+  &__orb {
     width: 1rem;
     height: 1rem;
     margin: 3rem 0.2rem;
     background: $default-colour;
     border-radius: 50%;
     animation: bouncing 0.6s infinite alternate;
-  }
-  > div:nth-child(2) {
-    animation-delay: 0.2s;
-  }
-  > div:nth-child(3) {
-    animation-delay: 0.4s;
+
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
   }
 }

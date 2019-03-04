@@ -1,4 +1,5 @@
 import React, { useReducer, useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 import SearchBar from 'components/SearchBar';
 import SearchResult from 'components/SearchResult';
@@ -17,8 +18,6 @@ import {
   getAgeFromBool
 } from 'utils/searchParams';
 
-import testData from './Search__TEST_DATA';
-
 async function fetchSources({ setSources, setSourceId }, { type, ...params }) {
   const result = await Query({
     query: getSources,
@@ -35,15 +34,12 @@ async function fetchSources({ setSources, setSourceId }, { type, ...params }) {
 }
 
 async function fetchSearchResults(dispatch, params) {
-  const result = await new Promise((resolve) =>
-    setTimeout(() => resolve({ data: { search: testData } }), 1000)
-  );
-  // const result = await Query({
-  //   query: getContentSearch,
-  //   variables: {
-  //     ...params
-  //   }
-  // });
+  const result = await Query({
+    query: getContentSearch,
+    variables: {
+      ...params
+    }
+  });
   const { search } = result.data || {};
   console.log('SearchPage > Queried! > ', params, result);
   dispatch({ type: SUCCESS, data: search, sourceId: params.sourceId });
@@ -115,6 +111,7 @@ function SearchPage(props) {
   return (
     <SourceContext.Provider value={[sources, setSources]}>
       <div className="search">
+        <Helmet title="Search" />
         <SearchBar
           searchString={state.searchString}
           isAdult={isAdult}

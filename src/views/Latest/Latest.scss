@@ -1,16 +1,6 @@
-@import '../../styles/_variables';
-@import '../../styles/_mixins';
-
 .latest-page {
   &__content-grid {
-    $grid-values: (
-      xs: 50,
-      sm: 33,
-      md: 25,
-      lg: 20
-    );
-
-    @include gridColumnGenerator($grid-values);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
 
   &__header {

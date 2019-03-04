@@ -37,9 +37,12 @@
     .svg-logo text {
       fill: $primary-colour;
     }
-    .has-float-label input:focus,
-    .has-float-label select:focus {
-      border-color: $primary-background;
+    .has-float-label input,
+    .has-float-label select {
+      border-color: map-get($values, control-border-colour);
+      &:focus {
+        border-color: $primary-background;
+      }
     }
     .toggle-box {
       background-color: $primary-background;
@@ -61,6 +64,9 @@
       .has-float-label select:focus {
         border-color: $primary-colour;
       }
+    }
+    .loading-bouncer__orb {
+      background-color: $primary-background;
     }
 
     // Navigation
@@ -109,6 +115,24 @@
       }
     }
 
+    // Tabs
+    .tabs {
+      border-top: 1px solid $primary-background;
+    }
+    .tab:not(.tab--active):not(:hover) {
+      background-color: $faded-out;
+      color: $grey33;
+      border-color: $faded-out;
+      border-bottom: none;
+    }
+    .tab--active,
+    .tab:hover {
+      border: {
+        color: $primary-background;
+        bottom-color: $base-background;
+      }
+    }
+
     // Toggle box
     .toggle-box {
       --toggle-box--box-shadow-colour: #{map-get($values, toggle-box--focused)};
@@ -123,8 +147,13 @@
         color: $yellow;
       }
       .radio-toggle__checked {
-        color: $white;
+        color: $black;
       }
+    }
+
+    // Form Errors
+    .form-control__error {
+      color: map-get($values, form-error-colour);
     }
   }
 }

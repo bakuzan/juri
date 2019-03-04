@@ -5,8 +5,9 @@
 
   > input {
     display: flex;
-    width: 100%;
+    flex: 1 0 100%;
     background-color: inherit;
+    box-sizing: border-box;
   }
 
   &:not(.not-clearable) > input {

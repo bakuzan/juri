@@ -1,0 +1,62 @@
+@import '~styles/_variables.scss';
+
+$tab-controls-height: 31px;
+
+.tab-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 5px 0;
+
+  .tabs {
+    position: relative;
+    height: calc(100% - #{$tab-controls-height});
+    min-width: 400px;
+  }
+}
+
+.tab-controls {
+  display: flex;
+  height: $tab-controls-height;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+  list-style-type: none;
+}
+
+.tab {
+  display: inline-flex;
+  padding: 2px;
+  margin: 0 1px;
+  border: {
+    width: 1px;
+    style: solid;
+  }
+  z-index: map-get($z-index, above-siblings);
+
+  &--active {
+    margin-bottom: -1px;
+  }
+}
+
+.tab-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  margin: 0;
+  opacity: 0;
+
+  pointer-events: none;
+
+  &--active {
+    position: relative;
+    opacity: 1;
+    z-index: map-get($z-index, above-siblings);
+    transition: all 1s ease-in-out;
+    pointer-events: auto;
+  }
+}

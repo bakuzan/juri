@@ -1,6 +1,3 @@
-@import '../../styles/_variables';
-@import '../../styles/_mixins';
-
 .search-results {
   display: flex;
   flex-direction: row;
@@ -21,13 +18,6 @@
 }
 
 .search-results__sources {
-  $grid-values: (
-    xs: 50,
-    sm: 33,
-    md: 25,
-    lg: 20
-  );
-
   width: 100%;
-  @include gridColumnGenerator($grid-values);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }

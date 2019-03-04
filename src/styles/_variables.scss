@@ -71,7 +71,9 @@ $theme-maps: (
     active-background: $juri-pink,
     active-colour: $juri-black,
     faded-out: $grey80,
-    toggle-box--focused: $juri-pink
+    toggle-box--focused: $juri-pink,
+    form-error-colour: firebrick,
+    control-border-colour: rgba(0, 0, 0, 0.1)
   ),
   dark: (
     base-background: $juri-black,
@@ -81,6 +83,8 @@ $theme-maps: (
     active-background: $juri-purple,
     active-colour: #fff,
     faded-out: $grey80,
-    toggle-box--focused: #fff
+    toggle-box--focused: #fff,
+    form-error-colour: $red,
+    control-border-colour: invert(rgba(0, 0, 0, 0.2))
   )
 );

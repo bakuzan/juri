@@ -59,7 +59,6 @@ export const getSourceById = gql`
       parser
       selector
       isAdult
-      isPaged
     }
   }
 `;

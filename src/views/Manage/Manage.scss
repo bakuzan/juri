@@ -37,6 +37,11 @@ $form-spacing: 15px;
   max-width: 100%;
   overflow: hidden;
 
+  &__loader {
+    position: absolute;
+    right: 200px;
+  }
+
   &__actions {
     display: flex;
     justify-content: flex-end;
@@ -50,6 +55,7 @@ $form-spacing: 15px;
   &__grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    width: 100%;
   }
   &__column {
     &:first-child {
@@ -67,5 +73,37 @@ $form-spacing: 15px;
 
   &__control {
     margin-bottom: $form-spacing;
+  }
+
+  &__help-text {
+    font-size: 0.875em;
+    margin: 5px;
+  }
+}
+
+.parser-tab {
+  display: flex;
+  @include respondTo(sm) {
+    flex-direction: column;
+  }
+  @include respondTo(xs) {
+    flex-direction: column;
+  }
+
+  &__help {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+
+    @include respondTo(sm) {
+      flex-direction: row;
+    }
+    @include respondTo(xs) {
+      flex-direction: row;
+    }
+  }
+
+  &__error {
+    margin: 0;
   }
 }

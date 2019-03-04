@@ -8,7 +8,6 @@ class AlertService {
   }
 
   showError(message, detail) {
-    console.log(this.__instance);
     this.__instance.triggerAlert({
       id: generateUniqueId(),
       type: ERROR,

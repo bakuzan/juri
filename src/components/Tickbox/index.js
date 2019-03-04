@@ -13,7 +13,7 @@ const Tickbox = ({
   onChange,
   text
 }) => (
-  <div className={classNames('input-container', className)}>
+  <div className={classNames('tickbox-container', className)}>
     <label
       className={classNames('tickbox', { 'tickbox--disabled': disabled })}
       htmlFor={id}

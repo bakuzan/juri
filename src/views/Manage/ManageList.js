@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink as RRDNavLink } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import { withButtonisation } from 'components/Button';
 import NavLink from 'components/NavLink';
@@ -36,6 +37,7 @@ function ManageList({ match, sourceState, ...props }) {
 
   return (
     <div className="manage-page">
+      <Helmet title="Manage Sources" />
       <div className="manage-page__actions">
         <ClearableInput
           autoFocus

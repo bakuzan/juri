@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import Header from 'components/Header';
 import SVGLogo from 'components/SVGLogo';
@@ -15,7 +16,7 @@ import { useStorage } from 'hooks/useStorage';
 const headerLinks = [
   { text: 'Search', to: '', exact: true },
   { text: 'Latest', to: Paths.latest },
-  { text: 'Manage', to: Paths.manage }
+  { text: 'Manage', to: Paths.manage, exact: true }
 ];
 
 function App(props) {
@@ -29,6 +30,7 @@ function App(props) {
         'theme--dark': isDarkTheme
       })}
     >
+      <Helmet defaultTitle="Juri" titleTemplate="Juri - %s" />
       <Header
         title="Juri"
         navLeft={
