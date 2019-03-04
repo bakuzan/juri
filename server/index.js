@@ -45,7 +45,10 @@ app.use(function(req, _, next) {
   req.headers.origin = req.headers.origin || req.headers.host;
   next();
 });
-app.use(express.static(path.resolve(__dirname, '..', 'dist')));
+app.use(
+  `/${Constants.appName}`,
+  express.static(path.resolve(__dirname, '..', 'build'))
+);
 
 // Always return the main index.html, so react-router render the route in the client
 if (process.env.NODE_ENV === Constants.environment.production) {
@@ -53,7 +56,7 @@ if (process.env.NODE_ENV === Constants.environment.production) {
     if (req.url.includes('graphql')) {
       next();
     }
-    res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
   });
 }
 
