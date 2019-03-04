@@ -1,12 +1,11 @@
-const jsdom = require('jsdom').jsdom;
+const { JSDOM } = require('jsdom');
 
 const { SourceDataTypes } = require('../constants/enums');
 const { generateUniqueId, joinTextContent } = require('../utils');
 
 function processHtml(source, html) {
   const { selector } = source;
-  const document = jsdom(html);
-  const window = document.defaultView;
+  const { window } = new JSDOM(html);
   return window.document.querySelectorAll(selector);
 }
 
