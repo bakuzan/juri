@@ -1,8 +1,7 @@
+@import '~styles/_extensions';
+
 .select-container {
-  display: flex;
-  flex: 1;
-  min-height: 35px;
-  box-sizing: content-box;
+  @extend %controls;
 }
 
 .select-box {

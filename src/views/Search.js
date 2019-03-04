@@ -7,8 +7,8 @@ import Query from 'juriGQL';
 import { getSources, getContentSearch } from 'juriGQL/queries';
 import SourceType from 'constants/sourceTypes';
 import { SourceContext, SearchParamContext } from 'context';
-import useDebounce from 'hooks/useDebounce';
-import usePrevious from 'hooks/usePrevious';
+import { useDebounce } from 'hooks/useDebounce';
+import { usePrevious } from 'hooks/usePrevious';
 import { capitalise } from 'utils';
 import {
   buildSearchParams,

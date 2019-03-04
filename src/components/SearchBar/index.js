@@ -47,6 +47,7 @@ function SearchBar({
       <div className="search-bar__input-container">
         <ClearableInput
           autoFocus
+          id="searchString"
           name="searchString"
           label="Search for something"
           value={searchString}

@@ -5,7 +5,7 @@ import React, { useRef } from 'react';
 import LoadingBouncer from 'components/LoadingBouncer';
 
 import Strings from 'constants/strings';
-import useProgressiveLoading from 'hooks/useProgressiveLoading';
+import { useProgressiveLoading } from 'hooks/useProgressiveLoading';
 import { isString } from 'utils';
 
 import './Grid.scss';

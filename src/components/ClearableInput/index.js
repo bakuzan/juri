@@ -25,6 +25,7 @@ class ClearableInput extends React.Component {
 
   render() {
     const {
+      id,
       className,
       clearInputButtonClass,
       type,
@@ -54,6 +55,7 @@ class ClearableInput extends React.Component {
       >
         <input
           ref={(input) => (this.inputField = input)}
+          id={id}
           className={classNames('input-container__input')}
           placeholder=" "
           autoComplete="off"
@@ -65,7 +67,7 @@ class ClearableInput extends React.Component {
           onChange={onChange}
           {...props}
         />
-        <label htmlFor={name}>{label}</label>
+        <label htmlFor={id}>{`${label}${props.required ? ' *' : ''}`}</label>
         {!!value && isTextInput && (
           <Button
             className={classNames('clear-input', clearInputButtonClass)}
@@ -93,6 +95,7 @@ ClearableInput.defaultProps = {
 };
 
 ClearableInput.propTypes = {
+  id: PropTypes.string.isRequired,
   clearInputButtonClass: PropTypes.string,
   name: PropTypes.string,
   label: PropTypes.string,

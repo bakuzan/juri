@@ -19,7 +19,7 @@ function setItemOnScreenWatch(targetNode, callback, rootMargin = '0px') {
   return observer;
 }
 
-export default function useProgressiveLoading(ref, onIntersect) {
+export function useProgressiveLoading(ref, onIntersect) {
   const hasRef = !!ref.current;
 
   useEffect(() => {

@@ -1,7 +1,11 @@
+@import '~styles/_extensions';
+
 .clearable-input {
+  @extend %controls;
+
   > input {
     display: flex;
-    flex: 1 0 100%;
+    width: 100%;
     background-color: inherit;
   }
 

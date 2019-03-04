@@ -12,8 +12,8 @@ import { getSources, getContentLatest } from 'juriGQL/queries';
 import SourceType from 'constants/sourceTypes';
 import Icons from 'constants/icons';
 import { mediaTypeText } from 'constants/searchFilters';
-import useStorage from 'hooks/useStorage';
-import useNotRecommendedEventCallback from 'hooks/useNotRecommendedEventCallback';
+import { useStorage } from 'hooks/useStorage';
+import { useNotRecommendedEventCallback } from 'hooks/useNotRecommendedEventCallback';
 import { capitalise, generateUniqueId } from 'utils';
 import {
   buildSearchParams,
@@ -156,6 +156,7 @@ function LatestPage({ location, ...props }) {
       <StickyHeader>
         <h2 className="latest-page__header">
           <SelectBox
+            id="site"
             name="site"
             text="Site"
             value={sourceData.sourceId}

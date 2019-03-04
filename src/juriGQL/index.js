@@ -28,8 +28,12 @@ export default async function juriQuery(payload) {
 
     return result;
   } catch (error) {
-    // TODO
-    // Handle failure errors with alert to user
+    const errorDefaultMessage = 'Anonymous Error Message.';
+    alertService.showError(
+      'Server Error',
+      `${error.message || errorDefaultMessage}\r\n${error.stack}`
+    );
+
     console.error(error);
     return { data: null };
   }

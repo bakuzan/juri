@@ -1,0 +1,48 @@
+@import '~styles/_variables';
+
+.tickbox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2px;
+  cursor: pointer;
+  input[type='checkbox'] {
+    appearance: none;
+    transition: all 0.3s;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+  }
+
+  &--disabled {
+    cursor: default;
+  }
+}
+
+.tickbox input:before,
+.tickbox input:checked:before {
+  color: #000;
+  transition: all 0.3s;
+  cursor: pointer;
+  z-index: map-get($z-index, wafer);
+}
+
+.tickbox input:before {
+  content: '\2610';
+  font-size: 2em;
+}
+
+.tickbox input:disabled:before {
+  content: '\274c';
+  color: #666;
+  cursor: default;
+}
+
+.tickbox input:checked:before {
+  content: '\2611';
+  color: #0f0;
+}

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import storage from 'utils/storage';
 
-export default function useStorage(key) {
+export function useStorage(key) {
   const setting = storage.get()[key];
   const [value, setState] = useState(setting);
 

@@ -39,6 +39,7 @@ function ManageList({ match, sourceState, ...props }) {
       <div className="manage-page__actions">
         <ClearableInput
           autoFocus
+          id="searchString"
           name="searchString"
           label="Filter"
           value={searchString}
@@ -57,8 +58,8 @@ function ManageList({ match, sourceState, ...props }) {
             <div>
               <NavLink to={`${match.url}/${item.id}`}>{item.name}</NavLink>
             </div>
-            <div>{item.mediaType}</div>
-            <div>{item.sourceType}</div>
+            <div className="source-item__reduced-text">{item.mediaType}</div>
+            <div className="source-item__reduced-text">{item.sourceType}</div>
           </li>
         )}
       </Grid>

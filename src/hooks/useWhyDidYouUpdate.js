@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 
-export default function useWhyDidYouUpdate(name, props) {
+// For Development logging
+export function useWhyDidYouUpdate(name, props) {
   const previousProps = useRef();
 
   useEffect(() => {

@@ -7,9 +7,10 @@ import SVGLogo from 'components/SVGLogo';
 import Alert from 'components/Alert';
 import RadioToggle from 'components/RadioToggle';
 
+import { ThemeContext } from 'context';
 import Paths from 'constants/paths';
 import Icons from 'constants/icons';
-import useStorage from 'hooks/useStorage';
+import { useStorage } from 'hooks/useStorage';
 
 const headerLinks = [
   { text: 'Search', to: '', exact: true },
@@ -58,11 +59,12 @@ function App(props) {
           </React.Fragment>
         }
       />
-
-      <main>
-        <Alert />
-        {props.children}
-      </main>
+      <ThemeContext.Provider value={[isDarkTheme, setTheme]}>
+        <main>
+          <Alert />
+          {props.children}
+        </main>
+      </ThemeContext.Provider>
     </div>
   );
 }

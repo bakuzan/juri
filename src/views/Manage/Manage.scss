@@ -23,4 +23,49 @@
 
 .source-item {
   padding: 5px;
+
+  &__reduced-text {
+    font-size: 0.875em;
+  }
+}
+
+// Manage Form
+$form-spacing: 15px;
+
+.manage-form {
+  min-height: 100vh;
+  max-width: 100%;
+  overflow: hidden;
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    > * {
+      margin: 5px;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
+  &__column {
+    &:first-child {
+      margin-right: 5px;
+    }
+    &:last-child {
+      margin-left: 5px;
+    }
+  }
+
+  &__editor-label {
+    font-size: 0.7em;
+    margin-left: 20px;
+  }
+
+  &__control {
+    margin-bottom: $form-spacing;
+  }
 }

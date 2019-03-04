@@ -45,3 +45,10 @@ export function padNumber(n, width, z = '0') {
   n += '';
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
+
+export function mapEnumToSelectOption(obj, displayFn) {
+  return Object.keys(obj).map((k) => {
+    const value = obj[k];
+    return { value, text: displayFn ? displayFn(value) : value };
+  });
+}

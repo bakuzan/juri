@@ -4,10 +4,20 @@ import React from 'react';
 
 import './SelectBox.scss';
 
-const SelectBox = ({ name, value, disabled, onSelect, text, options }) => (
-  <div className={classNames('has-float-label', 'select-container')}>
+const SelectBox = ({
+  className,
+  id,
+  name,
+  value,
+  disabled,
+  onSelect,
+  text,
+  options
+}) => (
+  <div className={classNames('has-float-label', 'select-container', className)}>
     <select
       className={classNames('select-box')}
+      id={id}
       name={name}
       value={value}
       onChange={onSelect}
@@ -19,7 +29,7 @@ const SelectBox = ({ name, value, disabled, onSelect, text, options }) => (
         </option>
       ))}
     </select>
-    <label htmlFor={name}>{text}</label>
+    <label htmlFor={id}>{text}</label>
   </div>
 );
 
@@ -28,7 +38,8 @@ SelectBox.defaultProps = {
 };
 
 SelectBox.propTypes = {
-  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,

@@ -58,6 +58,9 @@
         background-color: $primary-background;
         color: $primary-colour;
       }
+      .has-float-label select:focus {
+        border-color: $primary-colour;
+      }
     }
 
     // Navigation
