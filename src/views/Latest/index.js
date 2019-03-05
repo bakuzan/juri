@@ -67,13 +67,17 @@ async function fetchContentResults(dispatch, params) {
 
 const initialSourceData = { sources: [], sourceId: 0 };
 
+const LOADING = 'loading';
 const LOAD = 'load';
 const REFRESH = 'refresh';
 const LOAD_MORE = 'load-more';
+const RESET = 'reset';
 
 function latestReducer(state, action) {
   console.log('%c DISPATCH!', 'color: hotpink', state, action);
   switch (action.type) {
+    case LOADING:
+      return { ...state, isLoading: true };
     case LOAD:
       return {
         ...state,
@@ -94,6 +98,8 @@ function latestReducer(state, action) {
       };
     case LOAD_MORE:
       return { ...state, page: state.page + 1, isLoading: true };
+    case RESET:
+      return { ...state, page: 1, results: [] };
     default:
       return state;
   }
@@ -116,6 +122,7 @@ function LatestPage({ location, ...props }) {
       setSourceData(values);
     }
 
+    dispatch({ type: LOADING });
     fetchSources(setSourceInformation, { type, latestDefaultSources });
   }, [type]);
 
@@ -171,7 +178,9 @@ function LatestPage({ location, ...props }) {
               checked={isAnime}
               handleChange={(name, value) => {
                 const type = getTypeFromBool(value, true);
+
                 setSourceData(initialSourceData);
+                dispatch({ type: RESET });
                 props.history.replace(
                   `${props.match.url}${buildSearchParams({
                     type

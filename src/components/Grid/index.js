@@ -31,13 +31,15 @@ function Grid({
     : Strings.noItemsAvailable;
 
   return (
-    <ul ref={ref} className={classNames('grid', className)} {...other}>
+    <React.Fragment>
       {!passedNothing && !hasItems && displayNoItemsText && (
-        <li key="NONE">{noItemsTextToRender}</li>
+        <div>{noItemsTextToRender}</div>
       )}
-      {hasItems && items.map(children)}
+      <ul ref={ref} className={classNames('grid', className)} {...other}>
+        {hasItems && items.map(children)}
+      </ul>
       {isLoading && <LoadingBouncer />}
-    </ul>
+    </React.Fragment>
   );
 }
 

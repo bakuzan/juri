@@ -16,7 +16,9 @@ function SearchResult({ isLoading, sourceId, results, onSelectSource }) {
 
   return (
     <div className="search-results">
-      {!hasResults && isLoading && <LoadingBouncer />}
+      {!hasResults && isLoading && (
+        <LoadingBouncer className="search-results__loader" />
+      )}
       {hasResults && (
         <Grid className="search-results__sources" items={sources}>
           {(src) => {
