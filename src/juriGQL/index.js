@@ -22,9 +22,8 @@ export default async function juriQuery(payload) {
 
       alertService.showError(
         error.message,
-        `Resolver: ${error.path} > ${
-          error.extensions.code
-        }\r\n\r\n${exception.stacktrace.join('\r\n')}`
+        `Resolver: ${error.path} > ${error.extensions.code}\r\n\r\n
+        ${(exception.stacktrace || []).join('\r\n')}`
       );
     }
 
