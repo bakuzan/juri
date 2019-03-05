@@ -21,10 +21,14 @@ function tryParseJSON(jsonString) {
 
 function handleBadJsonTextResponse(text) {
   const result = [];
-  const objects = text.split(/({.+?})|(\[[^\[].+?\])(?=,|\])/); // Use this, not finished yet tho ({.+?})|(\[.+?\])(?=,|\])
+  const objects = text.split('\n'); //.split(/({.+?})|(\[[^\[].+?\])(?=,|\])/); // Use this, not finished yet tho ({.+?})|(\[.+?\])(?=,|\])
 
   for (let i = 0, length = objects.length; i < length; i++) {
     const obj = objects[i];
+    if (!obj) {
+      continue;
+    }
+
     const json = tryParseJSON(obj);
     if (json) {
       result.push(json);
@@ -40,14 +44,16 @@ function myRunner(obj) {
 
 module.exports = function responseProcessor(source, response) {
   let data = response.data || response;
-  if (/animeholics|mangapark/i.test(source.url)) {
+  const isBadResponse =
+    source.dataType === SourceDataTypes.text && source.selector === 'BADJSON';
+  if (isBadResponse) {
     data = handleBadJsonTextResponse(data);
   }
 
   const fn = myRunner(source.parser);
   const mapper = (d) => fn(d, { generateUniqueId, joinTextContent });
 
-  if (source.dataType === SourceDataTypes.json) {
+  if (source.dataType === SourceDataTypes.json || isBadResponse) {
     console.log(`${data.length} array items from ${source.name}`);
     return data.map(mapper);
   } else {

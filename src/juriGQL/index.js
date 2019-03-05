@@ -18,11 +18,13 @@ export default async function juriQuery(payload) {
 
     if (result.errors) {
       const error = result.errors[0];
+      const { exception = { stacktrace: [] } } = error.extensions;
+
       alertService.showError(
         error.message,
         `Resolver: ${error.path} > ${
           error.extensions.code
-        }\n\n${error.extensions.exception.stacktrace.join('\r\n')}`
+        }\r\n\r\n${exception.stacktrace.join('\r\n')}`
       );
     }
 
