@@ -71,13 +71,12 @@ const LOADING = 'loading';
 const LOAD = 'load';
 const REFRESH = 'refresh';
 const LOAD_MORE = 'load-more';
-const RESET = 'reset';
 
 function latestReducer(state, action) {
   console.log('%c DISPATCH!', 'color: hotpink', state, action);
   switch (action.type) {
     case LOADING:
-      return { ...state, isLoading: true };
+      return { ...state, isLoading: true, page: 1, results: [] };
     case LOAD:
       return {
         ...state,
@@ -85,10 +84,7 @@ function latestReducer(state, action) {
         results:
           state.page === 1
             ? action.latest
-            : [
-                ...state.results,
-                ...action.latest.map((x) => ({ ...x, id: generateUniqueId() }))
-              ]
+            : [...state.results, ...action.latest]
       };
     case REFRESH:
       return {
@@ -98,8 +94,6 @@ function latestReducer(state, action) {
       };
     case LOAD_MORE:
       return { ...state, page: state.page + 1, isLoading: true };
-    case RESET:
-      return { ...state, page: 1, results: [] };
     default:
       return state;
   }
@@ -165,6 +159,7 @@ function LatestPage({ location, ...props }) {
             options={siteOptions}
             onSelect={(event) => {
               const sourceId = Number(event.target.value);
+              dispatch({ type: LOADING });
               setLatestDefaultSources({ [type]: sourceId });
               setSourceData((prev) => ({ ...prev, sourceId }));
             }}
@@ -180,7 +175,6 @@ function LatestPage({ location, ...props }) {
                 const type = getTypeFromBool(value, true);
 
                 setSourceData(initialSourceData);
-                dispatch({ type: RESET });
                 props.history.replace(
                   `${props.match.url}${buildSearchParams({
                     type
