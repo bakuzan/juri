@@ -90,7 +90,9 @@ function latestReducer(state, action) {
       return {
         ...state,
         page: 1,
-        refreshKey: generateUniqueId()
+        refreshKey: generateUniqueId(),
+        results: [],
+        isLoading: true
       };
     case LOAD_MORE:
       return { ...state, page: state.page + 1, isLoading: true };
