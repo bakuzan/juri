@@ -38,16 +38,26 @@ function handleBadJsonTextResponse(text) {
   return result;
 }
 
+function processNestedJson(data, attrString) {
+  const attrs = attrString.split('.');
+  return attrs.reduce((p, c) => p[c], data);
+}
+
 function myRunner(obj) {
   return Function('"use strict";return (' + obj + ')')();
 }
 
 module.exports = function responseProcessor(source, response) {
   let data = response.data || response;
+  const isNestedJson =
+    source.dataType === SourceDataTypes.json && !!source.selector;
   const isBadResponse =
     source.dataType === SourceDataTypes.text && source.selector === 'BADJSON';
+
   if (isBadResponse) {
     data = handleBadJsonTextResponse(data);
+  } else if (isNestedJson) {
+    data = processNestedJson(data, source.selector);
   }
 
   const fn = myRunner(source.parser);
