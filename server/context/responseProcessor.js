@@ -40,7 +40,7 @@ function handleBadJsonTextResponse(text) {
 
 function processNestedJson(data, attrString) {
   const attrs = attrString.split('.');
-  return attrs.reduce((p, c) => p[c], data);
+  return attrs.reduce((p, c) => p[c], data) || [];
 }
 
 function myRunner(obj) {
@@ -48,12 +48,12 @@ function myRunner(obj) {
 }
 
 module.exports = function responseProcessor(source, response) {
-  let data = response.data || response;
   const isNestedJson =
     source.dataType === SourceDataTypes.json && !!source.selector;
   const isBadResponse =
     source.dataType === SourceDataTypes.text && source.selector === 'BADJSON';
 
+  let data = response;
   if (isBadResponse) {
     data = handleBadJsonTextResponse(data);
   } else if (isNestedJson) {
