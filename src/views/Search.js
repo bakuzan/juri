@@ -28,9 +28,9 @@ async function fetchSources({ setSources, setSourceId }, { type, ...params }) {
     }
   });
 
-  const { sources } = result.data || {};
+  const { sources = [] } = result;
   setSources(sources);
-  setSourceId(sources ? sources[0].id : 0);
+  setSourceId(sources[0] ? sources[0].id : 0);
 }
 
 async function fetchSearchResults(dispatch, params) {
@@ -40,8 +40,8 @@ async function fetchSearchResults(dispatch, params) {
       ...params
     }
   });
-  const { search } = result.data || {};
-  console.log('SearchPage > Queried! > ', params, result);
+  const { search = [] } = result;
+
   dispatch({ type: SUCCESS, data: search, sourceId: params.sourceId });
 }
 

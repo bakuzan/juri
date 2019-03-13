@@ -69,6 +69,14 @@ module.exports = {
         errorMessages: [],
         data: updated
       };
+    },
+    async sourceRemove(_, { id }) {
+      await Source.destroy({ where: { id } });
+      return {
+        success: true,
+        errorMessages: [],
+        data: null
+      };
     }
   },
   Source: SourceResolvers

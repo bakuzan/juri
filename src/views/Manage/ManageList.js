@@ -18,7 +18,7 @@ async function fetchSources(setState) {
     variables: {}
   });
 
-  const { sources = [] } = result.data || {};
+  const { sources = [] } = result;
   setState(sources.reduce((p, c) => p.set(c.id, c), new Map()));
 }
 

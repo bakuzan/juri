@@ -2,13 +2,18 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-function TabView({ isActive, children }) {
+function TabView({ className, isActive, children, ...props }) {
   const isFunctionChildren = typeof children === 'function';
 
   return (
     <div
-      className={classNames('tab-view', { 'tab-view--active': isActive })}
+      className={classNames(
+        'tab-view',
+        { 'tab-view--active': isActive },
+        className
+      )}
       role="tabpanel"
+      {...props}
     >
       {isFunctionChildren ? children(isActive) : children}
     </div>

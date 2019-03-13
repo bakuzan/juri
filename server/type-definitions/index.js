@@ -11,6 +11,7 @@ module.exports = [
         sourceType: SourceType
         mediaType: MediaType
         isAdult: Boolean
+        isActive: Boolean
       ): [Source]
       sourceById(id: Int!): Source
 
@@ -21,6 +22,7 @@ module.exports = [
     type Mutation {
       sourceCreate(payload: SourceInput!): SourceResponse
       sourceUpdate(payload: SourceInput!): SourceResponse
+      sourceRemove(id: Int!): SourceResponse
     }
 
     type Source {
@@ -33,6 +35,7 @@ module.exports = [
       parser: String
       selector: String
       isAdult: Boolean
+      isActive: Boolean
       isPaged: Boolean
     }
 
@@ -46,6 +49,7 @@ module.exports = [
       parser: String
       selector: String
       isAdult: Boolean
+      isActive: Boolean
     }
 
     """

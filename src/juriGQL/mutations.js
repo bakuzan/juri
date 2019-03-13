@@ -23,3 +23,12 @@ export const updateSource = gql`
     }
   }
 `;
+
+export const removeSource = gql`
+  mutation RemoveSource($id: Int!) {
+    sourceRemove(id: $id) {
+      success
+      errorMessages
+    }
+  }
+`;

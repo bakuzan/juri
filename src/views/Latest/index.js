@@ -38,7 +38,7 @@ function resolveLatestSourceId(sources, sourceId) {
 }
 
 async function fetchSources(setSourceData, { type, latestDefaultSources }) {
-  const result = await Query({
+  const { sources = [] } = await Query({
     query: getSources,
     variables: {
       sourceType: SourceType.latest,
@@ -46,7 +46,6 @@ async function fetchSources(setSourceData, { type, latestDefaultSources }) {
     }
   });
 
-  const { sources } = result.data || {};
   const sourceId = Number(
     resolveLatestSourceId(sources, latestDefaultSources[type])
   );
@@ -54,14 +53,13 @@ async function fetchSources(setSourceData, { type, latestDefaultSources }) {
 }
 
 async function fetchContentResults(dispatch, params) {
-  const result = await Query({
+  const { latest = [] } = await Query({
     query: getContentLatest,
     variables: {
       ...params
     }
   });
-  const { latest } = result.data || {};
-  console.log('LatestPage > Queried! > ', params, result);
+
   dispatch({ type: LOAD, latest });
 }
 
@@ -73,7 +71,6 @@ const REFRESH = 'refresh';
 const LOAD_MORE = 'load-more';
 
 function latestReducer(state, action) {
-  console.log('%c DISPATCH!', 'color: hotpink', state, action);
   switch (action.type) {
     case LOADING:
       return { ...state, isLoading: true, page: 1, results: [] };

@@ -11,7 +11,7 @@ import { TabContainer, TabView } from 'components/Tabs';
 
 import Query from 'juriGQL';
 import { getSourcesManagement, getSourceById } from 'juriGQL/queries';
-import { createSource, updateSource } from 'juriGQL/mutations';
+import { createSource, updateSource, removeSource } from 'juriGQL/mutations';
 import { ThemeContext } from 'context';
 import DataTypesEnum from 'constants/dataTypes';
 import MediaTypesEnum from 'constants/mediaTypes';
@@ -19,6 +19,7 @@ import SourceTypesEnum from 'constants/sourceTypes';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { mapEnumToSelectOption, capitalise } from 'utils';
 import validator from 'utils/manageFormValidator';
+import alertService from 'utils/alertService';
 
 const dataTypes = mapEnumToSelectOption(DataTypesEnum, (v) => capitalise(v));
 const mediaTypes = mapEnumToSelectOption(MediaTypesEnum);
@@ -26,23 +27,29 @@ const sourceTypes = mapEnumToSelectOption(SourceTypesEnum);
 
 async function fetchSourceById({ setState, setFormMeta }, id) {
   setFormMeta((prev) => ({ ...prev, isLoading: true }));
-  const result = await Query({
+  const { sourceById = {} } = await Query({
     query: getSourceById,
     variables: { id }
   });
 
-  const { sourceById = {} } = result.data || {};
-  setState(sourceById);
+  if (sourceById) {
+    setState(sourceById);
+  } else {
+    alertService.showError(
+      'Source not found',
+      `Source with Id: ${id}, was not found.`
+    );
+  }
+
   setFormMeta((prev) => ({ ...prev, isLoading: false }));
 }
 
 async function fetchSourcesManagement(setState) {
-  const result = await Query({
+  const { sourcesManagementInformation = {} } = await Query({
     query: getSourcesManagement,
     variables: {}
   });
 
-  const { sourcesManagementInformation = {} } = result.data || {};
   setState(sourcesManagementInformation);
 }
 
@@ -52,12 +59,11 @@ async function postManageForm(
 ) {
   setFormMeta((prev) => ({ ...prev, isLoading: true }));
 
-  const result = await Query({
+  const { sourceCreate, sourceUpdate } = await Query({
     query: isCreate ? createSource : updateSource,
     variables: { payload }
   });
 
-  const { sourceCreate, sourceUpdate } = result.data || {};
   const response = sourceCreate || sourceUpdate;
   if (response.success) {
     const id = response.data.id;
@@ -68,6 +74,17 @@ async function postManageForm(
     }
   }
   setFormMeta((prev) => ({ ...prev, isLoading: false }));
+}
+
+async function deleteSource({ navigate }, id) {
+  const { sourceRemove = {} } = await Query({
+    query: removeSource,
+    variables: { id }
+  });
+
+  if (sourceRemove.success) {
+    navigate();
+  }
 }
 
 function getEditorSize(windowSize) {
@@ -110,7 +127,8 @@ const MANAGE_FORM_DEFAULTS = {
   mediaType: '',
   parser: '',
   selector: '',
-  isAdult: false
+  isAdult: false,
+  isActive: true
 };
 
 function ManageForm({ match, history, informationState, ...props }) {
@@ -165,7 +183,7 @@ function ManageForm({ match, history, informationState, ...props }) {
   function handleSubmit(e) {
     e.preventDefault();
     const response = validator(state);
-    console.log('%c SUBMIT > ', 'color: firebrick', state, response);
+
     if (response.success) {
       postManageForm(
         {
@@ -182,6 +200,10 @@ function ManageForm({ match, history, informationState, ...props }) {
     setFormMeta({ isLoading: false, errors: response.errors });
   }
 
+  function handleDelete() {
+    deleteSource({ navigate: () => history.push(cancelUrl) }, state.id);
+  }
+
   return (
     <div className="manage-form">
       <Helmet title={pageTitle} />
@@ -194,7 +216,7 @@ function ManageForm({ match, history, informationState, ...props }) {
           </Button>
         </div>
         <TabContainer>
-          <TabView name="Data">
+          <TabView className="data-tab" name="Data">
             <div className="manage-form__grid">
               <div className="manage-form__column">
                 <ClearableInput
@@ -274,7 +296,20 @@ function ManageForm({ match, history, informationState, ...props }) {
                   checked={state.isAdult}
                   onChange={(e) => persist({ isAdult: e.target.checked })}
                 />
+                <Tickbox
+                  className="manage-form__control"
+                  id="isActive"
+                  name="is active"
+                  text="Is Active"
+                  checked={state.isActive}
+                  onChange={(e) => persist({ isActive: e.target.checked })}
+                />
               </div>
+            </div>
+            <div>
+              <Button className="delete-button" onClick={handleDelete}>
+                Delete
+              </Button>
             </div>
           </TabView>
           <TabView name="Parser">

@@ -16,7 +16,7 @@ function ValidateChildPropType(propValue, _, componentName, __, propFullName) {
 }
 
 class TabContainer extends React.Component {
-  constructor(props: ITabContainerProps) {
+  constructor(props) {
     super(props);
     this.state = {
       activeTab: null

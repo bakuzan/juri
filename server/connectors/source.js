@@ -34,6 +34,11 @@ module.exports = (db, Types) => {
       type: Types.BOOLEAN,
       allowNull: false,
       defaultValue: false
+    },
+    isActive: {
+      type: Types.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
     }
   });
 };

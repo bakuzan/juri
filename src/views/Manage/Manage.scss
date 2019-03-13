@@ -107,3 +107,12 @@ $form-spacing: 15px;
     margin: 0;
   }
 }
+
+.data-tab {
+  flex-direction: column;
+}
+
+.delete-button {
+  background-color: $app--danger-colour;
+  color: $white;
+}

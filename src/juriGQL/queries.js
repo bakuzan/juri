@@ -28,7 +28,12 @@ export const getSources = gql`
     $mediaType: MediaType
     $isAdult: Boolean
   ) {
-    sources(sourceType: $sourceType, mediaType: $mediaType, isAdult: $isAdult) {
+    sources(
+      sourceType: $sourceType
+      mediaType: $mediaType
+      isAdult: $isAdult
+      isActive: true
+    ) {
       id
       name
       isPaged
@@ -59,6 +64,7 @@ export const getSourceById = gql`
       parser
       selector
       isAdult
+      isActive
     }
   }
 `;

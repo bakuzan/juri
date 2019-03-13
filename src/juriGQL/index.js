@@ -27,7 +27,7 @@ export default async function juriQuery(payload) {
       );
     }
 
-    return result;
+    return result.data || {};
   } catch (error) {
     const errorDefaultMessage = 'Anonymous Error Message.';
     alertService.showError(

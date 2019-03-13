@@ -4,28 +4,13 @@ import React from 'react';
 
 import './Tickbox.scss';
 
-const Tickbox = ({
-  className,
-  id,
-  name,
-  checked,
-  disabled,
-  onChange,
-  text
-}) => (
+const Tickbox = ({ className, text, ...props }) => (
   <div className={classNames('tickbox-container', className)}>
     <label
-      className={classNames('tickbox', { 'tickbox--disabled': disabled })}
-      htmlFor={id}
+      className={classNames('tickbox', { 'tickbox--disabled': props.disabled })}
+      htmlFor={props.id}
     >
-      <input
-        type="checkbox"
-        id={id}
-        name={name}
-        checked={checked}
-        disabled={disabled}
-        onChange={onChange}
-      />
+      <input type="checkbox" {...props} />
       {text || ''}
     </label>
   </div>
