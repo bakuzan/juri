@@ -7,9 +7,10 @@ import SearchResult from 'components/SearchResult';
 import Query from 'juriGQL';
 import { getSources, getContentSearch } from 'juriGQL/queries';
 import SourceType from 'constants/sourceTypes';
-import { SourceContext, SearchParamContext } from 'context';
+import { SourceContext, SearchContext } from 'context';
 import { useDebounce } from 'hooks/useDebounce';
 import { usePrevious } from 'hooks/usePrevious';
+import { useStorage } from 'hooks/useStorage';
 import { capitalise } from 'utils';
 import {
   buildSearchParams,
@@ -18,7 +19,19 @@ import {
   getAgeFromBool
 } from 'utils/searchParams';
 
-async function fetchSources({ setSources, setSourceId }, { type, ...params }) {
+function resolveSourceId(primarySourceId, sources) {
+  const firstSource = sources[0];
+  return primarySourceId && sources.some((x) => x.id === primarySourceId)
+    ? primarySourceId
+    : firstSource
+    ? firstSource.id
+    : 0;
+}
+
+async function fetchSources(
+  { setSources, dispatch, primarySourceId },
+  { type, ...params }
+) {
   const result = await Query({
     query: getSources,
     variables: {
@@ -29,8 +42,10 @@ async function fetchSources({ setSources, setSourceId }, { type, ...params }) {
   });
 
   const { sources = [] } = result;
+  const sourceId = resolveSourceId(primarySourceId, sources);
+
   setSources(sources);
-  setSourceId(sources[0] ? sources[0].id : 0);
+  dispatch({ type: SOURCE, sourceId });
 }
 
 async function fetchSearchResults(dispatch, params) {
@@ -50,6 +65,7 @@ const ADULT_STATE_NAME = 'isAdult';
 
 const LOADING = 'loading';
 const SEARCH = 'search';
+const SOURCE = 'source';
 const SUCCESS = 'response';
 const RESET = 'reset';
 
@@ -62,7 +78,9 @@ function searchReducer(state, action) {
         results: action.clearResults ? new Map([]) : state.results
       };
     case SEARCH:
-      return { ...state, searchString: action.value };
+      return { ...state, sourceId: 0, searchString: action.value };
+    case SOURCE:
+      return { ...state, sourceId: action.sourceId };
     case SUCCESS:
       return {
         ...state,
@@ -70,7 +88,7 @@ function searchReducer(state, action) {
         results: state.results.set(action.sourceId, action.data)
       };
     case RESET:
-      return { ...state, results: new Map([]) };
+      return { ...state, sourceId: 0, results: new Map([]) };
     default:
       return state;
   }
@@ -78,35 +96,43 @@ function searchReducer(state, action) {
 
 function SearchPage(props) {
   const { isAnime, isAdult, type, age } = getFilterFlags(props.location);
+  const primarySourceKey = `${type}_${isAdult}`;
+
+  const [primarySourceIds, setPrimarySourceIds] = useStorage('search');
+  const primarySourceId = primarySourceIds[primarySourceKey];
 
   const [sources, setSources] = useState([]);
-  const [sourceId, setSourceId] = useState(0);
-
   const [state, dispatch] = useReducer(searchReducer, {
     isLoading: false,
-    results: new Map([]),
-    searchString: ''
+    searchString: '',
+    sourceId: 0,
+    results: new Map([])
   });
+
   const debouncedSearchTerm = useDebounce(state.searchString, 750);
   const prevSearchTerm = usePrevious(debouncedSearchTerm);
 
   useEffect(() => {
-    fetchSources({ setSources, setSourceId }, { type, isAdult });
+    fetchSources({ setSources, dispatch, primarySourceId }, { type, isAdult });
   }, [type, isAdult]);
 
   useEffect(() => {
-    if (state.searchString && sourceId) {
+    const { sourceId } = state;
+    const newSearchTerm = debouncedSearchTerm !== prevSearchTerm;
+    const hasSourceOrNewSearchTerm = sourceId || newSearchTerm;
+
+    if (!state.isLoading && debouncedSearchTerm && hasSourceOrNewSearchTerm) {
       dispatch({
         type: LOADING,
-        clearResults: debouncedSearchTerm !== prevSearchTerm
+        clearResults: newSearchTerm
       });
 
       fetchSearchResults(dispatch, {
-        sourceId,
+        sourceId: sourceId || resolveSourceId(primarySourceId, sources),
         searchString: debouncedSearchTerm
       });
     }
-  }, [sourceId, isAnime, isAdult, debouncedSearchTerm]);
+  }, [state.sourceId, isAnime, isAdult, debouncedSearchTerm]);
 
   return (
     <SourceContext.Provider value={[sources, setSources]}>
@@ -124,7 +150,6 @@ function SearchPage(props) {
             const newAge = isAdultChange ? getAgeFromBool(value) : age;
 
             // Reset stored data, changing the type/age will cause requeries.
-            setSourceId(0);
             dispatch({ type: RESET });
             props.history.replace(
               `${props.match.url}${buildSearchParams({
@@ -135,14 +160,17 @@ function SearchPage(props) {
           }}
         />
 
-        <SearchParamContext.Provider value={{ type, isAdult }}>
+        <SearchContext.Provider value={{ type, isAdult, dispatch }}>
           <SearchResult
             isLoading={state.isLoading}
-            sourceId={sourceId}
+            sourceId={state.sourceId}
+            primarySourceId={primarySourceId}
             results={state.results}
-            onSelectSource={setSourceId}
+            onSelectPrimarySource={(id) =>
+              setPrimarySourceIds({ [primarySourceKey]: id })
+            }
           />
-        </SearchParamContext.Provider>
+        </SearchContext.Provider>
       </div>
     </SourceContext.Provider>
   );

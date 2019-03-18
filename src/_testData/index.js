@@ -6,9 +6,9 @@ async function dummyApi(data) {
 }
 
 export async function fetchLatest__testData() {
-  return await dummyApi(latest);
+  return await dummyApi({ latest });
 }
 
 export async function fetchSearch__testData() {
-  return await dummyApi({ data: { search } });
+  return await dummyApi({ search });
 }

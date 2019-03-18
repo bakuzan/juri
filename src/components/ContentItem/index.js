@@ -7,14 +7,14 @@ import SendSelectedDataToSave from 'components/SendSelectedDataToSave';
 
 import MagicNumbers from 'constants/magicNumbers';
 import Paths from 'constants/paths';
-import { SearchParamContext } from 'context';
+import { SearchContext } from 'context';
 import { padNumber } from 'utils';
 
 import './ContentItem.scss';
 
 // TODO clean up styles!! use themes now!
 function ContentItem({ className, content, isLatest }) {
-  const searchParams = useContext(SearchParamContext);
+  const searchParams = useContext(SearchContext);
   const hasSearchParams = !!searchParams;
 
   const info =

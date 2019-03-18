@@ -6,12 +6,19 @@ export default {
     latest: {
       anime: 0,
       manga: 0
+    },
+    search: {
+      anime_false: 0,
+      manga_false: 0,
+      anime_true: 0,
+      manga_true: 0
     }
   },
   get() {
-    return (
-      JSON.parse(localStorage.getItem(Strings.localSettings)) || this.DEFAULTS
-    );
+    const values =
+      JSON.parse(localStorage.getItem(Strings.localSettings)) || this.DEFAULTS;
+
+    return { ...this.DEFAULTS, ...values };
   },
   set(newValues) {
     const values = this.get();

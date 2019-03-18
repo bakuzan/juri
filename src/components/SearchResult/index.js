@@ -5,13 +5,21 @@ import ContentItem from '../ContentItem';
 import Grid from 'components/Grid';
 import { Button } from 'components/Button';
 import LoadingBouncer from 'components/LoadingBouncer';
+import Tickbox from 'components/Tickbox';
 
-import { SourceContext } from 'context';
+import { SourceContext, SearchContext } from 'context';
 
 import './SearchResult.scss';
 
-function SearchResult({ isLoading, sourceId, results, onSelectSource }) {
+function SearchResult({
+  isLoading,
+  sourceId,
+  primarySourceId,
+  results,
+  onSelectPrimarySource
+}) {
   const [sources] = useContext(SourceContext);
+  const { dispatch: searchDispatch } = useContext(SearchContext);
   const hasResults = !!results.size;
 
   return (
@@ -28,7 +36,19 @@ function SearchResult({ isLoading, sourceId, results, onSelectSource }) {
 
             return (
               <li key={src.id} className="search-source">
-                <div className="search-source__title">{src.name}</div>
+                <div className="search-source__title">
+                  {src.name}
+                  <Tickbox
+                    id="isPrimary"
+                    className="search-source__is-primary"
+                    name="isPrimary"
+                    aria-label="Is primary"
+                    title="Is Primary"
+                    text=""
+                    checked={src.id === primarySourceId}
+                    onChange={() => onSelectPrimarySource(src.id)}
+                  />
+                </div>
                 {!hasSearched &&
                   (isLoading && isCurrentSource ? (
                     <LoadingBouncer />
@@ -36,7 +56,9 @@ function SearchResult({ isLoading, sourceId, results, onSelectSource }) {
                     <div className="search-source__query-trigger">
                       <Button
                         btnStyle="primary"
-                        onClick={() => onSelectSource(src.id)}
+                        onClick={() =>
+                          searchDispatch({ type: 'source', sourceId: src.id })
+                        }
                       >
                         Search {src.name}
                       </Button>
@@ -61,8 +83,9 @@ function SearchResult({ isLoading, sourceId, results, onSelectSource }) {
 SearchResult.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   sourceId: PropTypes.number.isRequired,
+  primarySourceId: PropTypes.number.isRequired,
   results: PropTypes.object, // a Map([])
-  onSelectSource: PropTypes.func.isRequired
+  onSelectPrimarySource: PropTypes.func.isRequired
 };
 
 export default SearchResult;
