@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { ClearableInput } from 'meikoLib';
 import ToggleBox from 'components/ToggleBox';
-import ClearableInput from 'components/ClearableInput';
 
 import { mediaTypeText, contentAgeText } from 'constants/searchFilters';
 

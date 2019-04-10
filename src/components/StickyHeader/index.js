@@ -45,6 +45,8 @@ function StickyHeader({ children }) {
     };
   }, [hasRef, isFixed]);
 
+  const isFnChildren = typeof children === 'function';
+
   return (
     <div ref={containerRef} className="sticky-header">
       <div
@@ -53,7 +55,7 @@ function StickyHeader({ children }) {
           'sticky-header__fixed--stuck': isFixed
         })}
       >
-        {children}
+        {isFnChildren ? children(isFixed) : children}
       </div>
     </div>
   );
@@ -63,7 +65,8 @@ StickyHeader.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
-    PropTypes.node
+    PropTypes.node,
+    PropTypes.func
   ]).isRequired
 };
 

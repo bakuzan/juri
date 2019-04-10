@@ -18,6 +18,7 @@ import {
   getTypeFromBool,
   getAgeFromBool
 } from 'utils/searchParams';
+import { fetchSearch__testData } from '_testData';
 
 function resolveSourceId(primarySourceId, sources) {
   const firstSource = sources[0];
@@ -49,12 +50,14 @@ async function fetchSources(
 }
 
 async function fetchSearchResults(dispatch, params) {
-  const result = await Query({
-    query: getContentSearch,
-    variables: {
-      ...params
-    }
-  });
+  const result = await fetchSearch__testData();
+  // TODO RESTORE
+  // const result = await Query({
+  //   query: getContentSearch,
+  //   variables: {
+  //     ...params
+  //   }
+  // });
   const { search = [] } = result;
 
   dispatch({ type: SUCCESS, data: search, sourceId: params.sourceId });

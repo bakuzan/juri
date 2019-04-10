@@ -1,8 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import CI from 'components/ClearableInput';
-import SB from 'components/SelectBox';
+import { ClearableInput as CI, SelectBox as SB } from 'meikoLib';
 
 import './FormControls.scss';
 

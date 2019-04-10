@@ -2,12 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { Helmet } from 'react-helmet-async';
 
+import { Button, LoadingBouncer, Tabs, Tickbox } from 'meikoLib';
 import { ClearableInput, SelectBox } from 'components/FormControls';
-import Tickbox from 'components/Tickbox';
-import { Button } from 'components/Button';
 import NavLink from 'components/NavLink';
-import LoadingBouncer from 'components/LoadingBouncer';
-import { TabContainer, TabView } from 'components/Tabs';
 
 import Query from 'juriGQL';
 import { getSourcesManagement, getSourceById } from 'juriGQL/queries';
@@ -215,8 +212,8 @@ function ManageForm({ match, history, informationState, ...props }) {
             Save
           </Button>
         </div>
-        <TabContainer>
-          <TabView className="data-tab" name="Data">
+        <Tabs.Container>
+          <Tabs.View className="data-tab" name="Data">
             <div className="manage-form__grid">
               <div className="manage-form__column">
                 <ClearableInput
@@ -262,7 +259,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                   text="Data Type"
                   value={state.dataType}
                   options={dataTypes}
-                  onSelect={(e) => persist({ dataType: e.target.value })}
+                  onChange={(e) => persist({ dataType: e.target.value })}
                   required
                   errors={errors}
                 />
@@ -273,7 +270,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                   text="Source Type"
                   value={state.sourceType}
                   options={sourceTypes}
-                  onSelect={(e) => persist({ sourceType: e.target.value })}
+                  onChange={(e) => persist({ sourceType: e.target.value })}
                   required
                   errors={errors}
                 />
@@ -284,7 +281,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                   text="Media Type"
                   value={state.mediaType}
                   options={mediaTypes}
-                  onSelect={(e) => persist({ mediaType: e.target.value })}
+                  onChange={(e) => persist({ mediaType: e.target.value })}
                   required
                   errors={errors}
                 />
@@ -311,8 +308,8 @@ function ManageForm({ match, history, informationState, ...props }) {
                 Delete
               </Button>
             </div>
-          </TabView>
-          <TabView name="Parser">
+          </Tabs.View>
+          <Tabs.View name="Parser">
             <div className="parser-tab">
               <div className="parser-tab__help">
                 <pre className="manage-form__help-text">
@@ -352,8 +349,8 @@ function ManageForm({ match, history, informationState, ...props }) {
                 )}
               </div>
             </div>
-          </TabView>
-        </TabContainer>
+          </Tabs.View>
+        </Tabs.Container>
       </form>
     </div>
   );

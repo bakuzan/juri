@@ -61,7 +61,7 @@ $theme-maps: (
     }
   }
 
-  .application-header,
+  // .application-header,
   .sticky-header__fixed--stuck {
     background-color: $primary-background;
     color: $primary-colour;
@@ -84,7 +84,7 @@ $theme-maps: (
 
   // Toggle box
   .toggle-box {
-    --toggle-box--box-shadow-colour: #{map-get($values, toggle-box--focused)};
+    --toggle-box--box-shadow-colour: #{map-get($theme, toggle-box--focused)};
   }
 
   // Radio toggle
@@ -102,163 +102,6 @@ $theme-maps: (
 
   // Form Errors
   .form-control__error {
-    color: map-get($values, form-error-colour);
+    color: map-get($theme, form-error-colour);
   }
 }
-
-// @each $theme, $values in $theme-maps {
-//   $base-background: map-get($values, base-background);
-//   $base-colour: map-get($values, base-colour);
-//   $primary-background: map-get($values, primary-background);
-//   $primary-colour: map-get($values, primary-colour);
-//   $active-background: map-get($values, active-background);
-//   $active-colour: map-get($values, active-colour);
-//   $faded-out: map-get($values, faded-out);
-
-//   .theme--#{$theme} {
-//     background-color: $base-background;
-//     color: $base-colour;
-
-//     .select-box,
-//     .input-container__input {
-//       color: $base-colour;
-//     }
-
-//     // Inherit base background
-//     .multi-select__dropdown-container,
-//     .select-box,
-//     .dropdown__menu {
-//       background-color: $base-background;
-//     }
-//     .dropdown__arrow {
-//       border-bottom-color: $base-background;
-//     }
-
-//     // Primary
-//     .themed-background {
-//       background-color: $primary-background;
-//       color: $primary-colour;
-//     }
-//     .svg-logo text {
-//       fill: $primary-colour;
-//     }
-//     .has-float-label input,
-//     .has-float-label select {
-//       border-color: map-get($values, control-border-colour);
-//       &:focus {
-//         border-color: $primary-background;
-//       }
-//     }
-//     .toggle-box {
-//       background-color: $primary-background;
-//       color: $primary-colour;
-
-//       &:hover {
-//         background-color: darken($primary-background, 10%);
-//       }
-//     }
-//     .application-header,
-//     .sticky-header__fixed--stuck {
-//       background-color: $primary-background;
-//       color: $primary-colour;
-
-//       .select-box {
-//         background-color: $primary-background;
-//         color: $primary-colour;
-//       }
-//       .has-float-label select:focus {
-//         border-color: $primary-colour;
-//       }
-//     }
-//     .loading-bouncer__orb {
-//       background-color: $primary-background;
-//     }
-
-//     // Navigation
-//     .nav-link {
-//       color: $primary-background;
-
-//       &:focus,
-//       &:hover,
-//       &:active {
-//         color: $active-background;
-//       }
-//     }
-
-//     .application-header__link {
-//       color: $primary-colour;
-
-//       &:hover,
-//       &.active {
-//         background-color: $active-background;
-//         color: $active-colour;
-//       }
-//     }
-
-//     // Buttons
-//     .button--primary {
-//       background-color: $primary-background;
-//       color: $primary-colour;
-//       &:focus,
-//       &:hover {
-//         @include lightenOrDarken('background-color', $primary-background, 10%);
-//       }
-//     }
-//     .button--accent {
-//       background-color: $active-background;
-//       color: $active-colour;
-
-//       &:focus,
-//       &:hover {
-//         @include lightenOrDarken('background-color', $active-background, 10%);
-//       }
-//     }
-//     .dropdown__toggler {
-//       &:focus,
-//       &:hover {
-//         @include lightenOrDarken('color', $primary-colour, 10%);
-//       }
-//     }
-
-//     // Tabs
-//     .tabs {
-//       border-top: 1px solid $primary-background;
-//     }
-//     .tab:not(.tab--active):not(:hover) {
-//       background-color: $faded-out;
-//       color: $grey33;
-//       border-color: $faded-out;
-//       border-bottom: none;
-//     }
-//     .tab--active,
-//     .tab:hover {
-//       border: {
-//         color: $primary-background;
-//         bottom-color: $base-background;
-//       }
-//     }
-
-//     // Toggle box
-//     .toggle-box {
-//       --toggle-box--box-shadow-colour: #{map-get($values, toggle-box--focused)};
-//     }
-
-//     // Radio toggle
-//     .radio-toggle {
-//       --radio-toggle--box-shadow-colour: #{$active-background};
-//     }
-//     .theme-toggle {
-//       .radio-toggle__unchecked {
-//         color: $yellow;
-//       }
-//       .radio-toggle__checked {
-//         color: $black;
-//       }
-//     }
-
-//     // Form Errors
-//     .form-control__error {
-//       color: map-get($values, form-error-colour);
-//     }
-//   }
-// }

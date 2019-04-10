@@ -3,8 +3,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-import Header from 'components/Header';
-import SVGLogo from 'components/SVGLogo';
+import { Header, SVGLogo, useGlobalStyles } from 'meikoLib';
 import Alert from 'components/Alert';
 import RadioToggle from 'components/RadioToggle';
 
@@ -21,6 +20,7 @@ const headerLinks = [
 
 function App(props) {
   const [isDarkTheme, setTheme] = useStorage('isDarkTheme');
+  useGlobalStyles();
 
   return (
     <HelmetProvider>

@@ -112,7 +112,11 @@ $form-spacing: 15px;
   flex-direction: column;
 }
 
-.delete-button {
+.delete-button.delete-button {
   background-color: $app--danger-colour;
   color: $white;
+
+  &:hover {
+    @include lightenOrDarken('background-color', $app--danger-colour, 10%);
+  }
 }

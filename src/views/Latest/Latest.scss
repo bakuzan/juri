@@ -25,6 +25,10 @@
       height: $size;
     }
 
+    &::before {
+      position: absolute;
+    }
+
     &:hover::before {
       animation: circleRotate 1s infinite linear;
     }

@@ -1,11 +1,10 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import { Button, SelectBox } from 'meikoLib';
 import ToggleBox from 'components/ToggleBox';
-import SelectBox from 'components/SelectBox';
 import ContentItem from 'components/ContentItem';
 import Grid from 'components/Grid';
-import { Button } from 'components/Button';
 import StickyHeader from 'components/StickyHeader';
 
 import Query from 'juriGQL';
@@ -23,6 +22,7 @@ import {
 } from 'utils/searchParams';
 
 import './Latest.scss';
+import { fetchLatest__testData } from '_testData';
 
 function resolveLatestSourceId(sources, sourceId) {
   const source = sources && sources[0];
@@ -53,12 +53,14 @@ async function fetchSources(setSourceData, { type, latestDefaultSources }) {
 }
 
 async function fetchContentResults(dispatch, params) {
-  const { latest = [] } = await Query({
-    query: getContentLatest,
-    variables: {
-      ...params
-    }
-  });
+  const { latest = [] } = await fetchLatest__testData();
+  // TODO RESTORE
+  // const { latest = [] } = await Query({
+  //   query: getContentLatest,
+  //   variables: {
+  //     ...params
+  //   }
+  // });
 
   dispatch({ type: LOAD, latest });
 }
@@ -149,47 +151,50 @@ function LatestPage({ location, ...props }) {
     <div className="latest-page">
       <Helmet title="Latest" />
       <StickyHeader>
-        <h2 className="latest-page__header">
-          <SelectBox
-            id="site"
-            name="site"
-            text="Site"
-            value={sourceData.sourceId}
-            options={siteOptions}
-            onSelect={(event) => {
-              const sourceId = Number(event.target.value);
-              dispatch({ type: LOADING });
-              setLatestDefaultSources({ [type]: sourceId });
-              setSourceData((prev) => ({ ...prev, sourceId }));
-            }}
-            disabled={disableSiteChanger}
-          />
-          <div className="center-contents latest-page__title">
-            Latest releases for
-            <ToggleBox
-              name="isAnime"
-              label="Is anime"
-              checked={isAnime}
-              handleChange={(name, value) => {
-                const type = getTypeFromBool(value, true);
-
-                setSourceData(initialSourceData);
-                props.history.replace(
-                  `${props.match.url}${buildSearchParams({
-                    type
-                  })}`
-                );
+        {(isFixed) => (
+          <h2 className="latest-page__header">
+            <SelectBox
+              id="site"
+              name="site"
+              text="Site"
+              value={sourceData.sourceId}
+              options={siteOptions}
+              onChange={(event) => {
+                const sourceId = Number(event.target.value);
+                dispatch({ type: LOADING });
+                setLatestDefaultSources({ [type]: sourceId });
+                setSourceData((prev) => ({ ...prev, sourceId }));
               }}
-              text={mediaTypeText}
+              disabled={disableSiteChanger}
             />
-          </div>
-          <Button
-            className="latest-page__refresh-button"
-            aria-label="Refresh data"
-            icon={Icons.circleArrow}
-            onClick={() => dispatch({ type: REFRESH })}
-          />
-        </h2>
+            <div className="center-contents latest-page__title">
+              Latest releases for
+              <ToggleBox
+                name="isAnime"
+                label="Is anime"
+                checked={isAnime}
+                handleChange={(name, value) => {
+                  const type = getTypeFromBool(value, true);
+
+                  setSourceData(initialSourceData);
+                  props.history.replace(
+                    `${props.match.url}${buildSearchParams({
+                      type
+                    })}`
+                  );
+                }}
+                text={mediaTypeText}
+              />
+            </div>
+            <Button
+              className="latest-page__refresh-button"
+              btnStyle={isFixed ? 'primary' : null}
+              aria-label="Refresh data"
+              icon={Icons.circleArrow}
+              onClick={() => dispatch({ type: REFRESH })}
+            />
+          </h2>
+        )}
       </StickyHeader>
       <Grid
         className="latest-page__content-grid"

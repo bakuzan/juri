@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 
+import { Button, LoadingBouncer, Tickbox } from 'meikoLib';
 import ContentItem from '../ContentItem';
 import Grid from 'components/Grid';
-import { Button } from 'components/Button';
-import LoadingBouncer from 'components/LoadingBouncer';
-import Tickbox from 'components/Tickbox';
 
 import { SourceContext, SearchContext } from 'context';
 

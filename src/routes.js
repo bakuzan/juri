@@ -3,8 +3,8 @@ import Loadable from 'react-loadable';
 import createHistory from 'history/createBrowserHistory';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
+import { LoadingBouncer } from 'meikoLib';
 import App from './App';
-import LoadingBouncer from 'components/LoadingBouncer';
 import Paths from 'constants/paths';
 
 const loadableSettings = { loading: LoadingBouncer, delay: 300 };

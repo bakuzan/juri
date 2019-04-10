@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { NavLink as RRDNavLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-import { withButtonisation } from 'components/Button';
+import { ClearableInput, withButtonisation } from 'meikoLib';
 import NavLink from 'components/NavLink';
 import Grid from 'components/Grid';
-import ClearableInput from 'components/ClearableInput';
 
 import Query from 'juriGQL';
 import { getSourcesList } from 'juriGQL/queries';
@@ -54,7 +53,12 @@ function ManageList({ match, sourceState, ...props }) {
           Add
         </ButtonisedLink>
       </div>
-      <Grid className="manage-page__grid" items={sources} isLoading={false}>
+      <Grid
+        className="manage-page__grid"
+        items={sources}
+        isLoading={false}
+        showCount
+      >
         {(item) => (
           <li key={item.id} className="source-item">
             <div>

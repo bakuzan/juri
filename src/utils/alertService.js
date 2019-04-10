@@ -3,12 +3,14 @@ import { generateUniqueId } from './index';
 const ERROR = 'error';
 
 class AlertService {
-  register(instance) {
-    this.__instance = instance;
+  __trigger = () => null;
+
+  register(trigger) {
+    this.__trigger = trigger;
   }
 
   showError(message, detail) {
-    this.__instance.triggerAlert({
+    this.__trigger({
       id: generateUniqueId(),
       type: ERROR,
       message,
@@ -18,4 +20,5 @@ class AlertService {
 }
 
 const inst = new AlertService();
+window.fire = () => inst.showError('test', 'googoog');
 export default inst;
