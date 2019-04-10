@@ -1,5 +1,5 @@
 import React, { useReducer, useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 import SearchBar from 'components/SearchBar';
 import SearchResult from 'components/SearchResult';

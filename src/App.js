@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import Header from 'components/Header';
 import SVGLogo from 'components/SVGLogo';
@@ -23,51 +23,53 @@ function App(props) {
   const [isDarkTheme, setTheme] = useStorage('isDarkTheme');
 
   return (
-    <div
-      className={classNames('juri', {
-        theme: true,
-        'theme--light': !isDarkTheme,
-        'theme--dark': isDarkTheme
-      })}
-    >
-      <Helmet defaultTitle="Juri" titleTemplate="Juri - %s" />
-      <Header
-        title="Juri"
-        navLeft={
-          <NavLink className="logo svg-link" to={Paths.base}>
-            <SVGLogo text="Juri" />
-          </NavLink>
-        }
-        navRight={
-          <React.Fragment>
-            {headerLinks.map(({ text, to, ...other }) => (
-              <NavLink
-                key={text}
-                className="application-header__link"
-                to={`${Paths.base}${to}`}
-                {...other}
-              >
-                {text}
-              </NavLink>
-            ))}
-            <RadioToggle
-              className="theme-toggle"
-              label="Switch between Dark and Light mode"
-              name="theme"
-              icons={[Icons.moon, Icons.sun]}
-              checked={isDarkTheme}
-              onChange={setTheme}
-            />
-          </React.Fragment>
-        }
-      />
-      <ThemeContext.Provider value={[isDarkTheme, setTheme]}>
-        <main>
-          <Alert />
-          {props.children}
-        </main>
-      </ThemeContext.Provider>
-    </div>
+    <HelmetProvider>
+      <div
+        className={classNames('juri', {
+          theme: true,
+          'theme--light': !isDarkTheme,
+          'theme--dark': isDarkTheme
+        })}
+      >
+        <Helmet defaultTitle="Juri" titleTemplate="Juri - %s" />
+        <Header
+          title="Juri"
+          navLeft={
+            <NavLink className="logo svg-link" to={Paths.base}>
+              <SVGLogo text="Juri" />
+            </NavLink>
+          }
+          navRight={
+            <React.Fragment>
+              {headerLinks.map(({ text, to, ...other }) => (
+                <NavLink
+                  key={text}
+                  className="application-header__link"
+                  to={`${Paths.base}${to}`}
+                  {...other}
+                >
+                  {text}
+                </NavLink>
+              ))}
+              <RadioToggle
+                className="theme-toggle"
+                label="Switch between Dark and Light mode"
+                name="theme"
+                icons={[Icons.moon, Icons.sun]}
+                checked={isDarkTheme}
+                onChange={setTheme}
+              />
+            </React.Fragment>
+          }
+        />
+        <ThemeContext.Provider value={[isDarkTheme, setTheme]}>
+          <main>
+            <Alert />
+            {props.children}
+          </main>
+        </ThemeContext.Provider>
+      </div>
+    </HelmetProvider>
   );
 }
 

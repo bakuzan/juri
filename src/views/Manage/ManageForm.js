@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 import { ClearableInput, SelectBox } from 'components/FormControls';
 import Tickbox from 'components/Tickbox';
