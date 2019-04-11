@@ -3,9 +3,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-import { Header, SVGLogo, useGlobalStyles } from 'meikoLib';
+import { Header, RadioToggle, SVGLogo, useGlobalStyles } from 'meikoLib';
 import Alert from 'components/Alert';
-import RadioToggle from 'components/RadioToggle';
 
 import { ThemeContext } from 'context';
 import Paths from 'constants/paths';

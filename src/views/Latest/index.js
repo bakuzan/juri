@@ -22,7 +22,6 @@ import {
 } from 'utils/searchParams';
 
 import './Latest.scss';
-import { fetchLatest__testData } from '_testData';
 
 function resolveLatestSourceId(sources, sourceId) {
   const source = sources && sources[0];
@@ -53,14 +52,12 @@ async function fetchSources(setSourceData, { type, latestDefaultSources }) {
 }
 
 async function fetchContentResults(dispatch, params) {
-  const { latest = [] } = await fetchLatest__testData();
-  // TODO RESTORE
-  // const { latest = [] } = await Query({
-  //   query: getContentLatest,
-  //   variables: {
-  //     ...params
-  //   }
-  // });
+  const { latest = [] } = await Query({
+    query: getContentLatest,
+    variables: {
+      ...params
+    }
+  });
 
   dispatch({ type: LOAD, latest });
 }

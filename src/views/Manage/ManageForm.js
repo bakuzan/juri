@@ -2,8 +2,13 @@ import React, { useState, useEffect, useContext } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { Helmet } from 'react-helmet-async';
 
-import { Button, LoadingBouncer, Tabs, Tickbox } from 'meikoLib';
-import { ClearableInput, SelectBox } from 'components/FormControls';
+import {
+  Button,
+  LoadingBouncer,
+  Tabs,
+  Tickbox,
+  FormControls as FC
+} from 'meikoLib';
 import NavLink from 'components/NavLink';
 
 import Query from 'juriGQL';
@@ -216,7 +221,7 @@ function ManageForm({ match, history, informationState, ...props }) {
           <Tabs.View className="data-tab" name="Data">
             <div className="manage-form__grid">
               <div className="manage-form__column">
-                <ClearableInput
+                <FC.ClearableInput
                   className="manage-form__control"
                   id="name"
                   name="name"
@@ -230,7 +235,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                   <div className="manage-form__help-text">
                     Available url replacements: {urlReplacements}.
                   </div>
-                  <ClearableInput
+                  <FC.ClearableInput
                     className="manage-form__control"
                     id="url"
                     name="url"
@@ -241,7 +246,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                     errors={errors}
                   />
                 </div>
-                <ClearableInput
+                <FC.ClearableInput
                   className="manage-form__control"
                   id="selector"
                   name="selector"
@@ -252,7 +257,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                 />
               </div>
               <div className="manage-form__column">
-                <SelectBox
+                <FC.SelectBox
                   className="manage-form__control"
                   id="dataType"
                   name="dataType"
@@ -263,7 +268,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                   required
                   errors={errors}
                 />
-                <SelectBox
+                <FC.SelectBox
                   className="manage-form__control"
                   id="sourceType"
                   name="sourceType"
@@ -274,7 +279,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                   required
                   errors={errors}
                 />
-                <SelectBox
+                <FC.SelectBox
                   className="manage-form__control"
                   id="mediaType"
                   name="mediaType"
@@ -286,7 +291,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                   errors={errors}
                 />
                 <Tickbox
-                  className="manage-form__control"
+                  containerClassName="manage-form__control"
                   id="isAdult"
                   name="is adult"
                   text="Is Adult"
@@ -294,7 +299,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                   onChange={(e) => persist({ isAdult: e.target.checked })}
                 />
                 <Tickbox
-                  className="manage-form__control"
+                  containerClassName="manage-form__control"
                   id="isActive"
                   name="is active"
                   text="Is Active"
@@ -303,7 +308,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                 />
               </div>
             </div>
-            <div>
+            <div className="manage-form__delete-container">
               <Button className="delete-button" onClick={handleDelete}>
                 Delete
               </Button>

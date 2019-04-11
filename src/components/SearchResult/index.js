@@ -38,7 +38,7 @@ function SearchResult({
                   {src.name}
                   <Tickbox
                     id="isPrimary"
-                    className="search-source__is-primary"
+                    containerClassName="search-source__is-primary"
                     name="isPrimary"
                     aria-label="Is primary"
                     title="Is Primary"

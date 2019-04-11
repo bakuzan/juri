@@ -22,6 +22,9 @@
   &__is-primary {
     flex: unset;
     min-height: 1em;
+    input {
+      margin: 0;
+    }
   }
   &__query-trigger {
     padding: 5px 0;

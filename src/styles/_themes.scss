@@ -13,7 +13,7 @@ $theme-maps: (
     active-colour: $juri-black,
     faded-out: $grey80,
     toggle-box--focused: $juri-pink,
-    form-error-colour: firebrick,
+    danger-colour: firebrick,
     control-border-colour: rgba(0, 0, 0, 0.1)
   ),
   dark: (
@@ -25,7 +25,7 @@ $theme-maps: (
     active-colour: #fff,
     faded-out: $grey80,
     toggle-box--focused: #fff,
-    form-error-colour: $red,
+    danger-colour: $red,
     control-border-colour: invert(rgba(0, 0, 0, 0.2))
   )
 );
@@ -88,9 +88,6 @@ $theme-maps: (
   }
 
   // Radio toggle
-  .radio-toggle {
-    --radio-toggle--box-shadow-colour: #{$active-background};
-  }
   .theme-toggle {
     .radio-toggle__unchecked {
       color: $yellow;
@@ -98,10 +95,5 @@ $theme-maps: (
     .radio-toggle__checked {
       color: $black;
     }
-  }
-
-  // Form Errors
-  .form-control__error {
-    color: map-get($theme, form-error-colour);
   }
 }
