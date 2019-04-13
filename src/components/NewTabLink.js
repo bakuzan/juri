@@ -8,4 +8,6 @@ const NewTabLink = ({ children, ...props }) => (
   </NavLink>
 );
 
+NewTabLink.displayName = 'NewTabLink';
+
 export default NewTabLink;
