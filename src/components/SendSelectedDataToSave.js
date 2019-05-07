@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { Button } from 'meikoLib';
+import { Button } from 'mko';
 
 const BASE_URL = process.env.REACT_APP_ERZA_BASE_URL;
 

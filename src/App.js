@@ -3,7 +3,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-import { Header, RadioToggle, SVGLogo, useGlobalStyles } from 'meikoLib';
+import { Header, RadioToggle, SVGLogo, useGlobalStyles } from 'mko';
 import Alert from 'components/Alert';
 
 import { ThemeContext } from 'context';

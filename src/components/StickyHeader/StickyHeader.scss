@@ -1,18 +1,22 @@
 @import '../../styles/_variables';
 
-.sticky-header__fixed {
-  position: relative;
-  width: 100%;
-  min-height: $header--height;
+.sticky-header {
+  min-height: $header--height; // stop occasional jarring due to height changing
 
-  &--stuck {
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  &__fixed {
+    position: relative;
     width: 100%;
-    z-index: map-get($z-index, above-header);
+    min-height: $header--height;
+
+    &--stuck {
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 100%;
+      z-index: map-get($z-index, above-header);
+    }
   }
 }

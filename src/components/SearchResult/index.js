@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 
-import { Button, LoadingBouncer, Tickbox } from 'meikoLib';
+import { Button, LoadingBouncer, Tickbox } from 'mko';
 import ContentItem from '../ContentItem';
 import Grid from 'components/Grid';
 

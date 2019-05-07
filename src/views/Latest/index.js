@@ -1,7 +1,7 @@
-import React, { useReducer, useState, useEffect } from 'react';
+import React, { useReducer, useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { Button, SelectBox } from 'meikoLib';
+import { Button, SelectBox } from 'mko';
 import ToggleBox from 'components/ToggleBox';
 import ContentItem from 'components/ContentItem';
 import Grid from 'components/Grid';
@@ -13,7 +13,6 @@ import SourceType from 'constants/sourceTypes';
 import Icons from 'constants/icons';
 import { mediaTypeText } from 'constants/searchFilters';
 import { useStorage } from 'hooks/useStorage';
-import { useNotRecommendedEventCallback } from 'hooks/useNotRecommendedEventCallback';
 import { capitalise, generateUniqueId } from 'utils';
 import {
   buildSearchParams,
@@ -36,7 +35,7 @@ function resolveLatestSourceId(sources, sourceId) {
   return source.id;
 }
 
-async function fetchSources(setSourceData, { type, latestDefaultSources }) {
+async function fetchSources(setSourceData, { type }) {
   const { sources = [] } = await Query({
     query: getSources,
     variables: {
@@ -45,13 +44,11 @@ async function fetchSources(setSourceData, { type, latestDefaultSources }) {
     }
   });
 
-  const sourceId = Number(
-    resolveLatestSourceId(sources, latestDefaultSources[type])
-  );
-  setSourceData({ sources, sourceId });
+  setSourceData(sources);
 }
 
 async function fetchContentResults(dispatch, params) {
+  // const { latest = [] } = await fetchLatest__testData();
   const { latest = [] } = await Query({
     query: getContentLatest,
     variables: {
@@ -90,8 +87,11 @@ function latestReducer(state, action) {
         results: [],
         isLoading: true
       };
-    case LOAD_MORE:
-      return { ...state, page: state.page + 1, isLoading: true };
+    case LOAD_MORE: {
+      return state.isLoading
+        ? state
+        : { ...state, page: state.page + 1, isLoading: true };
+    }
     default:
       return state;
   }
@@ -108,15 +108,20 @@ function LatestPage({ location, ...props }) {
     results: []
   });
 
+  const latestSourcesForType = latestDefaultSources[type];
+
   useEffect(() => {
-    function setSourceInformation(values) {
-      setLatestDefaultSources({ [type]: values.sourceId });
-      setSourceData(values);
+    function setSourceInformation(sources) {
+      const resolvedId = Number(
+        resolveLatestSourceId(sources, latestSourcesForType)
+      );
+      setLatestDefaultSources({ [type]: resolvedId });
+      setSourceData({ sources, sourceId: resolvedId });
     }
 
     dispatch({ type: LOADING });
-    fetchSources(setSourceInformation, { type, latestDefaultSources });
-  }, [type]);
+    fetchSources(setSourceInformation, { type });
+  }, [type, setLatestDefaultSources, latestSourcesForType]);
 
   useEffect(() => {
     if (sourceData.sourceId) {
@@ -136,13 +141,14 @@ function LatestPage({ location, ...props }) {
   const activeSite = sourceData.sources.find(
     (x) => x.id === sourceData.sourceId
   );
+
   const hasPaging = activeSite && activeSite.isPaged;
 
-  const handleLoadMore = useNotRecommendedEventCallback(() => {
-    if (hasPaging && !state.isLoading) {
+  const handleLoadMore = useCallback(() => {
+    if (hasPaging) {
       dispatch({ type: LOAD_MORE });
     }
-  }, [hasPaging, state.isLoading]);
+  }, [hasPaging]);
 
   return (
     <div className="latest-page">

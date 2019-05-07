@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useRef } from 'react';
 
-import { LoadingBouncer } from 'meikoLib';
+import { LoadingBouncer } from 'mko';
 
 import Strings from 'constants/strings';
 import { useProgressiveLoading } from 'hooks/useProgressiveLoading';

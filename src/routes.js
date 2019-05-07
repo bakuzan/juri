@@ -3,7 +3,7 @@ import Loadable from 'react-loadable';
 import createHistory from 'history/createBrowserHistory';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
-import { LoadingBouncer } from 'meikoLib';
+import { LoadingBouncer } from 'mko';
 import App from './App';
 import Paths from 'constants/paths';
 

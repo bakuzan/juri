@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { Alert } from 'meikoLib';
+import { Alert } from 'mko';
 import service from 'utils/alertService';
 
 function JriAlert({ ...props }) {
@@ -20,7 +20,7 @@ function JriAlert({ ...props }) {
     }
 
     service.register(triggerAlert);
-  }, [timer.current]);
+  }, []);
 
   if (!alerts.length) {
     return null;

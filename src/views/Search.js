@@ -49,13 +49,13 @@ async function fetchSources(
 }
 
 async function fetchSearchResults(dispatch, params) {
-  const result = await Query({
+  // const { search = [] } = await fetchSearch__testData();
+  const { search = [] } = await Query({
     query: getContentSearch,
     variables: {
       ...params
     }
   });
-  const { search = [] } = result;
 
   dispatch({ type: SUCCESS, data: search, sourceId: params.sourceId });
 }
@@ -114,25 +114,33 @@ function SearchPage(props) {
 
   useEffect(() => {
     fetchSources({ setSources, dispatch, primarySourceId }, { type, isAdult });
-  }, [type, isAdult]);
+  }, [primarySourceId, type, isAdult]);
 
+  const resolvedSourceId = resolveSourceId(primarySourceId, sources);
   useEffect(() => {
-    const { sourceId } = state;
+    const sourceId = state.sourceId;
     const newSearchTerm = debouncedSearchTerm !== prevSearchTerm;
     const hasSourceOrNewSearchTerm = sourceId || newSearchTerm;
 
-    if (!state.isLoading && debouncedSearchTerm && hasSourceOrNewSearchTerm) {
+    if (debouncedSearchTerm && hasSourceOrNewSearchTerm) {
       dispatch({
         type: LOADING,
         clearResults: newSearchTerm
       });
 
       fetchSearchResults(dispatch, {
-        sourceId: sourceId || resolveSourceId(primarySourceId, sources),
+        sourceId: sourceId || resolvedSourceId,
         searchString: debouncedSearchTerm
       });
     }
-  }, [state.sourceId, isAnime, isAdult, debouncedSearchTerm]);
+  }, [
+    resolvedSourceId,
+    state.sourceId,
+    isAnime,
+    isAdult,
+    prevSearchTerm,
+    debouncedSearchTerm
+  ]);
 
   return (
     <SourceContext.Provider value={[sources, setSources]}>

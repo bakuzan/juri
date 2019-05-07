@@ -2,13 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { Helmet } from 'react-helmet-async';
 
-import {
-  Button,
-  LoadingBouncer,
-  Tabs,
-  Tickbox,
-  FormControls as FC
-} from 'meikoLib';
+import { Button, LoadingBouncer, Tabs, Tickbox, FormControls as FC } from 'mko';
 import NavLink from 'components/NavLink';
 
 import Query from 'juriGQL';
@@ -176,7 +170,7 @@ function ManageForm({ match, history, informationState, ...props }) {
     if (!hasInformation) {
       fetchSourcesManagement(setInformation);
     }
-  }, []);
+  }, [information, setInformation]);
 
   function persist(obj) {
     setState((prev) => ({ ...prev, ...obj }));

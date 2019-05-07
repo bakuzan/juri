@@ -32,6 +32,6 @@
 }
 
 .search-results__sources {
-  width: 100%;
+  width: calc(100% - 10px); // account for padding
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }

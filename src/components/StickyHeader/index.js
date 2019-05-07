@@ -10,10 +10,9 @@ function addEvent(event, cb) {
 }
 
 function StickyHeader({ children }) {
+  const [isFixed, setFixed] = useState(false);
   const containerRef = useRef();
   const stickyRef = useRef();
-  const hasRef = !!stickyRef.current;
-  const [isFixed, setFixed] = useState(false);
 
   useLayoutEffect(() => {
     function handleFixedState() {
@@ -43,7 +42,7 @@ function StickyHeader({ children }) {
       detachScroll();
       detachResize();
     };
-  }, [hasRef, isFixed]);
+  }, [containerRef, stickyRef, isFixed]);
 
   const isFnChildren = typeof children === 'function';
 

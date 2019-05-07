@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink as RRDNavLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-import { ClearableInput, withButtonisation } from 'meikoLib';
+import { ClearableInput, withButtonisation } from 'mko';
 import NavLink from 'components/NavLink';
 import Grid from 'components/Grid';
 
@@ -21,13 +21,13 @@ async function fetchSources(setState) {
   setState(sources.reduce((p, c) => p.set(c.id, c), new Map()));
 }
 
-function ManageList({ match, sourceState, ...props }) {
+function ManageList({ match, sourceState }) {
   const [sourceMap, setSources] = sourceState;
   const [searchString, setSearchString] = useState('');
 
   useEffect(() => {
     fetchSources(setSources);
-  }, []);
+  }, [setSources]);
 
   const lowerSearchString = searchString.toLowerCase();
   const sources = [...sourceMap.values()].filter((x) =>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 function setItemOnScreenWatch(targetNode, callback, rootMargin = '0px') {
   const observer = new IntersectionObserver(
@@ -20,7 +20,11 @@ function setItemOnScreenWatch(targetNode, callback, rootMargin = '0px') {
 }
 
 export function useProgressiveLoading(ref, onIntersect) {
-  const hasRef = !!ref.current;
+  const savedHandler = useRef();
+
+  useEffect(() => {
+    savedHandler.current = onIntersect;
+  }, [onIntersect]);
 
   useEffect(() => {
     let itemObserver = null;
@@ -36,7 +40,12 @@ export function useProgressiveLoading(ref, onIntersect) {
           : [record.previousSibling];
 
         const watched = Array.from(source).pop();
-        itemObserver = setItemOnScreenWatch(watched, onIntersect, '50px');
+
+        itemObserver = setItemOnScreenWatch(
+          watched,
+          savedHandler.current,
+          '50px'
+        );
       }
     });
 
@@ -52,5 +61,5 @@ export function useProgressiveLoading(ref, onIntersect) {
       observer && observer.disconnect();
       itemObserver && itemObserver.disconnect();
     };
-  }, [hasRef]);
+  }, [ref]);
 }

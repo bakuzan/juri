@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 import storage from 'utils/storage';
 
@@ -6,17 +6,20 @@ export function useStorage(key) {
   const setting = storage.get()[key];
   const [value, setState] = useState(setting);
 
-  function setWrappedState(newValue) {
-    const isObject = typeof newValue === 'object';
-    const currentSetting = storage.get()[key];
+  const setWrappedState = useCallback(
+    (newValue) => {
+      const isObject = typeof newValue === 'object';
+      const currentSetting = storage.get()[key];
 
-    const data = isObject
-      ? { [key]: { ...currentSetting, ...newValue } }
-      : { [key]: newValue };
+      const data = isObject
+        ? { [key]: { ...currentSetting, ...newValue } }
+        : { [key]: newValue };
 
-    const updated = storage.set(data)[key];
-    setState(updated);
-  }
+      const updated = storage.set(data)[key];
+      setState(updated);
+    },
+    [key]
+  );
 
   return [value, setWrappedState];
 }
