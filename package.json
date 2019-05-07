@@ -1,6 +1,6 @@
 {
   "name": "juri",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "private": true,
   "homepage": "http://localhost:3001/juri/",
   "proxy": "http://localhost:9000",
