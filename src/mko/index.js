@@ -10,6 +10,7 @@ export { default as RadioToggle } from 'meiko/RadioToggle';
 export { default as SelectBox } from 'meiko/SelectBox';
 export { default as Tabs } from 'meiko/Tabs';
 export { default as Tickbox } from 'meiko/Tickbox';
+export { default as Image } from 'meiko/Image';
 
 // Hooks
 export { useGlobalStyles } from 'meiko/hooks/useGlobalStyles';

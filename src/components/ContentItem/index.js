@@ -2,47 +2,47 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useContext } from 'react';
 
+import { Image } from 'mko';
 import NewTabLink from 'components/NewTabLink';
 import SendSelectedDataToSave from 'components/SendSelectedDataToSave';
 
 import MagicNumbers from 'constants/magicNumbers';
-import Paths from 'constants/paths';
 import { SearchContext } from 'context';
 import { padNumber } from 'utils';
 
 import './ContentItem.scss';
 
-// TODO clean up styles!! use themes now!
+function resolveInfo(content) {
+  return (
+    content.authour ||
+    content.versions ||
+    MagicNumbers.animeType[content.type] ||
+    null
+  );
+}
+
 function ContentItem({ className, content, isLatest }) {
   const searchParams = useContext(SearchContext);
   const hasSearchParams = !!searchParams;
 
-  const info =
-    content.authour ||
-    content.versions ||
-    MagicNumbers.animeType[content.type] ||
-    null;
+  const info = resolveInfo(content);
   const additionalInformation = info ? `(${info})` : '';
 
   return (
     <li
       className={classNames('content-item', className, {
-        'content-item__latest': isLatest
+        'content-item--latest': isLatest
       })}
     >
-      <div>
-        <span
+      <div className="content-item__inner">
+        <Image
           className="content-item__image"
-          style={{ backgroundImage: `url("${Paths.images.deadImage}")` }}
-        >
-          <span
-            className="content-item__image"
-            style={{
-              backgroundImage: `url("${unescape(content.image)}")`
-            }}
-            aria-label={`Cover image for ${content.title}`}
-          />
-        </span>
+          src={unescape(content.image)}
+          alt={`Cover for ${content.title}`}
+          width="58px"
+          height="90px"
+          isLazy
+        />
         <div className="content-item__info">
           <NewTabLink className="content-item__link" to={`${content.href}`}>
             {`${content.title} ${additionalInformation}\n
