@@ -1,6 +1,6 @@
 import React from 'react';
 import Loadable from 'react-loadable';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import { LoadingBouncer } from 'mko';
@@ -26,7 +26,7 @@ const PageNotFound = Loadable({
   ...loadableSettings
 });
 
-const history = createHistory();
+const history = createBrowserHistory();
 
 function JuriRoutes({ match }) {
   return (

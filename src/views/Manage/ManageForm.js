@@ -302,11 +302,13 @@ function ManageForm({ match, history, informationState, ...props }) {
                 />
               </div>
             </div>
-            <div className="manage-form__delete-container">
-              <Button className="delete-button" onClick={handleDelete}>
-                Delete
-              </Button>
-            </div>
+            {!isCreate && (
+              <div className="manage-form__delete-container">
+                <Button className="delete-button" onClick={handleDelete}>
+                  Delete
+                </Button>
+              </div>
+            )}
           </Tabs.View>
           <Tabs.View name="Parser">
             <div className="parser-tab">
