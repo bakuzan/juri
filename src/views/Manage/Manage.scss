@@ -73,6 +73,10 @@ $form-spacing: 15px;
 
   &__control {
     margin-bottom: $form-spacing;
+
+    &--checkbox {
+      margin: $form-spacing 0;
+    }
   }
 
   &__help-text {
@@ -81,30 +85,22 @@ $form-spacing: 15px;
   }
 
   &__delete-container {
-    margin-top: 20px;
+    position: fixed;
+    bottom: 10px;
+  }
+
+  &__errors {
+    display: flex;
+    flex: 1;
+    color: $app--danger-colour;
   }
 }
 
 .parser-tab {
   display: flex;
-  @include respondTo(sm) {
-    flex-direction: column;
-  }
-  @include respondTo(xs) {
-    flex-direction: column;
-  }
 
-  &__help {
-    display: flex;
+  @include respondToAll((xs, sm)) {
     flex-direction: column;
-    max-width: 400px;
-
-    @include respondTo(sm) {
-      flex-direction: row;
-    }
-    @include respondTo(xs) {
-      flex-direction: row;
-    }
   }
 
   &__error {

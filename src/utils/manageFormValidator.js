@@ -1,6 +1,3 @@
-import DataTypes from 'constants/dataTypes';
-import SourceTypes from 'constants/sourceTypes';
-
 export default function manageFormValidator(values) {
   const errors = new Map();
 
@@ -8,33 +5,9 @@ export default function manageFormValidator(values) {
     errors.set('name', 'Name is required.');
   }
 
-  if (!values.url || !values.url.trim()) {
-    errors.set('url', 'Url is required.');
-  }
-
-  // Data Type
-  if (!values.dataType) {
-    errors.set('dataType', 'Data Type is required.');
-  }
-
-  if (values.dataType === DataTypes.text && !values.selector) {
-    errors.set('selector', 'Selector is required for Data Type "text".');
-  }
-
   // Source Type
   if (!values.sourceType) {
     errors.set('sourceType', 'Source Type is required.');
-  }
-
-  if (
-    values.sourceType === SourceTypes.search &&
-    values.url &&
-    values.url.includes(':page')
-  ) {
-    errors.set(
-      'url',
-      'Source Type "Search" does not currently support the ":page" replacement.'
-    );
   }
 
   // Media Type
@@ -42,9 +15,17 @@ export default function manageFormValidator(values) {
     errors.set('mediaType', 'Media Type is required.');
   }
 
-  // Parser
-  if (!values.parser || !values.parser.trim()) {
-    errors.set('parser', 'Parser is required.');
+  // Parsers
+  if (!values.optionsParser || !values.optionsParser.trim()) {
+    errors.set('optionsParser', 'Options Parser is required.');
+  }
+
+  if (!values.responseParser || !values.responseParser.trim()) {
+    errors.set('responseParser', 'Response Parser is required.');
+  }
+
+  if (!values.itemParser || !values.itemParser.trim()) {
+    errors.set('itemParser', 'Item Parser is required.');
   }
 
   return { success: errors.size === 0, errors };

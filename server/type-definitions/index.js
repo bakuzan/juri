@@ -6,7 +6,7 @@ module.exports = [
   ...enums,
   gql`
     type Query {
-      sourcesManagementInformation: SourcesManagementResponse
+      sourcesManagementInformation: [SourcesManagementResponse]
       sources(
         sourceType: SourceType
         mediaType: MediaType
@@ -28,12 +28,11 @@ module.exports = [
     type Source {
       id: Int
       name: String
-      url: String
-      dataType: DataType
       sourceType: SourceType
       mediaType: MediaType
-      parser: String
-      selector: String
+      optionsParser: String
+      responseParser: String
+      itemParser: String
       isAdult: Boolean
       isActive: Boolean
       isPaged: Boolean
@@ -42,14 +41,14 @@ module.exports = [
     input SourceInput {
       id: Int
       name: String
-      url: String
-      dataType: DataType
       sourceType: SourceType
       mediaType: MediaType
-      parser: String
-      selector: String
+      optionsParser: String
+      responseParser: String
+      itemParser: String
       isAdult: Boolean
       isActive: Boolean
+      isPaged: Boolean
     }
 
     """
@@ -80,8 +79,9 @@ module.exports = [
     }
 
     type SourcesManagementResponse {
+      key: String
+      functionSignature: String
       returnObject: String
-      urlReplacements: [String]
       availableHelperFunctions: [String]
     }
   `

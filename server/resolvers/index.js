@@ -1,33 +1,9 @@
 const { Source } = require('../connectors');
-const SourceResolvers = require('./source');
+const sourcesManagementInformation = require('./sourcesManagementInformation');
 
 module.exports = {
   Query: {
-    async sourcesManagementInformation() {
-      return {
-        returnObject: `
-        type ContentItem {
-          id: String
-          href: String
-          title: String
-          image: String
-    
-          subtitle: String
-          authour: String
-          versions: String
-    
-          type: String
-          status: String
-          startDate: String
-          endDate: String
-          currentEpisode: Int
-          postedDate: String
-        }
-        `,
-        urlReplacements: [':searchString', ':paging', ':timestamp'],
-        availableHelperFunctions: ['generateUniqueId', 'joinTextContent']
-      };
-    },
+    sourcesManagementInformation,
     async sources(_, args = {}) {
       return await Source.findAll({
         where: {
@@ -78,6 +54,5 @@ module.exports = {
         data: null
       };
     }
-  },
-  Source: SourceResolvers
+  }
 };

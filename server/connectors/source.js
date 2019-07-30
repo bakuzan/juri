@@ -1,18 +1,10 @@
-const { SourceDataType, SourceType, MediaType } = require('../constants/enums');
+const { SourceType, MediaType } = require('../constants/enums');
 
 module.exports = (db, Types) => {
   return db.define('source', {
     name: {
       type: Types.STRING,
       allowNull: false
-    },
-    url: {
-      type: Types.STRING,
-      allowNull: false
-    },
-    dataType: {
-      type: Types.ENUM,
-      values: [...SourceDataType]
     },
     sourceType: {
       type: Types.ENUM,
@@ -22,13 +14,17 @@ module.exports = (db, Types) => {
       type: Types.ENUM,
       values: [...MediaType]
     },
-    parser: {
+    optionsParser: {
       type: Types.STRING,
       allowNull: false
     },
-    selector: {
+    responseParser: {
       type: Types.STRING,
-      allowNull: true
+      allowNull: false
+    },
+    itemParser: {
+      type: Types.STRING,
+      allowNull: false
     },
     isAdult: {
       type: Types.BOOLEAN,
@@ -39,6 +35,11 @@ module.exports = (db, Types) => {
       type: Types.BOOLEAN,
       allowNull: false,
       defaultValue: true
+    },
+    isPaged: {
+      type: Types.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   });
 };

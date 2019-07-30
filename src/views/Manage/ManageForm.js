@@ -4,20 +4,19 @@ import { Helmet } from 'react-helmet-async';
 
 import { Button, LoadingBouncer, Tabs, Tickbox, FormControls as FC } from 'mko';
 import NavLink from 'components/NavLink';
+import ParserHelp from 'components/ParserHelp';
 
 import Query from 'juriGQL';
 import { getSourcesManagement, getSourceById } from 'juriGQL/queries';
 import { createSource, updateSource, removeSource } from 'juriGQL/mutations';
 import { ThemeContext } from 'context';
-import DataTypesEnum from 'constants/dataTypes';
 import MediaTypesEnum from 'constants/mediaTypes';
 import SourceTypesEnum from 'constants/sourceTypes';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { mapEnumToSelectOption, capitalise } from 'utils';
+import { mapEnumToSelectOption } from 'utils';
 import validator from 'utils/manageFormValidator';
 import alertService from 'utils/alertService';
 
-const dataTypes = mapEnumToSelectOption(DataTypesEnum, (v) => capitalise(v));
 const mediaTypes = mapEnumToSelectOption(MediaTypesEnum);
 const sourceTypes = mapEnumToSelectOption(SourceTypesEnum);
 
@@ -87,42 +86,14 @@ function getEditorSize(windowSize) {
   return windowSize < 992 ? windowSize : windowSize - 400;
 }
 
-function getHelpText(information) {
-  if (!information) {
-    return {
-      returnObjectModel: '',
-      urlReplacements: '',
-      functionSignature: '',
-      helpersFunctions: ''
-    };
-  }
-
-  const returnObjectModel = information.returnObject;
-  const urlReplacements = information.urlReplacements.reduce(
-    (p, c) => `${p}, ${c}`
-  );
-  const helpersFunctions = information.availableHelperFunctions.reduce(
-    (p, c) => `${p}  ${c},\n`,
-    ''
-  );
-  const functionSignature = `function myParser(dataItem, helpers): ContentItem`;
-
-  return {
-    returnObjectModel,
-    urlReplacements,
-    helpersFunctions,
-    functionSignature
-  };
-}
-
 const MANAGE_FORM_DEFAULTS = {
   name: '',
-  url: '',
-  dataType: '',
   sourceType: '',
   mediaType: '',
-  parser: '',
-  selector: '',
+  optionsParser: '',
+  responseParser: '',
+  itemParser: '',
+  isPaged: false,
   isAdult: false,
   isActive: true
 };
@@ -149,14 +120,6 @@ function ManageForm({ match, history, informationState, ...props }) {
 
   const { width } = useWindowSize();
   const editorWidth = getEditorSize(width);
-
-  // Help text things
-  const {
-    returnObjectModel,
-    urlReplacements,
-    helpersFunctions,
-    functionSignature
-  } = getHelpText(information);
 
   useEffect(() => {
     const hasSourceId = !!sourceId;
@@ -199,12 +162,15 @@ function ManageForm({ match, history, informationState, ...props }) {
   function handleDelete() {
     deleteSource({ navigate: () => history.push(cancelUrl) }, state.id);
   }
-
+  console.log('RENDER MANAGE FORM', state);
   return (
     <div className="manage-form">
       <Helmet title={pageTitle} />
       <form name="manage" autoComplete="off" noValidate onSubmit={handleSubmit}>
         <div className="manage-form__actions">
+          {!!errors.size && (
+            <div className="manage-form__errors">* Has errors</div>
+          )}
           {isLoading && <LoadingBouncer className="manage-form__loader" />}
           <NavLink to={cancelUrl}>Cancel</NavLink>
           <Button type="submit" btnStyle="primary">
@@ -222,43 +188,6 @@ function ManageForm({ match, history, informationState, ...props }) {
                   label="Name"
                   value={state.name}
                   onChange={(e) => persist({ name: e.target.value })}
-                  required
-                  errors={errors}
-                />
-                <div>
-                  <div className="manage-form__help-text">
-                    Available url replacements: {urlReplacements}.
-                  </div>
-                  <FC.ClearableInput
-                    className="manage-form__control"
-                    id="url"
-                    name="url"
-                    label="Url"
-                    value={state.url}
-                    onChange={(e) => persist({ url: e.target.value })}
-                    required
-                    errors={errors}
-                  />
-                </div>
-                <FC.ClearableInput
-                  className="manage-form__control"
-                  id="selector"
-                  name="selector"
-                  label="Selector"
-                  value={state.selector}
-                  onChange={(e) => persist({ selector: e.target.value })}
-                  errors={errors}
-                />
-              </div>
-              <div className="manage-form__column">
-                <FC.SelectBox
-                  className="manage-form__control"
-                  id="dataType"
-                  name="dataType"
-                  text="Data Type"
-                  value={state.dataType}
-                  options={dataTypes}
-                  onChange={(e) => persist({ dataType: e.target.value })}
                   required
                   errors={errors}
                 />
@@ -284,8 +213,18 @@ function ManageForm({ match, history, informationState, ...props }) {
                   required
                   errors={errors}
                 />
+              </div>
+              <div className="manage-form__column">
                 <Tickbox
-                  containerClassName="manage-form__control"
+                  containerClassName="manage-form__control manage-form__control--checkbox"
+                  id="isPaged"
+                  name="is paged"
+                  text="Is Paged"
+                  checked={state.isPaged}
+                  onChange={(e) => persist({ isPaged: e.target.checked })}
+                />
+                <Tickbox
+                  containerClassName="manage-form__control manage-form__control--checkbox"
                   id="isAdult"
                   name="is adult"
                   text="Is Adult"
@@ -293,7 +232,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                   onChange={(e) => persist({ isAdult: e.target.checked })}
                 />
                 <Tickbox
-                  containerClassName="manage-form__control"
+                  containerClassName="manage-form__control manage-form__control--checkbox"
                   id="isActive"
                   name="is active"
                   text="Is Active"
@@ -302,6 +241,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                 />
               </div>
             </div>
+
             {!isCreate && (
               <div className="manage-form__delete-container">
                 <Button className="delete-button" onClick={handleDelete}>
@@ -310,42 +250,88 @@ function ManageForm({ match, history, informationState, ...props }) {
               </div>
             )}
           </Tabs.View>
-          <Tabs.View name="Parser">
+          <Tabs.View name="Options Parser">
             <div className="parser-tab">
-              <div className="parser-tab__help">
-                <pre className="manage-form__help-text">
-                  <strong>Write a function with the signature:</strong>
-                  {`\r\n@param dataItem: Response item data`}
-                  {`\r\n@param helpers: {\n${helpersFunctions} }`}
-                  {`\r\n${functionSignature}`}
-                </pre>
-                <br />
-                <pre className="manage-form__help-text">
-                  <strong>Return object definition:</strong>
-                  {returnObjectModel}
-                </pre>
-              </div>
+              <ParserHelp attr={'optionsParser'} data={information} />
               <div className="manage-form__control form-control">
                 <label className="manage-form__editor-label">
-                  Source Parser *
+                  Options Parser *
                 </label>
                 <MonacoEditor
                   height="400"
                   width={editorWidth}
                   language="javascript"
                   theme={editorTheme}
-                  value={state.parser}
+                  value={state.optionsParser}
                   options={{
                     contextmenu: false,
                     selectOnLineNumbers: true,
-                    ariaLabel: 'Source Parser',
+                    ariaLabel: 'Options Parser',
                     fontSize: 16
                   }}
-                  onChange={(parser) => persist({ parser })}
+                  onChange={(optionsParser) => persist({ optionsParser })}
                 />
-                {errors.has('parser') && (
+                {errors.has('optionsParser') && (
                   <div className="form-control__error parser-tab__error">
-                    {errors.get('parser')}
+                    {errors.get('optionsParser')}
+                  </div>
+                )}
+              </div>
+            </div>
+          </Tabs.View>
+          <Tabs.View name="Response Parser">
+            <div className="parser-tab">
+              <ParserHelp attr="responseParser" data={information} />
+              <div className="manage-form__control form-control">
+                <label className="manage-form__editor-label">
+                  Response Parser *
+                </label>
+                <MonacoEditor
+                  height="400"
+                  width={editorWidth}
+                  language="javascript"
+                  theme={editorTheme}
+                  value={state.responseParser}
+                  options={{
+                    contextmenu: false,
+                    selectOnLineNumbers: true,
+                    ariaLabel: 'Response Parser',
+                    fontSize: 16
+                  }}
+                  onChange={(responseParser) => persist({ responseParser })}
+                />
+                {errors.has('responseParser') && (
+                  <div className="form-control__error parser-tab__error">
+                    {errors.get('responseParser')}
+                  </div>
+                )}
+              </div>
+            </div>
+          </Tabs.View>
+          <Tabs.View name="Item Parser">
+            <div className="parser-tab">
+              <ParserHelp attr="itemParser" data={information} />
+              <div className="manage-form__control form-control">
+                <label className="manage-form__editor-label">
+                  Item Parser *
+                </label>
+                <MonacoEditor
+                  height="400"
+                  width={editorWidth}
+                  language="javascript"
+                  theme={editorTheme}
+                  value={state.itemParser}
+                  options={{
+                    contextmenu: false,
+                    selectOnLineNumbers: true,
+                    ariaLabel: 'Item Parser',
+                    fontSize: 16
+                  }}
+                  onChange={(itemParser) => persist({ itemParser })}
+                />
+                {errors.has('itemParser') && (
+                  <div className="form-control__error parser-tab__error">
+                    {errors.get('itemParser')}
                   </div>
                 )}
               </div>

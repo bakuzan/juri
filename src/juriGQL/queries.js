@@ -57,12 +57,12 @@ export const getSourceById = gql`
     sourceById(id: $id) {
       id
       name
-      url
-      dataType
       sourceType
       mediaType
-      parser
-      selector
+      optionsParser
+      responseParser
+      itemParser
+      isPaged
       isAdult
       isActive
     }
@@ -72,8 +72,9 @@ export const getSourceById = gql`
 export const getSourcesManagement = gql`
   query GetSourcesManagement {
     sourcesManagementInformation {
+      key
+      functionSignature
       returnObject
-      urlReplacements
       availableHelperFunctions
     }
   }

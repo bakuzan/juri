@@ -1,0 +1,21 @@
+@import '../../styles/_variables';
+@import '../../styles/_mixins';
+
+.parser-help {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+
+  &__text {
+    font-size: 0.875em;
+    margin: 5px;
+  }
+
+  @include respondToAll((xs, sm)) {
+    flex-direction: row;
+
+    &__text {
+      margin: 5px 10px;
+    }
+  }
+}
