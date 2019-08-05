@@ -68,7 +68,8 @@ async function postManageForm(
       navigate(id);
     }
   }
-  setFormMeta((prev) => ({ ...prev, isLoading: false }));
+
+  setFormMeta((prev) => ({ ...prev, isLoading: false, submitted: false }));
 }
 
 async function deleteSource({ navigate }, id) {
@@ -86,6 +87,7 @@ function getEditorSize(windowSize) {
   return windowSize < 992 ? windowSize : windowSize - 400;
 }
 
+const EMPTY_ERRORS = new Map([]);
 const MANAGE_FORM_DEFAULTS = {
   name: '',
   sourceType: '',
@@ -103,10 +105,12 @@ function ManageForm({ match, history, informationState, ...props }) {
   const isCreate = !sourceId || isNaN(sourceId);
   const [information, setInformation] = informationState;
   const [state, setState] = useState(MANAGE_FORM_DEFAULTS);
-  const [{ isLoading, errors }, setFormMeta] = useState({
+  const [{ isLoading, submitted }, setFormMeta] = useState({
     isLoading: false,
-    errors: new Map()
+    submitted: false
   });
+
+  const errors = submitted ? validator(state).errors : EMPTY_ERRORS;
 
   const index = match.url.lastIndexOf('/');
   const cancelUrl = match.url.slice(0, index);
@@ -156,13 +160,34 @@ function ManageForm({ match, history, informationState, ...props }) {
       return;
     }
 
-    setFormMeta({ isLoading: false, errors: response.errors });
+    setFormMeta({ isLoading: false, submitted: true });
   }
 
   function handleDelete() {
     deleteSource({ navigate: () => history.push(cancelUrl) }, state.id);
   }
-  console.log('RENDER MANAGE FORM', state);
+
+  const mediaOptions = state.mediaType
+    ? mediaTypes
+    : [{ text: 'Select a media type', value: '' }, ...mediaTypes];
+
+  const sourceOptions = state.sourceType
+    ? sourceTypes
+    : [{ text: 'Select a source type', value: '' }, ...sourceTypes];
+
+  const hasError = (key) => (errors.has(key) ? '(!)' : '');
+  const dataError = ['name', 'sourceType', 'mediaType']
+    .map((x) => hasError(x))
+    .filter((x) => !!x)
+    .pop();
+
+  const tabDisplay = {
+    data: `Data ${dataError || ''}`,
+    options: `Options Parser ${hasError('optionsParser')}`,
+    response: `Response Parser ${hasError('responseParser')}`,
+    item: `Item parser ${hasError('itemParser')}`
+  };
+
   return (
     <div className="manage-form">
       <Helmet title={pageTitle} />
@@ -178,7 +203,11 @@ function ManageForm({ match, history, informationState, ...props }) {
           </Button>
         </div>
         <Tabs.Container>
-          <Tabs.View className="data-tab" name="Data">
+          <Tabs.View
+            className="data-tab"
+            name="Data"
+            displayName={tabDisplay.data}
+          >
             <div className="manage-form__grid">
               <div className="manage-form__column">
                 <FC.ClearableInput
@@ -189,7 +218,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                   value={state.name}
                   onChange={(e) => persist({ name: e.target.value })}
                   required
-                  errors={errors}
+                  error={errors}
                 />
                 <FC.SelectBox
                   className="manage-form__control"
@@ -197,10 +226,10 @@ function ManageForm({ match, history, informationState, ...props }) {
                   name="sourceType"
                   text="Source Type"
                   value={state.sourceType}
-                  options={sourceTypes}
+                  options={sourceOptions}
                   onChange={(e) => persist({ sourceType: e.target.value })}
                   required
-                  errors={errors}
+                  error={errors}
                 />
                 <FC.SelectBox
                   className="manage-form__control"
@@ -208,10 +237,10 @@ function ManageForm({ match, history, informationState, ...props }) {
                   name="mediaType"
                   text="Media Type"
                   value={state.mediaType}
-                  options={mediaTypes}
+                  options={mediaOptions}
                   onChange={(e) => persist({ mediaType: e.target.value })}
                   required
-                  errors={errors}
+                  error={errors}
                 />
               </div>
               <div className="manage-form__column">
@@ -250,7 +279,7 @@ function ManageForm({ match, history, informationState, ...props }) {
               </div>
             )}
           </Tabs.View>
-          <Tabs.View name="Options Parser">
+          <Tabs.View name="Options Parser" displayName={tabDisplay.options}>
             <div className="parser-tab">
               <ParserHelp attr={'optionsParser'} data={information} />
               <div className="manage-form__control form-control">
@@ -279,7 +308,7 @@ function ManageForm({ match, history, informationState, ...props }) {
               </div>
             </div>
           </Tabs.View>
-          <Tabs.View name="Response Parser">
+          <Tabs.View name="Response Parser" displayName={tabDisplay.response}>
             <div className="parser-tab">
               <ParserHelp attr="responseParser" data={information} />
               <div className="manage-form__control form-control">
@@ -308,7 +337,7 @@ function ManageForm({ match, history, informationState, ...props }) {
               </div>
             </div>
           </Tabs.View>
-          <Tabs.View name="Item Parser">
+          <Tabs.View name="Item Parser" displayName={tabDisplay.item}>
             <div className="parser-tab">
               <ParserHelp attr="itemParser" data={information} />
               <div className="manage-form__control form-control">
