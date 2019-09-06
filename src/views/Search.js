@@ -95,7 +95,13 @@ function searchReducer(state, action) {
 }
 
 function SearchPage(props) {
-  const { isAnime, isAdult, type, age } = getFilterFlags(props.location);
+  const {
+    isAnime,
+    isAdult,
+    type,
+    age,
+    searchString: searchParam
+  } = getFilterFlags(props.location);
   const primarySourceKey = `${type}_${isAdult}`;
 
   const [primarySourceIds, setPrimarySourceIds] = useStorage('search');
@@ -111,6 +117,12 @@ function SearchPage(props) {
 
   const debouncedSearchTerm = useDebounce(state.searchString, 750);
   const prevSearchTerm = usePrevious(debouncedSearchTerm);
+
+  useEffect(() => {
+    if (searchParam) {
+      dispatch({ type: SEARCH, value: searchParam });
+    }
+  }, [searchParam]);
 
   useEffect(() => {
     fetchSources({ setSources, dispatch, primarySourceId }, { type, isAdult });

@@ -11,14 +11,17 @@ export function buildSearchParams(values) {
 }
 
 export function getFilterFlags(location) {
-  const { type, age } = constructObjectFromSearchParams(location.search || '');
+  const { type, age, searchString = '' } = constructObjectFromSearchParams(
+    location.search || ''
+  );
   const isAnime = isTypeAnime(type);
   const isAdult = isAgeAdult(age);
   return {
     isAnime,
     isAdult,
     type: type || SearchFilters.anime,
-    age: age || SearchFilters.allAges
+    age: age || SearchFilters.allAges,
+    searchString
   };
 }
 
