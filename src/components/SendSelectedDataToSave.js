@@ -5,8 +5,17 @@ import { Button } from 'mko';
 
 const BASE_URL = process.env.REACT_APP_ERZA_BASE_URL;
 
+function guardImageUrl(imageUrl) {
+  const hasProxy = /=http/.test(imageUrl);
+  const index = imageUrl.indexOf('=');
+
+  return hasProxy ? imageUrl.slice(index + 1) : imageUrl;
+}
+
 const mapContentItem = (item) =>
-  item ? { link: item.href, title: item.title, image: item.image } : {};
+  item
+    ? { link: item.href, title: item.title, image: guardImageUrl(item.image) }
+    : {};
 
 const mapSelectedToData = (contentItem) => ({
   ...mapContentItem(contentItem)
