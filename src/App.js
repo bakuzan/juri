@@ -30,7 +30,7 @@ function App(props) {
           'theme--dark': isDarkTheme
         })}
       >
-        <Helmet defaultTitle="Juri" titleTemplate="Juri - %s" />
+        <Helmet defaultTitle="Juri" titleTemplate="%s | Juri" />
         <Header
           title="Juri"
           navLeft={
