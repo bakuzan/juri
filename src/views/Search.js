@@ -1,6 +1,7 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import { useDebounce, usePrevious } from 'mko';
 import SearchBar from 'components/SearchBar';
 import SearchResult from 'components/SearchResult';
 
@@ -8,8 +9,6 @@ import Query from 'juriGQL';
 import { getSources, getContentSearch } from 'juriGQL/queries';
 import SourceType from 'constants/sourceTypes';
 import { SourceContext, SearchContext } from 'context';
-import { useDebounce } from 'hooks/useDebounce';
-import { usePrevious } from 'hooks/usePrevious';
 import { useStorage } from 'hooks/useStorage';
 import { capitalise } from 'utils';
 import {
