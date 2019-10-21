@@ -13,4 +13,6 @@ export { default as Tickbox } from 'meiko/Tickbox';
 export { default as Image } from 'meiko/Image';
 
 // Hooks
+export { useDebounce } from 'meiko/hooks/useDebounce';
 export { useGlobalStyles } from 'meiko/hooks/useGlobalStyles';
+export { usePrevious } from 'meiko/hooks/usePrevious';
