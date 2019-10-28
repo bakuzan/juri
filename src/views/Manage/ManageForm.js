@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { Helmet } from 'react-helmet-async';
 
+import { useWindowSize } from 'meiko/hooks/useWindowSize';
 import { Button, LoadingBouncer, Tabs, Tickbox, FormControls as FC } from 'mko';
 import NavLink from 'components/NavLink';
 import ParserHelp from 'components/ParserHelp';
@@ -12,7 +13,6 @@ import { createSource, updateSource, removeSource } from 'juriGQL/mutations';
 import { ThemeContext } from 'context';
 import MediaTypesEnum from 'constants/mediaTypes';
 import SourceTypesEnum from 'constants/sourceTypes';
-import { useWindowSize } from 'hooks/useWindowSize';
 import { mapEnumToSelectOption } from 'utils';
 import validator from 'utils/manageFormValidator';
 import alertService from 'utils/alertService';

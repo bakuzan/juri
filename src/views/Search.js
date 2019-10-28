@@ -1,6 +1,7 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import { capitalise } from 'ayaka/capitalise';
 import { useDebounce, usePrevious } from 'mko';
 import SearchBar from 'components/SearchBar';
 import SearchResult from 'components/SearchResult';
@@ -10,7 +11,7 @@ import { getSources, getContentSearch } from 'juriGQL/queries';
 import SourceType from 'constants/sourceTypes';
 import { SourceContext, SearchContext } from 'context';
 import { useStorage } from 'hooks/useStorage';
-import { capitalise } from 'utils';
+
 import {
   buildSearchParams,
   getFilterFlags,

@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useRef } from 'react';
 
+import isString from 'ayaka/isString';
 import { LoadingBouncer } from 'mko';
 
 import Strings from 'constants/strings';
 import { useProgressiveLoading } from 'hooks/useProgressiveLoading';
-import { isString } from 'utils';
 
 import './Grid.scss';
 

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useState } from 'react';
 
-import { capitalise } from 'utils';
+import { capitalise } from 'ayaka/capitalise';
 
 import './ToggleBox.scss';
 

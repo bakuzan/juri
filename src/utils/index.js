@@ -1,11 +1,5 @@
 import SearchFilters from '../constants/searchFilters';
 
-export { capitalise, capitaliseEachWord } from 'ayaka/capitalise';
-export { default as debounce } from 'ayaka/debounce';
-export { default as generateUniqueId } from 'ayaka/generateUniqueId';
-export { default as isString } from 'ayaka/isString';
-export { default as padNumber } from 'ayaka/padNumber';
-
 const checkStringMatch = (cstr, fallback) => (str = fallback) =>
   str.toLowerCase() === cstr.toLowerCase();
 

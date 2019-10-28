@@ -1,4 +1,4 @@
-import { generateUniqueId } from './index';
+import generateUniqueId from 'ayaka/generateUniqueId';
 
 const ERROR = 'error';
 

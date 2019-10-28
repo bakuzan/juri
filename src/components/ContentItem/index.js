@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import React, { useContext } from 'react';
 
+import padNumber from 'ayaka/padNumber';
 import { Image } from 'mko';
 import NewTabLink from 'components/NewTabLink';
 import SendSelectedDataToSave from 'components/SendSelectedDataToSave';
 
 import MagicNumbers from 'constants/magicNumbers';
 import { SearchContext } from 'context';
-import { padNumber } from 'utils';
 
 import './ContentItem.scss';
 
