@@ -3,7 +3,11 @@ import MonacoEditor from 'react-monaco-editor';
 import { Helmet } from 'react-helmet-async';
 
 import { useWindowSize } from 'meiko/hooks/useWindowSize';
-import { Button, LoadingBouncer, Tabs, Tickbox, FormControls as FC } from 'mko';
+import { Button } from 'meiko/Button';
+import { default as FC } from 'meiko/FormControls';
+import LoadingBouncer from 'meiko/LoadingBouncer';
+import Tabs from 'meiko/Tabs';
+import Tickbox from 'meiko/Tickbox';
 import NavLink from 'components/NavLink';
 import ParserHelp from 'components/ParserHelp';
 

@@ -3,7 +3,8 @@ import { Helmet } from 'react-helmet-async';
 
 import { capitalise } from 'ayaka/capitalise';
 import generateUniqueId from 'ayaka/generateUniqueId';
-import { Button, SelectBox } from 'mko';
+import { Button } from 'meiko/Button';
+import SelectBox from 'meiko/SelectBox';
 import ToggleBox from 'components/ToggleBox';
 import ContentItem from 'components/ContentItem';
 import Grid from 'components/Grid';

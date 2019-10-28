@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { Alert } from 'mko';
+import Alert from 'meiko/Alert';
 import service from 'utils/alertService';
 
 function JriAlert({ ...props }) {

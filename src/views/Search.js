@@ -2,7 +2,8 @@ import React, { useReducer, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { capitalise } from 'ayaka/capitalise';
-import { useDebounce, usePrevious } from 'mko';
+import { useDebounce } from 'meiko/hooks/useDebounce';
+import { usePrevious } from 'meiko/hooks/usePrevious';
 import SearchBar from 'components/SearchBar';
 import SearchResult from 'components/SearchResult';
 

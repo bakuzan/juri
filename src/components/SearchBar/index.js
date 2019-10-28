@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { ClearableInput } from 'mko';
+import ClearableInput from 'meiko/ClearableInput';
 import ToggleBox from 'components/ToggleBox';
 
 import { mediaTypeText, contentAgeText } from 'constants/searchFilters';
@@ -15,9 +15,7 @@ function SearchBar({
   onCheckboxChange,
   onUserInput
 }) {
-  const titleLabel = `Search for ${mediaTypeText[isAnime]} on ${
-    contentAgeText[isAdult]
-  } sites`;
+  const titleLabel = `Search for ${mediaTypeText[isAnime]} on ${contentAgeText[isAdult]} sites`;
 
   return (
     <div className="search-bar">

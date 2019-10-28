@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { useRef } from 'react';
 
 import isString from 'ayaka/isString';
-import { LoadingBouncer } from 'mko';
+import LoadingBouncer from 'meiko/LoadingBouncer';
 
 import Strings from 'constants/strings';
 import { useProgressiveLoading } from 'hooks/useProgressiveLoading';

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { useContext } from 'react';
 
 import padNumber from 'ayaka/padNumber';
-import { Image } from 'mko';
+import Image from 'meiko/Image';
 import NewTabLink from 'components/NewTabLink';
 import SendSelectedDataToSave from 'components/SendSelectedDataToSave';
 
