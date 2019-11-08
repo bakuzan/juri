@@ -1,5 +1,6 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import { Button } from 'meiko/Button';
 import LoadingBouncer from 'meiko/LoadingBouncer';
@@ -19,8 +20,13 @@ function SearchResult({
   onSelectPrimarySource
 }) {
   const [sources] = useContext(SourceContext);
-  const { dispatch: searchDispatch } = useContext(SearchContext);
+  const { type, isAdult, dispatch: searchDispatch } = useContext(SearchContext);
+  const [collapsedSources, setCollapsedSources] = useState([]);
   const hasResults = !!results.size;
+
+  useEffect(() => {
+    setCollapsedSources([]);
+  }, [type, isAdult]);
 
   return (
     <div className="search-results">
@@ -33,11 +39,26 @@ function SearchResult({
             const items = results.get(src.id);
             const hasSearched = !!items;
             const isCurrentSource = sourceId === src.id;
+            const isCollapsed = collapsedSources.includes(src.id);
 
             return (
               <li key={src.id} className="search-source">
                 <div className="search-source__title">
-                  {src.name}
+                  <button
+                    type="button"
+                    className={classNames('search-source__accordion-toggle', {
+                      'search-source__accordion-toggle--checked': isCollapsed
+                    })}
+                    onClick={() =>
+                      setCollapsedSources((cs) =>
+                        cs.includes(src.id)
+                          ? cs.filter((x) => x !== src.id)
+                          : [...cs, src.id]
+                      )
+                    }
+                  >
+                    {src.name}
+                  </button>
                   <Tickbox
                     id="isPrimary"
                     containerClassName="search-source__is-primary"
@@ -49,28 +70,38 @@ function SearchResult({
                     onChange={() => onSelectPrimarySource(src.id)}
                   />
                 </div>
-                {!hasSearched &&
-                  (isLoading && isCurrentSource ? (
-                    <LoadingBouncer />
-                  ) : (
-                    <div className="search-source__query-trigger">
-                      <Button
-                        btnStyle="primary"
-                        onClick={() =>
-                          searchDispatch({ type: 'source', sourceId: src.id })
-                        }
-                      >
-                        Search {src.name}
-                      </Button>
-                    </div>
-                  ))}
-                {hasSearched && (
-                  <Grid className="search-results__content-grid" items={items}>
-                    {(item) => {
-                      return <ContentItem key={item.id} content={item} />;
-                    }}
-                  </Grid>
-                )}
+                <div
+                  aria-hidden={isCollapsed}
+                  className={classNames('search-source__content', {
+                    'search-source__content--collapsed': isCollapsed
+                  })}
+                >
+                  {!hasSearched &&
+                    (isLoading && isCurrentSource ? (
+                      <LoadingBouncer />
+                    ) : (
+                      <div className="search-source__query-trigger">
+                        <Button
+                          btnStyle="primary"
+                          onClick={() =>
+                            searchDispatch({ type: 'source', sourceId: src.id })
+                          }
+                        >
+                          Search {src.name}
+                        </Button>
+                      </div>
+                    ))}
+                  {hasSearched && (
+                    <Grid
+                      className="search-results__content-grid"
+                      items={items}
+                    >
+                      {(item) => {
+                        return <ContentItem key={item.id} content={item} />;
+                      }}
+                    </Grid>
+                  )}
+                </div>
               </li>
             );
           }}

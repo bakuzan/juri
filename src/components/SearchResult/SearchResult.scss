@@ -1,3 +1,5 @@
+@import '../../styles/_extensions.scss';
+
 .search-results {
   display: flex;
   flex-direction: row;
@@ -19,6 +21,47 @@
     border-bottom: 1px solid;
     font-size: 1.2em;
   }
+
+  &__accordion-toggle {
+    @extend %reset-button-styles;
+    position: relative;
+    cursor: pointer;
+    padding: 0 6px 0 15px;
+    text-align: left;
+    width: 100%;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background-color: #000;
+      transition: 0.5s;
+      top: 50%;
+    }
+
+    &::before {
+      left: 0px;
+      width: 10px;
+      height: 2px;
+      margin-top: -1px;
+      transform: rotate(360deg);
+    }
+
+    &::after {
+      left: 4px;
+      height: 10px;
+      width: 2px;
+      margin-top: -5px;
+      transform: rotate(450deg);
+    }
+
+    &--checked::before,
+    &--checked::after {
+      transform: rotate(0deg);
+      transition: 0.5s;
+    }
+  }
+
   &__is-primary {
     flex: unset;
     min-height: 1em;
@@ -26,6 +69,21 @@
       margin: 0;
     }
   }
+
+  &__content {
+    height: auto;
+    overflow: hidden;
+    opacity: 1;
+    transition: 0.5s;
+    transition-delay: 0.1s;
+
+    &--collapsed {
+      height: 1px;
+      opacity: 0;
+      transition-delay: 0.25s;
+    }
+  }
+
   &__query-trigger {
     padding: 5px 0;
   }
