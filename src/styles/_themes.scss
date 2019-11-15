@@ -31,6 +31,10 @@ $theme-maps: (
 );
 
 @include appTheme($theme-maps) {
+  --scroll-top-button--background: #{$primary-background};
+  --scroll-top-button--background-hover: #{darken($primary-background, 10%)};
+  --scroll-top-button--colour: #{$primary-colour};
+
   // Navigation
   .nav-link {
     color: $primary-background;

@@ -1,3 +1,4 @@
+// import { fetchLatest__testData } from '_testData';
 import React, { useReducer, useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 
@@ -5,6 +6,7 @@ import { capitalise } from 'ayaka/capitalise';
 import generateUniqueId from 'ayaka/generateUniqueId';
 import { Button } from 'meiko/Button';
 import SelectBox from 'meiko/SelectBox';
+import ScrollTopButton from 'meiko/ScrollTopButton';
 import ToggleBox from 'components/ToggleBox';
 import ContentItem from 'components/ContentItem';
 import Grid from 'components/Grid';
@@ -210,6 +212,7 @@ function LatestPage({ location, ...props }) {
       >
         {(item) => <ContentItem key={item.id} isLatest content={item} />}
       </Grid>
+      <ScrollTopButton />
     </div>
   );
 }
