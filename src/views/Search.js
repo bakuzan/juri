@@ -76,7 +76,7 @@ function searchReducer(state, action) {
     case LOADING:
       return {
         ...state,
-        isLoading: true,
+        loadingSources: [...state.loadingSources, action.sourceId],
         results: action.clearResults ? new Map([]) : state.results
       };
     case SEARCH:
@@ -86,11 +86,18 @@ function searchReducer(state, action) {
     case SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        loadingSources: state.loadingSources.filter(
+          (x) => x !== action.sourceId
+        ),
         results: state.results.set(action.sourceId, action.data)
       };
     case RESET:
-      return { ...state, sourceId: 0, results: new Map([]) };
+      return {
+        ...state,
+        sourceId: 0,
+        loadingSources: [],
+        results: new Map([])
+      };
     default:
       return state;
   }
@@ -111,7 +118,7 @@ function SearchPage(props) {
 
   const [sources, setSources] = useState([]);
   const [state, dispatch] = useReducer(searchReducer, {
-    isLoading: false,
+    loadingSources: [],
     searchString: '',
     sourceId: 0,
     results: new Map([])
@@ -137,13 +144,16 @@ function SearchPage(props) {
     const hasSourceOrNewSearchTerm = sourceId || newSearchTerm;
 
     if (debouncedSearchTerm && hasSourceOrNewSearchTerm) {
+      const querySourceId = sourceId || resolvedSourceId;
+
       dispatch({
         type: LOADING,
-        clearResults: newSearchTerm
+        clearResults: newSearchTerm,
+        sourceId: querySourceId
       });
 
       fetchSearchResults(dispatch, {
-        sourceId: sourceId || resolvedSourceId,
+        sourceId: querySourceId,
         searchString: debouncedSearchTerm
       });
     }
@@ -184,8 +194,7 @@ function SearchPage(props) {
 
         <SearchContext.Provider value={{ type, isAdult, dispatch }}>
           <SearchResult
-            isLoading={state.isLoading}
-            sourceId={state.sourceId}
+            currentlyLoading={state.loadingSources}
             primarySourceId={primarySourceId}
             results={state.results}
             onSelectPrimarySource={(id) =>

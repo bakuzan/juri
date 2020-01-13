@@ -13,8 +13,7 @@ import { SourceContext, SearchContext } from 'context';
 import './SearchResult.scss';
 
 function SearchResult({
-  isLoading,
-  sourceId,
+  currentlyLoading,
   primarySourceId,
   results,
   onSelectPrimarySource
@@ -23,6 +22,7 @@ function SearchResult({
   const { type, isAdult, dispatch: searchDispatch } = useContext(SearchContext);
   const [collapsedSources, setCollapsedSources] = useState([]);
   const hasResults = !!results.size;
+  const isLoading = currentlyLoading.length > 0;
 
   useEffect(() => {
     setCollapsedSources([]);
@@ -38,7 +38,7 @@ function SearchResult({
           {(src) => {
             const items = results.get(src.id);
             const hasSearched = !!items;
-            const isCurrentSource = sourceId === src.id;
+            const isCurrentSource = currentlyLoading.includes(src.id);
             const isCollapsed = collapsedSources.includes(src.id);
 
             return (
@@ -112,8 +112,7 @@ function SearchResult({
 }
 
 SearchResult.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  sourceId: PropTypes.number.isRequired,
+  currentlyLoading: PropTypes.arrayOf(PropTypes.number).isRequired,
   primarySourceId: PropTypes.number.isRequired,
   results: PropTypes.object, // a Map([])
   onSelectPrimarySource: PropTypes.func.isRequired

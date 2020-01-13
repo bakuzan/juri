@@ -53,6 +53,7 @@ async function fetchSources(setSourceData, { type }) {
 }
 
 async function fetchContentResults(dispatch, params) {
+  dispatch({ type: LOADING_SOURCE, sourceId: params.sourceId });
   // const { latest = [] } = await fetchLatest__testData();
   const { latest = [] } = await Query({
     query: getContentLatest,
@@ -61,12 +62,13 @@ async function fetchContentResults(dispatch, params) {
     }
   });
 
-  dispatch({ type: LOAD, latest });
+  dispatch({ type: LOAD, latest, sourceId: params.sourceId });
 }
 
 const initialSourceData = { sources: [], sourceId: 0 };
 
 const LOADING = 'loading';
+const LOADING_SOURCE = 'loading-source';
 const LOAD = 'load';
 const REFRESH = 'refresh';
 const LOAD_MORE = 'load-more';
@@ -74,28 +76,35 @@ const LOAD_MORE = 'load-more';
 function latestReducer(state, action) {
   switch (action.type) {
     case LOADING:
-      return { ...state, isLoading: true, page: 1, results: [] };
-    case LOAD:
+      return { ...state, loadingSource: action.sourceId, page: 1, results: [] };
+    case LOADING_SOURCE:
+      return { ...state, loadingSource: action.sourceId };
+    case LOAD: {
+      if (action.sourceId !== state.loadingSource) {
+        return state;
+      }
+
       return {
         ...state,
-        isLoading: false,
+        loadingSource: null,
         results:
           state.page === 1
             ? action.latest
             : [...state.results, ...action.latest]
       };
+    }
     case REFRESH:
       return {
         ...state,
         page: 1,
         refreshKey: generateUniqueId(),
         results: [],
-        isLoading: true
+        loadingSource: action.sourceId
       };
     case LOAD_MORE: {
-      return state.isLoading
+      return state.loadingSource !== null
         ? state
-        : { ...state, page: state.page + 1, isLoading: true };
+        : { ...state, page: state.page + 1, loadingSource: action.sourceId };
     }
     default:
       return state;
@@ -108,12 +117,14 @@ function LatestPage({ location, ...props }) {
   const [sourceData, setSourceData] = useState(initialSourceData);
   const [state, dispatch] = useReducer(latestReducer, {
     refreshKey: generateUniqueId(),
-    isLoading: true,
+    loadingSource: null,
     page: 1,
     results: []
   });
 
   const latestSourcesForType = latestDefaultSources[type];
+  const isLoading = state.loadingSource !== null;
+  const sourceId = sourceData.sourceId;
 
   useEffect(() => {
     function setSourceInformation(sources) {
@@ -124,18 +135,18 @@ function LatestPage({ location, ...props }) {
       setSourceData({ sources, sourceId: resolvedId });
     }
 
-    dispatch({ type: LOADING });
+    dispatch({ type: LOADING, sourceId: 0 });
     fetchSources(setSourceInformation, { type });
   }, [type, setLatestDefaultSources, latestSourcesForType]);
 
   useEffect(() => {
-    if (sourceData.sourceId) {
+    if (sourceId) {
       fetchContentResults(dispatch, {
-        sourceId: sourceData.sourceId,
+        sourceId,
         page: state.page
       });
     }
-  }, [sourceData.sourceId, state.page, state.refreshKey]);
+  }, [sourceId, state.page, state.refreshKey]);
 
   const siteOptions = sourceData.sources.map((o) => ({
     value: o.id,
@@ -143,17 +154,15 @@ function LatestPage({ location, ...props }) {
   }));
 
   const disableSiteChanger = siteOptions.length < 2;
-  const activeSite = sourceData.sources.find(
-    (x) => x.id === sourceData.sourceId
-  );
+  const activeSite = sourceData.sources.find((x) => x.id === sourceId);
 
-  const hasPaging = activeSite && activeSite.isPaged;
+  const hasPaging = (activeSite && activeSite.isPaged) || false;
 
   const handleLoadMore = useCallback(() => {
     if (hasPaging) {
-      dispatch({ type: LOAD_MORE });
+      dispatch({ type: LOAD_MORE, sourceId });
     }
-  }, [hasPaging]);
+  }, [hasPaging, sourceId]);
 
   return (
     <div className="latest-page">
@@ -165,11 +174,11 @@ function LatestPage({ location, ...props }) {
               id="site"
               name="site"
               text="Site"
-              value={sourceData.sourceId}
+              value={sourceId}
               options={siteOptions}
               onChange={(event) => {
                 const sourceId = Number(event.target.value);
-                dispatch({ type: LOADING });
+                dispatch({ type: LOADING, sourceId });
                 setLatestDefaultSources({ [type]: sourceId });
                 setSourceData((prev) => ({ ...prev, sourceId }));
               }}
@@ -181,7 +190,7 @@ function LatestPage({ location, ...props }) {
                 name="isAnime"
                 label="Is anime"
                 checked={isAnime}
-                handleChange={(name, value) => {
+                handleChange={(_, value) => {
                   const type = getTypeFromBool(value, true);
 
                   setSourceData(initialSourceData);
@@ -199,7 +208,7 @@ function LatestPage({ location, ...props }) {
               btnStyle={isFixed ? 'primary' : null}
               aria-label="Refresh data"
               icon={Icons.circleArrow}
-              onClick={() => dispatch({ type: REFRESH })}
+              onClick={() => dispatch({ type: REFRESH, sourceId })}
             />
           </h2>
         )}
@@ -207,7 +216,7 @@ function LatestPage({ location, ...props }) {
       <Grid
         className="latest-page__content-grid"
         items={state.results}
-        isLoading={state.isLoading}
+        isLoading={isLoading}
         onLoadMore={handleLoadMore}
       >
         {(item) => <ContentItem key={item.id} isLatest content={item} />}

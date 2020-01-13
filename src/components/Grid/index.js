@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import React, { useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import isString from 'ayaka/isString';
 import LoadingBouncer from 'meiko/LoadingBouncer';
+import { useProgressiveLoading } from 'meiko/hooks/useProgressiveLoading';
 
 import Strings from 'constants/strings';
-import { useProgressiveLoading } from 'hooks/useProgressiveLoading';
 
 import './Grid.scss';
+import { usePrevious } from 'meiko/hooks/usePrevious';
 
 function Grid({
   className,
@@ -16,13 +17,20 @@ function Grid({
   noItemsText,
   children,
   isLoading,
-  isPaged,
   onLoadMore,
   showCount,
   ...other
 }) {
-  const ref = useRef();
-  useProgressiveLoading(ref, onLoadMore);
+  const ref = useProgressiveLoading(onLoadMore);
+  const [isReady, setReady] = useState(false);
+  const prevLoading = usePrevious(isLoading);
+
+  useEffect(() => {
+    const changed = isLoading !== prevLoading;
+    if (changed) {
+      setReady(isLoading);
+    }
+  }, [isLoading, prevLoading, isReady]);
 
   const passedNothing = !items;
   const hasItems = !passedNothing && items.length > 0;
@@ -48,7 +56,7 @@ function Grid({
       >
         {hasItems && items.map(children)}
       </ul>
-      {isLoading && <LoadingBouncer />}
+      {isReady && <LoadingBouncer />}
     </div>
   );
 }
