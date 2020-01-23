@@ -35,6 +35,10 @@ $theme-maps: (
   --scroll-top-button--background-hover: #{darken($primary-background, 10%)};
   --scroll-top-button--colour: #{$primary-colour};
 
+  --manage-sources--accent-colour: #fad1ed;
+
+  --danger-colour: #{map-get($theme, danger-colour)};
+
   // Navigation
   .nav-link {
     color: $primary-background;

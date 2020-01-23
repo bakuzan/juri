@@ -15,14 +15,11 @@ import Query from 'juriGQL';
 import { getSourcesManagement, getSourceById } from 'juriGQL/queries';
 import { createSource, updateSource, removeSource } from 'juriGQL/mutations';
 import { ThemeContext } from 'context';
-import MediaTypesEnum from 'constants/mediaTypes';
-import SourceTypesEnum from 'constants/sourceTypes';
-import { mapEnumToSelectOption } from 'utils';
 import validator from 'utils/manageFormValidator';
 import alertService from 'utils/alertService';
+import { MANAGE_FORM_DEFAULTS, mediaTypes, sourceTypes } from './manageUtils';
 
-const mediaTypes = mapEnumToSelectOption(MediaTypesEnum);
-const sourceTypes = mapEnumToSelectOption(SourceTypesEnum);
+import './ManageForm.scss';
 
 async function fetchSourceById({ setState, setFormMeta }, id) {
   setFormMeta((prev) => ({ ...prev, isLoading: true }));
@@ -92,17 +89,6 @@ function getEditorSize(windowSize) {
 }
 
 const EMPTY_ERRORS = new Map([]);
-const MANAGE_FORM_DEFAULTS = {
-  name: '',
-  sourceType: '',
-  mediaType: '',
-  optionsParser: '',
-  responseParser: '',
-  itemParser: '',
-  isPaged: false,
-  isAdult: false,
-  isActive: true
-};
 
 function ManageForm({ match, history, informationState, ...props }) {
   const sourceId = Number(match.params.id || 0);

@@ -11,7 +11,7 @@
     margin: 5px;
   }
 
-  @include respondToAll((xs, sm)) {
+  @include respondTo(sm) {
     flex-direction: row;
 
     &__text {

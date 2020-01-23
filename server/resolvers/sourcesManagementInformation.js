@@ -9,16 +9,16 @@ module.exports = async function sourcesManagementInformation() {
         options: RequestInit
       }
       `,
-      availableHelperFunctions: []
+      availableHelperFunctions: ['FormData', 'JSON']
     },
     {
       key: 'responseParser',
       functionSignature: 'async function responseParser(response, helpers)',
       returnObject: `Array<ResponseItem>`,
       availableHelperFunctions: [
-        'processNestedJson',
-        'handleBadJsonTextResponse',
-        'processHtml'
+        'processNestedJson: (data: any, attrString: string) => any;',
+        'handleBadJsonTextResponse: (data: any) => any[];',
+        'processHtml: (selector: string, html: HTMLElement) => HTMLElement[];'
       ]
     },
     {
@@ -43,7 +43,11 @@ module.exports = async function sourcesManagementInformation() {
         postedDate: String
       }
       `,
-      availableHelperFunctions: ['generateUniqueId', 'joinTextContent']
+      availableHelperFunctions: [
+        'generateUniqueId: () => string;',
+        'joinTextContent: (nodes: HTMLElement[]) => string;',
+        'proxyUrl: string'
+      ]
     }
   ];
 };

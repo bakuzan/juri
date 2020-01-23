@@ -5,8 +5,6 @@ import PageNotFound from 'views/PageNotFound';
 import ManageList from './ManageList';
 import ManageForm from './ManageForm';
 
-import './Manage.scss';
-
 function Manage({ match, ...props }) {
   const sourceState = useState(new Map());
   const informationState = useState(null);

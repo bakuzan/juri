@@ -15,6 +15,7 @@
     "classnames": "^2.2.6",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "form-data": "^3.0.0",
     "graphql": "^14.3.1",
     "graphql-tag": "^2.10.1",
     "history": "^4.9.0",

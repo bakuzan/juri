@@ -1,0 +1,67 @@
+@import '../../styles/_variables';
+@import '../../styles/_mixins';
+
+.manage-page {
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+  }
+
+  &__filters {
+    display: flex;
+    flex: 1;
+    align-items: center;
+
+    @include respondToAll((xxs, xs)) {
+      flex-direction: column;
+
+      > * {
+        width: calc(100% - 20px);
+      }
+    }
+  }
+
+  &__search {
+    flex: 4;
+  }
+
+  &__grid {
+    $grid-values: (
+      xs: 32,
+      sm: 24,
+      md: 19,
+      lg: 12
+    );
+
+    grid-gap: 1px;
+    @include gridColumnGenerator($grid-values);
+  }
+}
+
+.source-item {
+  display: flex;
+  padding: 5px;
+  border: 1px dotted var(--manage-sources--accent-colour);
+
+  &__content {
+    flex: 1;
+  }
+
+  &__reduced-text {
+    font-size: 0.875em;
+  }
+
+  &__states {
+    text-align: center;
+    width: 1.5rem;
+  }
+
+  &__adult {
+    border: 1px solid var(--danger-colour);
+    border-radius: 50%;
+    font-size: 0.75rem;
+    width: 100%;
+  }
+}

@@ -48,6 +48,8 @@ export const getSourcesList = gql`
       name
       mediaType
       sourceType
+      isAdult
+      isActive
     }
   }
 `;
