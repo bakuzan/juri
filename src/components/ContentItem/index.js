@@ -13,12 +13,8 @@ import { SearchContext } from 'context';
 import './ContentItem.scss';
 
 function resolveInfo(content) {
-  return (
-    content.authour ||
-    content.versions ||
-    MagicNumbers.animeType[content.type] ||
-    null
-  );
+  const contentType = MagicNumbers.animeType[content.type] || content.type;
+  return content.authour || content.versions || contentType || null;
 }
 
 function ContentItem({ className, content, isLatest }) {
@@ -77,7 +73,8 @@ function ContentItem({ className, content, isLatest }) {
             )}
             {!!content.status && (
               <span>
-                <b>Status:</b> {MagicNumbers.animeStatus[content.status]}
+                <b>Status:</b>{' '}
+                {MagicNumbers.animeStatus[content.status] || content.status}
               </span>
             )}
           </div>

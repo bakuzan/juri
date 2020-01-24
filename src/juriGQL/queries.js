@@ -17,6 +17,9 @@ const contentFragment = gql`
     status
     startDate
     endDate
+
+    episodes
+    currentEpisode
   }
 `;
 
