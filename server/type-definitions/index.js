@@ -69,6 +69,7 @@ module.exports = [
       startDate: String
       endDate: String
       currentEpisode: Int
+      episodes: Int
       postedDate: String
     }
 

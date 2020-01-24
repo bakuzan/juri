@@ -40,6 +40,7 @@ module.exports = async function sourcesManagementInformation() {
         startDate: String
         endDate: String
         currentEpisode: Int
+		episodes: Int
         postedDate: String
       }
       `,
