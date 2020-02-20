@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { useFocusShortcut } from 'meiko/hooks/useFocusShortcut';
 import ClearableInput from 'meiko/ClearableInput';
 import ToggleBox from 'components/ToggleBox';
 
@@ -16,6 +17,7 @@ function SearchBar({
   onUserInput
 }) {
   const titleLabel = `Search for ${mediaTypeText[isAnime]} on ${contentAgeText[isAdult]} sites`;
+  const ref = useFocusShortcut();
 
   return (
     <div className="search-bar">
@@ -44,6 +46,7 @@ function SearchBar({
       </div>
       <div className="search-bar__input-container">
         <ClearableInput
+          ref={ref}
           autoFocus
           id="searchString"
           name="searchString"
