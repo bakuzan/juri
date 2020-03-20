@@ -23,7 +23,8 @@ module.exports = async function sourcesManagementInformation() {
     },
     {
       key: 'itemParser',
-      functionSignature: 'function itemParser(dataItem, helpers)',
+      functionSignature:
+        'function itemParser(dataItem, helpers, index, allDataItems)',
       returnObject: `
       type ContentItem {
         id: String
@@ -40,7 +41,7 @@ module.exports = async function sourcesManagementInformation() {
         startDate: String
         endDate: String
         currentEpisode: Int
-		episodes: Int
+		    episodes: Int
         postedDate: String
       }
       `,

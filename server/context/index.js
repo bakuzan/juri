@@ -1,11 +1,17 @@
 const fetch = require('node-fetch');
 const FormData = require('form-data');
 
-const { generateUniqueId, joinTextContent } = require('../utils');
+const { filterFalsey, generateUniqueId, joinTextContent } = require('../utils');
 const myRunner = require('../utils/runner');
 const processNestedJson = require('../utils/processedNestedJson');
 const handleBadJsonTextResponse = require('../utils/handleBadJsonTextResponse');
 const processHtml = require('../utils/processHtml');
+
+const helpers = {
+  generateUniqueId,
+  joinTextContent,
+  proxyUrl: 'https://proxy.duckduckgo.com/iu/?u='
+};
 
 async function fetchContentFromSource(source, replacements) {
   const optionsFn = myRunner(source.optionsParser);
@@ -24,13 +30,9 @@ async function fetchContentFromSource(source, replacements) {
       processHtml
     });
 
-    return Array.from(data).map((x) =>
-      itemFn(x, {
-        generateUniqueId,
-        joinTextContent,
-        proxyUrl: 'https://proxy.duckduckgo.com/iu/?u='
-      })
-    );
+    return Array.from(data)
+      .map((entry, index, allData) => itemFn(entry, helpers, index, allData))
+      .filter(filterFalsey);
   } catch (err) {
     throw err;
   }

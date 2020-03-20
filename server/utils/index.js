@@ -26,10 +26,15 @@ function joinTextContent(nodes) {
   return strs.join(', ');
 }
 
+function filterFalsey(value) {
+  return value !== null && value !== undefined;
+}
+
 module.exports = {
   enumArrayToObject,
   mapArrToGraphqlString,
   castStringToBool,
   generateUniqueId,
-  joinTextContent
+  joinTextContent,
+  filterFalsey
 };
