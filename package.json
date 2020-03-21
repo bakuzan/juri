@@ -39,6 +39,7 @@
     "react-router-dom": "^5.1.2",
     "sequelize": "^5.21.5",
     "sequelize-cli": "^5.5.1",
+    "snoowrap": "^1.21.0",
     "sqlite": "^3.0.3",
     "ssl-root-cas": "^1.3.1",
     "umzug": "^2.2.0"

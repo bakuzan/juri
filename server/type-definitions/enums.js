@@ -15,4 +15,24 @@ const MediaTypeGQL = gql`
   }
 `;
 
-module.exports = [SourceTypeGQL, MediaTypeGQL];
+module.exports = [
+  SourceTypeGQL,
+  MediaTypeGQL,
+  gql`
+    enum RedditSort {
+      Relevance
+      Hot
+      Top
+      New
+    }
+
+    enum RedditTime {
+      Hour
+      Day
+      Week
+      Month
+      Year
+      All
+    }
+  `
+];

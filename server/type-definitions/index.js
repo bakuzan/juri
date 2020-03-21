@@ -17,6 +17,8 @@ module.exports = [
 
       latest(sourceId: Int!, page: Int): [ContentItem]
       search(sourceId: Int!, searchString: String!): [ContentItem]
+
+      rManga(sort: RedditSort!, search: String, time: RedditTime): [RedditPost]
     }
 
     type Mutation {
@@ -71,6 +73,24 @@ module.exports = [
       currentEpisode: Int
       episodes: Int
       postedDate: String
+    }
+
+    type Thumbnail {
+      src: String
+      height: Int
+      width: Int
+    }
+
+    type RedditPost {
+      authour: String
+      bodyHTML: String
+      createdAt: String
+      id: String
+      image: Thumbnail
+      nsfw: Boolean
+      permalink: String
+      title: String
+      url: String
     }
 
     type SourceResponse {

@@ -22,6 +22,9 @@ module.exports = {
     async search(_, { sourceId, searchString }, context) {
       const siteData = await Source.findByPk(sourceId, { raw: true });
       return await context.fetchContentFromSource(siteData, { searchString });
+    },
+    async rManga(_, args, context) {
+      return await context.Reddit.getPosts('manga', args);
     }
   },
   Mutation: {

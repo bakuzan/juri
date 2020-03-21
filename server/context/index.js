@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const FormData = require('form-data');
 
+const Reddit = require('./reddit');
 const { filterFalsey, generateUniqueId, joinTextContent } = require('../utils');
 const myRunner = require('../utils/runner');
 const processNestedJson = require('../utils/processedNestedJson');
@@ -39,5 +40,6 @@ async function fetchContentFromSource(source, replacements) {
 }
 
 module.exports = {
-  fetchContentFromSource
+  fetchContentFromSource,
+  Reddit
 };
