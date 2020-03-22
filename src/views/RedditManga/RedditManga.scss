@@ -1,0 +1,28 @@
+.rmanga {
+  &__title {
+    margin: 0.5rem;
+  }
+
+  &__filters {
+    display: flex;
+  }
+
+  &__post {
+    display: flex;
+  }
+
+  &__thumbnail {
+    max-height: 70px;
+    width: 70px;
+    margin-right: 10px;
+  }
+}
+
+.post-links {
+  display: flex;
+  flex-direction: column;
+
+  > * {
+    margin-bottom: 10px;
+  }
+}

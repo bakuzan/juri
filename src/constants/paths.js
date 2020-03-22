@@ -23,6 +23,7 @@ export default {
   about: 'about',
   latest: 'latest',
   manage: 'manage',
+  redditManga: 'rManga',
   query: {
     malSearch: '/api/mal-search/:type',
     contentSearch: '/api/content-search/:site/:type/:age',

@@ -104,3 +104,21 @@ export const getContentLatest = gql`
   }
   ${contentFragment}
 `;
+
+// Reddit
+
+export const getMangaPosts = gql`
+  query GetRMangaDiscussions($sort: RedditSort!, $time: RedditTime) {
+    posts: rManga(sort: $sort, time: $time) {
+      id
+      title
+      image {
+        src
+        height
+        width
+      }
+      name
+      url
+    }
+  }
+`;

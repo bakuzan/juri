@@ -87,6 +87,7 @@ module.exports = [
       createdAt: String
       id: String
       image: Thumbnail
+      name: String
       nsfw: Boolean
       permalink: String
       title: String

@@ -17,6 +17,7 @@ import { useStorage } from 'hooks/useStorage';
 const headerLinks = [
   { text: 'Search', to: '', exact: true },
   { text: 'Latest', to: Paths.latest },
+  { text: 'r/Manga', to: Paths.redditManga },
   { text: 'Manage', to: Paths.manage, exact: true }
 ];
 
@@ -35,6 +36,7 @@ function App(props) {
       >
         <Helmet defaultTitle="Juri" titleTemplate="%s | Juri" />
         <Header
+          leftAlignTitle
           title="Juri"
           navLeft={
             <NavLink className="logo svg-link" to={Paths.base}>

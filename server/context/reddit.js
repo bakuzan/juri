@@ -29,6 +29,7 @@ module.exports = {
         height: p.thumbnail_height,
         width: p.thumbnail_width
       },
+      name: p.name,
       nsfw: p.over_18,
       permalink: p.permalink,
       title: p.title,

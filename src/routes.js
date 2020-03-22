@@ -20,6 +20,11 @@ const Manage = Loadable({
   loader: () => import(/* webpackChunkName: 'manage' */ './views/Manage'),
   ...loadableSettings
 });
+const RedditManga = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: 'redditManga' */ './views/RedditManga'),
+  ...loadableSettings
+});
 const PageNotFound = Loadable({
   loader: () =>
     import(/* webpackChunkName: 'notFound' */ './views/PageNotFound'),
@@ -34,6 +39,10 @@ function JuriRoutes({ match }) {
       <Route exact path={match.path} component={Search} />
       <Route path={`${match.path}${Paths.latest}`} component={Latest} />
       <Route path={`${match.path}${Paths.manage}`} component={Manage} />
+      <Route
+        path={`${match.path}${Paths.redditManga}`}
+        component={RedditManga}
+      />
       <Route path="*" component={PageNotFound} />
     </Switch>
   );
