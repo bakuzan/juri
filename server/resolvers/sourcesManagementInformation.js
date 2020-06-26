@@ -6,7 +6,7 @@ module.exports = async function sourcesManagementInformation() {
       returnObject: `
       type FetchOptions {
         url: String
-        options: RequestInit
+        options?: RequestInit
       }
       `,
       availableHelperFunctions: ['FormData', 'JSON']

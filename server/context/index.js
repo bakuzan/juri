@@ -1,4 +1,3 @@
-const fetch = require('node-fetch');
 const FormData = require('form-data');
 
 const Reddit = require('./reddit');
@@ -7,6 +6,7 @@ const myRunner = require('../utils/runner');
 const processNestedJson = require('../utils/processedNestedJson');
 const handleBadJsonTextResponse = require('../utils/handleBadJsonTextResponse');
 const processHtml = require('../utils/processHtml');
+const juriFetch = require('../utils/juriFetch');
 
 const helpers = {
   generateUniqueId,
@@ -23,7 +23,7 @@ async function fetchContentFromSource(source, replacements) {
 
   try {
     const reqOpts = opts.options || {};
-    const response = await fetch(opts.url, { method: 'GET', ...reqOpts });
+    const response = await juriFetch(opts, { method: 'GET', ...reqOpts });
 
     const data = await responseFn(response, {
       processNestedJson,
