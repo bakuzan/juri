@@ -3,8 +3,7 @@ module.exports = async function sourcesManagementInformation() {
     {
       key: 'optionsParser',
       functionSignature: 'function optionsParser(replacements, helpers)',
-      returnObject: `
-      type FetchOptions {
+      returnObject: `type FetchOptions {
         url: String
         options?: RequestInit
       }
@@ -23,10 +22,12 @@ module.exports = async function sourcesManagementInformation() {
     },
     {
       key: 'itemParser',
-      functionSignature:
-        'function itemParser(dataItem, helpers, index, allDataItems)',
-      returnObject: `
-      type ContentItem {
+      functionSignature: `function itemParser(
+          dataItem, 
+          helpers, 
+          index, 
+          allDataItems)`,
+      returnObject: `type ContentItem {
         id: String
         href: String
         title: String
@@ -41,7 +42,7 @@ module.exports = async function sourcesManagementInformation() {
         startDate: String
         endDate: String
         currentEpisode: Int
-		    episodes: Int
+        episodes: Int
         postedDate: String
       }
       `,

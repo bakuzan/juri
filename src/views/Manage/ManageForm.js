@@ -10,6 +10,7 @@ import Tabs from 'meiko/Tabs';
 import Tickbox from 'meiko/Tickbox';
 import NavLink from 'components/NavLink';
 import ParserHelp from 'components/ParserHelp';
+import EditorError from 'components/EditorError';
 
 import Query from 'juriGQL';
 import { getSourcesManagement, getSourceById } from 'juriGQL/queries';
@@ -17,6 +18,7 @@ import { createSource, updateSource, removeSource } from 'juriGQL/mutations';
 import { ThemeContext } from 'context';
 import validator from 'utils/manageFormValidator';
 import alertService from 'utils/alertService';
+import formatCode from 'utils/formatCode';
 import { MANAGE_FORM_DEFAULTS, mediaTypes, sourceTypes } from './manageUtils';
 
 import './ManageForm.scss';
@@ -85,7 +87,7 @@ async function deleteSource({ navigate }, id) {
 }
 
 function getEditorSize(windowSize) {
-  return windowSize < 992 ? windowSize : windowSize - 400;
+  return windowSize < 992 ? windowSize : windowSize - 430;
 }
 
 const EMPTY_ERRORS = new Map([]);
@@ -95,11 +97,13 @@ function ManageForm({ match, history, informationState, ...props }) {
   const isCreate = !sourceId || isNaN(sourceId);
   const [information, setInformation] = informationState;
   const [state, setState] = useState(MANAGE_FORM_DEFAULTS);
-  const [{ isLoading, submitted }, setFormMeta] = useState({
+  const [formMeta, setFormMeta] = useState({
     isLoading: false,
-    submitted: false
+    submitted: false,
+    formatErrors: new Map([])
   });
 
+  const { isLoading, submitted, formatErrors } = formMeta;
   const errors = submitted ? validator(state).errors : EMPTY_ERRORS;
 
   const index = match.url.lastIndexOf('/');
@@ -133,28 +137,53 @@ function ManageForm({ match, history, informationState, ...props }) {
     setState((prev) => ({ ...prev, ...obj }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const response = validator(state);
+    const response = validator(state, true);
 
     if (response.success) {
-      postManageForm(
-        {
-          isCreate,
-          setFormMeta,
-          setState,
-          navigate: (id) => history.push(`${cancelUrl}/${id}`)
-        },
-        state
-      );
-      return;
-    }
+      const { values } = response;
+      const opts = {
+        isCreate,
+        setFormMeta,
+        setState,
+        navigate: (id) => history.push(`${cancelUrl}/${id}`)
+      };
 
-    setFormMeta({ isLoading: false, submitted: true });
+      await postManageForm(opts, values);
+      persist({
+        optionsParser: values.optionsParser,
+        responseParser: values.responseParser,
+        itemParser: values.itemParser
+      });
+    } else {
+      setFormMeta({
+        isLoading: false,
+        submitted: true,
+        formatErrors: response.formatErrors
+      });
+    }
   }
 
   function handleDelete() {
     deleteSource({ navigate: () => history.push(cancelUrl) }, state.id);
+  }
+
+  function formatField(key) {
+    const formatResult = formatCode(state[key]);
+
+    if (formatResult.isPretty) {
+      persist({ [key]: formatResult.value });
+
+      const cleanedError = new Map(formatErrors);
+      if (cleanedError.delete(key)) {
+        setFormMeta({ formatErrors: cleanedError });
+      }
+    } else {
+      setFormMeta((p) => ({
+        formatErrors: p.formatErrors.set(key, formatResult.errorMessage)
+      }));
+    }
   }
 
   const mediaOptions = state.mediaType
@@ -165,7 +194,9 @@ function ManageForm({ match, history, informationState, ...props }) {
     ? sourceTypes
     : [{ text: 'Select a source type', value: '' }, ...sourceTypes];
 
-  const hasError = (key) => (errors.has(key) ? '(!)' : '');
+  const hasError = (key) =>
+    errors.has(key) || formatErrors.has(key) ? '(!)' : '';
+
   const dataError = ['name', 'sourceType', 'mediaType']
     .map((x) => hasError(x))
     .filter((x) => !!x)
@@ -276,6 +307,7 @@ function ManageForm({ match, history, informationState, ...props }) {
                 <label className="manage-form__editor-label">
                   Options Parser *
                 </label>
+
                 <MonacoEditor
                   height="400"
                   width={editorWidth}
@@ -290,11 +322,22 @@ function ManageForm({ match, history, informationState, ...props }) {
                   }}
                   onChange={(optionsParser) => persist({ optionsParser })}
                 />
-                {errors.has('optionsParser') && (
-                  <div className="form-control__error parser-tab__error">
-                    {errors.get('optionsParser')}
-                  </div>
-                )}
+
+                <div className="manage-form__format">
+                  <Button
+                    type="button"
+                    btnStyle="accent"
+                    onClick={() => formatField('optionsParser')}
+                  >
+                    Format
+                  </Button>
+                </div>
+
+                <EditorError
+                  errors={errors}
+                  formatErrors={formatErrors}
+                  fieldName="optionsParser"
+                />
               </div>
             </div>
           </Tabs.View>
@@ -319,11 +362,22 @@ function ManageForm({ match, history, informationState, ...props }) {
                   }}
                   onChange={(responseParser) => persist({ responseParser })}
                 />
-                {errors.has('responseParser') && (
-                  <div className="form-control__error parser-tab__error">
-                    {errors.get('responseParser')}
-                  </div>
-                )}
+
+                <div className="manage-form__format">
+                  <Button
+                    type="button"
+                    btnStyle="accent"
+                    onClick={() => formatField('responseParser')}
+                  >
+                    Format
+                  </Button>
+                </div>
+
+                <EditorError
+                  errors={errors}
+                  formatErrors={formatErrors}
+                  fieldName="responseParser"
+                />
               </div>
             </div>
           </Tabs.View>
@@ -348,11 +402,22 @@ function ManageForm({ match, history, informationState, ...props }) {
                   }}
                   onChange={(itemParser) => persist({ itemParser })}
                 />
-                {errors.has('itemParser') && (
-                  <div className="form-control__error parser-tab__error">
-                    {errors.get('itemParser')}
-                  </div>
-                )}
+
+                <div className="manage-form__format">
+                  <Button
+                    type="button"
+                    btnStyle="accent"
+                    onClick={() => formatField('itemParser')}
+                  >
+                    Format
+                  </Button>
+                </div>
+
+                <EditorError
+                  errors={errors}
+                  formatErrors={formatErrors}
+                  fieldName="itemParser"
+                />
               </div>
             </div>
           </Tabs.View>

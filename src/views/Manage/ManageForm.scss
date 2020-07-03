@@ -28,6 +28,7 @@ $form-spacing: 15px;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     width: 100%;
   }
+
   &__column {
     &:first-child {
       margin-right: 5px;
@@ -40,6 +41,12 @@ $form-spacing: 15px;
   &__editor-label {
     font-size: 0.7em;
     margin-left: 20px;
+  }
+
+  &__format {
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px 10px;
   }
 
   &__control {
@@ -76,6 +83,7 @@ $form-spacing: 15px;
 
   &__error {
     margin: 0;
+    white-space: pre-line;
   }
 }
 
@@ -90,4 +98,8 @@ $form-spacing: 15px;
   &:hover {
     @include lightenOrDarken('background-color', $app--danger-colour, 10%);
   }
+}
+
+.react-monaco-editor-container {
+  margin: 10px 0;
 }

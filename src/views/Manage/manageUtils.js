@@ -8,22 +8,22 @@ export const MANAGE_FORM_DEFAULTS = {
   mediaType: '',
   optionsParser: `function parser({ searchString, page }) {
     return {
-        url: "",
+      url: "",
     }
-}`,
-  responseParser: `async function parser(response) {
+  }`,
+  responseParser: `async function parser(response, { processHtml }) {
     // return await response.json();
     // const page = await response.text();
     // return processHtml(".class li", page);
-}`,
+  }`,
   itemParser: `function parser(dataItem, { generateUniqueId }) {
     return {
-        id: generateUniqueId(),
-        href: "",
-        title: "",
-        image: "",
+      id: generateUniqueId(),
+      href: "",
+      title: "",
+      image: "",
     };
-}`,
+  }`,
   isPaged: false,
   isAdult: false,
   isActive: true

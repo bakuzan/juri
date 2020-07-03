@@ -14,22 +14,25 @@ function ParserHelp({ attr, data }) {
   }
 
   const { functionSignature, returnObject, availableHelperFunctions } = opts;
+  const helpers = (
+    availableHelperFunctions.join('\r\n') || '\r\nNone available'
+  ).trim();
 
   return (
     <div className="parser-help">
       <pre className="parser-help__text">
         <strong>Expected function with signature:</strong>
-        {`\r\n${functionSignature}`}
+        {`\r\n${functionSignature.trim()}`}
       </pre>
       <br />
       <pre className="parser-help__text">
         <strong>Available Helpers:</strong>
-        {`\r\n${availableHelperFunctions.join('\r\n') || '\r\nNone available'}`}
+        {`\r\n${helpers}`}
       </pre>
       <br />
       <pre className="parser-help__text">
         <strong>Return object model:</strong>
-        {`\r\n${returnObject}`}
+        {`\r\n${returnObject.trim()}`}
       </pre>
     </div>
   );

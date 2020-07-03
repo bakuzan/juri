@@ -49,8 +49,6 @@ function ManageList({ match, sourceState }) {
       (!mediaType || x.mediaType === mediaType)
   );
 
-  console.log(sourceMap, 'MANAGE', sourceType, mediaType, sources);
-
   return (
     <div className="manage-page">
       <Helmet title="Manage Sources" />

@@ -1,5 +1,19 @@
-export default function manageFormValidator(values) {
+import formatCode from './formatCode';
+
+function formatAndUpdate(key, values, errors) {
+  const response = formatCode(values[key]);
+
+  if (response.isPretty) {
+    values[key] = response.value;
+  } else {
+    errors.set(key, response.errorMessage);
+  }
+}
+
+export default function manageFormValidator(data, includeFormatting = false) {
+  const values = { ...data };
   const errors = new Map();
+  const formatErrors = new Map();
 
   if (!values.name || !values.name.trim()) {
     errors.set('name', 'Name is required.');
@@ -28,5 +42,16 @@ export default function manageFormValidator(values) {
     errors.set('itemParser', 'Item Parser is required.');
   }
 
-  return { success: errors.size === 0, errors };
+  if (includeFormatting) {
+    formatAndUpdate('optionsParser', values, formatErrors);
+    formatAndUpdate('responseParser', values, formatErrors);
+    formatAndUpdate('itemParser', values, formatErrors);
+  }
+
+  return {
+    success: errors.size === 0 && formatErrors.size === 0,
+    errors,
+    formatErrors,
+    values
+  };
 }
