@@ -142,10 +142,13 @@ function SearchPage(props) {
     const sourceId = state.sourceId;
     const newSearchTerm = debouncedSearchTerm !== prevSearchTerm;
     const hasSourceOrNewSearchTerm = sourceId || newSearchTerm;
+    const querySourceId = sourceId || resolvedSourceId;
 
-    if (debouncedSearchTerm && hasSourceOrNewSearchTerm) {
-      const querySourceId = sourceId || resolvedSourceId;
-
+    if (
+      debouncedSearchTerm &&
+      hasSourceOrNewSearchTerm &&
+      querySourceId !== 0
+    ) {
       dispatch({
         type: LOADING,
         clearResults: newSearchTerm,
