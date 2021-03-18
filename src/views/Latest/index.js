@@ -11,6 +11,8 @@ import ToggleBox from 'components/ToggleBox';
 import ContentItem from 'components/ContentItem';
 import Grid from 'components/Grid';
 import StickyHeader from 'components/StickyHeader';
+import NewTabLink from 'components/NewTabLink';
+import OpenInNewTabIcon from 'components/OpenInNewTabIcon';
 
 import Query from 'juriGQL';
 import { getSources, getContentLatest } from 'juriGQL/queries';
@@ -156,6 +158,7 @@ function LatestPage({ location, ...props }) {
   const disableSiteChanger = siteOptions.length < 2;
   const activeSite = sourceData.sources.find((x) => x.id === sourceId);
 
+  const activeSiteOrigin = (activeSite && activeSite.estimatedSiteUrl) || null;
   const hasPaging = (activeSite && activeSite.isPaged) || false;
 
   const handleLoadMore = useCallback(() => {
@@ -184,6 +187,13 @@ function LatestPage({ location, ...props }) {
               }}
               disabled={disableSiteChanger}
             />
+            {activeSiteOrigin && (
+              <NewTabLink className="site-origin" to={activeSiteOrigin}>
+                <OpenInNewTabIcon
+                  alt={`Open ${activeSite.name} origin in new tab.`}
+                />
+              </NewTabLink>
+            )}
             <div className="center-contents latest-page__title">
               Latest releases for
               <ToggleBox

@@ -38,6 +38,7 @@ module.exports = [
       isAdult: Boolean
       isActive: Boolean
       isPaged: Boolean
+      estimatedSiteUrl: String
     }
 
     input SourceInput {

@@ -1,4 +1,8 @@
+const FormData = require('form-data');
+const url = require('url');
+
 const { Source } = require('../connectors');
+const myRunner = require('../utils/runner');
 const sourcesManagementInformation = require('./sourcesManagementInformation');
 
 module.exports = {
@@ -56,6 +60,15 @@ module.exports = {
         errorMessages: [],
         data: null
       };
+    }
+  },
+  // Type resolvers
+  Source: {
+    estimatedSiteUrl(source) {
+      const optionsFn = myRunner(source.optionsParser);
+      const replacements = { page: 0, searchString: '' };
+      const opts = optionsFn(replacements, { FormData, JSON });
+      return new url.URL(opts.url).origin;
     }
   }
 };

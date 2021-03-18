@@ -40,6 +40,7 @@ export const getSources = gql`
       id
       name
       isPaged
+      estimatedSiteUrl
     }
   }
 `;

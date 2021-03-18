@@ -7,6 +7,7 @@ import LoadingBouncer from 'meiko/LoadingBouncer';
 
 import NewTabLink from 'components/NewTabLink';
 import RadioGroup from 'components/RadioGroup';
+import OpenInNewTabIcon from 'components/OpenInNewTabIcon';
 
 import Query from 'juriGQL';
 import { getMangaPosts } from 'juriGQL/queries';
@@ -131,11 +132,7 @@ function RedditManga() {
                       to={`https://localhost:5001/post/${x.name}/comments`}
                     >
                       Open post in fuyuki
-                      <img
-                        src={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==`}
-                        alt="open in new tab"
-                        style={{ margin: `2px 5px` }}
-                      />
+                      <OpenInNewTabIcon />
                     </NewTabLink>
                   </div>
                 </li>
