@@ -15,6 +15,8 @@ module.exports = async function sourcesManagementInformation() {
       functionSignature: 'async function responseParser(response, helpers)',
       returnObject: `Array<ResponseItem>`,
       availableHelperFunctions: [
+        'sourceName: string',
+        'debugging: JuriDebugging',
         'processNestedJson: (data: any, attrString: string) => any;',
         'handleBadJsonTextResponse: (data: any) => any[];',
         'processHtml: (selector: string, html: HTMLElement) => HTMLElement[];'

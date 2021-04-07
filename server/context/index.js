@@ -7,6 +7,7 @@ const processNestedJson = require('../utils/processedNestedJson');
 const handleBadJsonTextResponse = require('../utils/handleBadJsonTextResponse');
 const processHtml = require('../utils/processHtml');
 const juriFetch = require('../utils/juriFetch');
+const debugging = require('../utils/debugging');
 
 const helpers = {
   generateUniqueId,
@@ -26,10 +27,14 @@ async function fetchContentFromSource(source, replacements) {
     const response = await juriFetch(opts, { method: 'GET', ...reqOpts });
 
     const data = await responseFn(response, {
+      sourceName: source.name,
+      debugging,
       processNestedJson,
       handleBadJsonTextResponse,
       processHtml
     });
+
+    await debugging.writeOut(source.name, data);
 
     return Array.from(data)
       .map((entry, index, allData) => itemFn(entry, helpers, index, allData))
