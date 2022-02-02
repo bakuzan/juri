@@ -7,14 +7,15 @@ const TestData = require('../config/testData');
 
 const db = new Sequelize(Constants.appName, null, null, {
   dialect: 'sqlite',
-  storage: `${process.env.DB_STORAGE_PATH}${Constants.appName}.${
-    process.env.NODE_ENV
-  }.sqlite`,
-  operatorsAliases: false
+  storage: `${process.env.DB_STORAGE_PATH}${Constants.appName}.${process.env.NODE_ENV}.sqlite`
 });
 
-// Import models
-db.import('./source');
+const modelDefiners = [require('./source')];
+
+// We define all models according to their files.
+for (const modelDefiner of modelDefiners) {
+  modelDefiner(db);
+}
 
 // Sync and Migrate db
 // Only add test data if sync is forced

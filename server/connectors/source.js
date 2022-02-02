@@ -1,43 +1,44 @@
+const { DataTypes } = require('sequelize');
 const { SourceType, MediaType } = require('../constants/enums');
 
-module.exports = (db, Types) => {
+module.exports = (db) => {
   return db.define('source', {
     name: {
-      type: Types.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     sourceType: {
-      type: Types.ENUM,
+      type: DataTypes.ENUM,
       values: [...SourceType]
     },
     mediaType: {
-      type: Types.ENUM,
+      type: DataTypes.ENUM,
       values: [...MediaType]
     },
     optionsParser: {
-      type: Types.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     responseParser: {
-      type: Types.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     itemParser: {
-      type: Types.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     isAdult: {
-      type: Types.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
     },
     isActive: {
-      type: Types.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true
     },
     isPaged: {
-      type: Types.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
     }
