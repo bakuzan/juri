@@ -5,12 +5,14 @@ $screen-xs: 480px;
 $screen-sm: 768px;
 $screen-md: 992px;
 $screen-lg: 1200px;
+$screen-xlg: 1500px;
 
 // Prevent overlapping
 $screen-xxs-max: ($screen-xs - 1);
 $screen-xs-max: ($screen-sm - 1);
 $screen-sm-max: ($screen-md - 1);
 $screen-md-max: ($screen-lg - 1);
+$screen-lg-max: ($screen-xlg - 1);
 
 // App Vars
 $app--anchor-colour: $juri-pink;

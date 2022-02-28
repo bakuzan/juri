@@ -1,10 +1,20 @@
 @import '../../styles/_colours';
+@import '../../styles/_variables';
 
 .content-item {
   min-height: 90px;
   padding: 2px;
   margin: 2px 0;
   list-style-type: none;
+  font-size: 1.15rem;
+
+  @media (min-width: $screen-lg) and (max-width: $screen-lg-max) {
+    font-size: 1.3rem;
+  }
+
+  @media (min-width: $screen-xlg) {
+    font-size: 1.6rem;
+  }
 
   &__inner {
     display: flex;

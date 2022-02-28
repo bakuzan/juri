@@ -1,6 +1,8 @@
+@import '../../styles/_extensions.scss';
+
 .latest-page {
   &__content-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    @extend %grid-settings;
   }
 
   &__header {

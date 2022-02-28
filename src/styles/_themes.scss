@@ -31,6 +31,7 @@ $theme-maps: (
 );
 
 @include appTheme($theme-maps) {
+  --colour: #{$base-colour};
   --scroll-top-button--background: #{$primary-background};
   --scroll-top-button--background-hover: #{darken($primary-background, 10%)};
   --scroll-top-button--colour: #{$primary-colour};
@@ -38,6 +39,13 @@ $theme-maps: (
   --manage-sources--accent-colour: #fad1ed;
 
   --danger-colour: #{map-get($theme, danger-colour)};
+
+  // Overrides START
+  .alert__content,
+  .tickbox input:not(:checked):before {
+    color: $base-colour;
+  }
+  // Overrides END
 
   // Navigation
   .nav-link {

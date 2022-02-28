@@ -1,5 +1,5 @@
 import prettier from 'prettier/standalone';
-import babelParser from 'prettier/parser-babylon';
+import babelParser from 'prettier/parser-babel';
 
 export default function formatCode(code) {
   const prettyOptions = {
