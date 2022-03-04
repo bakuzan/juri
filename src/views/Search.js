@@ -51,7 +51,7 @@ async function fetchSources(
 }
 
 async function fetchSearchResults(dispatch, params) {
-  // const { search = [] } = await fetchSearch__testData();
+  // const { search = [] } = await fetchSearch__testData(params);
   const { search = [] } = await Query({
     query: getContentSearch,
     variables: {
@@ -111,8 +111,8 @@ function SearchPage(props) {
     age,
     searchString: searchParam
   } = getFilterFlags(props.location);
-  const primarySourceKey = `${type}_${isAdult}`;
 
+  const primarySourceKey = `${type}_${isAdult}`;
   const [primarySourceIds, setPrimarySourceIds] = useStorage('search');
   const primarySourceId = primarySourceIds[primarySourceKey];
 
@@ -126,6 +126,20 @@ function SearchPage(props) {
 
   const debouncedSearchTerm = useDebounce(state.searchString, 750);
   const prevSearchTerm = usePrevious(debouncedSearchTerm);
+  const prevSourceId = usePrevious(state.sourceId);
+
+  function updateUrlParams(queryType, queryAge, querySearch) {
+    const newType = getTypeFromBool(queryType);
+    const newAge = getAgeFromBool(queryAge);
+
+    props.history.replace(
+      `${props.match.url}${buildSearchParams({
+        type: newType.toLowerCase(),
+        age: newAge.toLowerCase(),
+        searchString: querySearch
+      })}`
+    );
+  }
 
   useEffect(() => {
     if (searchParam) {
@@ -141,12 +155,13 @@ function SearchPage(props) {
   useEffect(() => {
     const sourceId = state.sourceId;
     const newSearchTerm = debouncedSearchTerm !== prevSearchTerm;
-    const hasSourceOrNewSearchTerm = sourceId || newSearchTerm;
+    const newSourceId = sourceId && sourceId !== prevSourceId;
+    const hasNewSourceOrSearchTerm = newSourceId || newSearchTerm;
     const querySourceId = sourceId || resolvedSourceId;
 
     if (
       debouncedSearchTerm &&
-      hasSourceOrNewSearchTerm &&
+      hasNewSourceOrSearchTerm &&
       querySourceId !== 0
     ) {
       dispatch({
@@ -154,6 +169,8 @@ function SearchPage(props) {
         clearResults: newSearchTerm,
         sourceId: querySourceId
       });
+
+      updateUrlParams(isAnime, isAdult, debouncedSearchTerm);
 
       fetchSearchResults(dispatch, {
         sourceId: querySourceId,
@@ -163,6 +180,7 @@ function SearchPage(props) {
   }, [
     resolvedSourceId,
     state.sourceId,
+    prevSourceId,
     isAnime,
     isAdult,
     prevSearchTerm,
