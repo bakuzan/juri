@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import { useFocusShortcut } from 'meiko/hooks/useFocusShortcut';
 import ClearableInput from 'meiko/ClearableInput';
@@ -16,11 +17,15 @@ function SearchBar({
   onCheckboxChange,
   onUserInput
 }) {
-  const titleLabel = `Search for ${mediaTypeText[isAnime]} on ${contentAgeText[isAdult]} sites`;
   const ref = useFocusShortcut();
+  const typeText = mediaTypeText[isAnime];
+  const ageText = contentAgeText[isAdult];
+  const titleLabel = `Search for ${ageText} ${typeText}`;
+  const pageTitle = `${searchString || 'Search'} for ${ageText} ${typeText}`;
 
   return (
     <div className="search-bar">
+      <Helmet title={pageTitle} />
       <div>
         <h2
           className="search-bar__title center-contents"
@@ -42,6 +47,7 @@ function SearchBar({
             handleChange={onCheckboxChange}
             text={contentAgeText}
           />
+          sites
         </h2>
       </div>
       <div className="search-bar__input-container">
