@@ -1,4 +1,3 @@
-// import { fetchLatest__testData } from '_testData';
 import React, { useReducer, useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 
@@ -56,7 +55,6 @@ async function fetchSources(setSourceData, { type }) {
 
 async function fetchContentResults(dispatch, params) {
   dispatch({ type: LOADING_SOURCE, sourceId: params.sourceId });
-  // const { latest = [] } = await fetchLatest__testData();
   const { latest = [] } = await Query({
     query: getContentLatest,
     variables: {

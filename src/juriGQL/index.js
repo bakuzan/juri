@@ -1,8 +1,24 @@
+import { fetchSearch__testData, fetchLatest__testData } from '_testData';
+import { getContentSearch, getContentLatest } from 'juriGQL/queries';
 import alertService from 'utils/alertService';
 
+const getRawQueryBody = (query) => query.loc.source.body;
+
 export default async function juriQuery(payload) {
-  const query = payload.query.loc.source.body; // Get the query raw string
-  const body = JSON.stringify({ ...payload, query });
+  const query = getRawQueryBody(payload.query);
+  const queryData = { ...payload, query };
+  const body = JSON.stringify(queryData);
+
+  if (process.env.NODE_ENV === 'development') {
+    switch (query) {
+      case getRawQueryBody(getContentSearch):
+        return await fetchSearch__testData(queryData);
+      case getRawQueryBody(getContentLatest):
+        return await fetchLatest__testData(queryData);
+      default:
+        break;
+    }
+  }
 
   try {
     const response = await fetch('/graphql', {
