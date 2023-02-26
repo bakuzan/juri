@@ -1,4 +1,3 @@
-// import { fetchSearch__testData } from '_testData';
 import React, { useReducer, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
@@ -51,7 +50,6 @@ async function fetchSources(
 }
 
 async function fetchSearchResults(dispatch, params) {
-  // const { search = [] } = await fetchSearch__testData(params);
   const { search = [] } = await Query({
     query: getContentSearch,
     variables: {
