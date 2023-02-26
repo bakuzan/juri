@@ -7,7 +7,7 @@ const { ApolloServer } = require('apollo-server-express');
 const {
   ApolloServerPluginLandingPageGraphQLPlayground
 } = require('apollo-server-core');
-const sslRootCAs = require('ssl-root-cas/latest');
+const sslRootCAs = require('ssl-root-cas');
 
 const Constants = require('./constants/index');
 const typeDefs = require('./type-definitions');
