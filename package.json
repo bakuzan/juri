@@ -17,7 +17,7 @@
     "dotenv": "^15.0.1",
     "express": "^4.17.3",
     "form-data": "^3.0.1",
-    "graphql": "^16.3.0",
+    "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "history": "^4.10.1",
     "jsdom": "^16.5.0",
